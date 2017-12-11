@@ -1,0 +1,292 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>CtsApp</title>
+  <base href="/">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  <script src="https://unpkg.com/frappe-charts@0.0.8/dist/frappe-charts.min.iife.js"></script>
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+</head>
+<!--<body>
+  <app-root>Loading...</app-root>
+</body>-->
+
+<body>
+<!--<div id="chart"></div>-->
+<div class="container">
+  <div class="card" style="width: 100%">
+    <div class="card-body">
+      <h4 class="card-title">Cyclone Testing Station SWIRLnet</h4>
+
+      <h6 class="card-subtitle mb-2 text-muted">Tower 1 (North Ayr)</h6>
+     <!-- <p class="card-text">Wind speed data for cyclone deployment.</p>-->
+
+      <div id="myDiv1" style="width: 100%; height: 600px; padding-top: 0px"><!-- Plotly chart will be drawn inside this DIV --></div>
+      <button id="current" type="button" class="btn btn-outline-secondary">Current Data</button>
+      <button id="old" type="button" class="btn btn-outline-secondary">TC Debbie</button>
+
+    </div>
+  </div>
+  <div class="card" style="width: 100%">
+    <div class="card-body">
+      <h4 class="card-title">Cyclone Testing Station SWIRLnet</h4>
+
+      <h6 class="card-subtitle mb-2 text-muted">Tower 1 (North Ayr)</h6>
+     <!-- <p class="card-text">Wind speed data for cyclone deployment.</p>-->
+
+      <div id="myDiv2" style="width: 100%; height: 600px; padding-top: 0px"><!-- Plotly chart will be drawn inside this DIV --></div>
+      <button id="current2" type="button" class="btn btn-outline-secondary">Current Data</button>
+      <button id="old2" type="button" class="btn btn-outline-secondary">TC Debbie</button>
+
+    </div>
+  </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script></body>
+
+<script>
+
+  $('#current').on('click', function (e) {
+    makeplotCurrent();
+  });
+
+  $('#old').on('click', function (e) {
+    makeplot();
+  });
+
+  function makeplotCurrent() {
+    Plotly.d3.csv("data/current/wind10min_pkb1.csv", function(data){ processData(data) } );
+  }
+
+  function makeplot() {
+    Plotly.d3.csv("data/old/wind10min_pkb1.csv", function(data){ processData(data) } );
+  }
+
+  function makeplotOther() {
+    Plotly.d3.csv("data/current/tenmin_pkb1.csv", function(data){ processDataOther(data) } );
+  }
+
+  function processData(allRows) {
+    var x = [], y1 = [], y2= [];
+    var y3 = [], y4 = [], y5= [], y6=[];
+    for (var i=0; i<allRows.length; i++) {
+      row = allRows[i];
+      x.push( row['TIMESTAMP'] );
+      y1.push( row['Kmh_Max3Sec'] );
+      y2.push( row['WS_kmh_3SecAvg_TMx'] );
+      y3.push(row['WindDir_3sec']);
+      y4.push( row['Kmh_Mean'] );
+      y5.push( row['WindDir_MeanVect'] );
+      y6.push(row['Kmh_StDev']);
+    }
+    makePlotly( x, y1, y2,y3,y4,y5,y6 );
+  }
+
+  function processDataOther(allRows) {
+    var x = [], y1 = [], y2= [];
+
+    for (var i=0; i<allRows.length; i++) {
+      row = allRows[i];
+      x.push( row['TIMESTAMP'] );
+      y1.push( row['Pressure'] );
+      y2.push( row['AirTemp_Avg'] );
+
+    }
+    makePlotlyOther( x, y1, y2 );
+  }
+
+  function makePlotlyOther( x, y1, y2 ){
+    var plotDiv = document.getElementById("plot");
+    var traces1 = [{
+      x: x,
+      y: y1,
+      name: 'Pressure',
+      line: {
+        color: "blue"
+      }
+    },{
+      x: x,
+      y: y2,
+      yaxis: 'y2',
+      name: 'AirTemp_Avg',
+      line: {
+        color: "gray"
+
+      }
+    }];
+    var layout = {
+
+      yaxis: {title: 'Pressure hPa'},
+      yaxis:{
+        autorange: false,
+        range: [990,1020],
+        title: 'Pressure hPa'
+      },
+      yaxis2: {
+        title: 'Average Temperature C',
+        titlefont: {color: 'black'},
+        tickfont: {color: 'black'},
+        overlaying: 'y',
+        side: 'right',
+        showgrid: false,
+        //autorange: false,
+        range: [0,100],
+        zeroline: false
+
+
+      }
+    };
+
+    Plotly.newPlot('myDiv2', traces1,
+      layout);
+
+  }
+
+  function makePlotly( x, y1, y2,y3,y4,y5,y6 ){
+    var plotDiv = document.getElementById("plot");
+    // Javascript
+    /*let data = {
+      labels: x,
+      datasets: [
+        {
+          title: "Max 3-sec Gust",
+          values: y1
+        },
+        {
+          title: "10 Minute Mean",
+          values: y4
+        }
+      ]
+    };
+
+    let chart = new Chart({
+      parent: "#chart", // or a DOM element
+      title: "Tower 1 (North Ayr)",
+      data: data,
+      type: 'line', // or 'line', 'scatter', 'pie', 'percentage'
+      show_dots: 0,
+      is_series: 1,
+      height: 400,
+      colors: ['#7cd6fd', 'violet', 'blue'],
+      // hex-codes or these preset colors;
+      // defaults (in order):
+      // ['light-blue', 'blue', 'violet', 'red',
+      // 'orange', 'yellow', 'green', 'light-green',
+      // 'purple', 'magenta', 'grey', 'dark-grey']
+      format_tooltip_x: d => (d + '').toUpperCase(),
+      format_tooltip_y: d => d + ' pts'
+    });
+*/
+    var traces1 = [{
+      x: x,
+      y: y1,
+      name: 'Max 3-sec Gust',
+      line: {
+        color: "red"
+      }
+    },{
+      x: x,
+      y: y4,
+      name: '10 Minute Mean',
+      line: {
+        color: "gray"
+
+      }
+    },{
+      x: x,
+      y: y5,
+      name: 'Direction',
+      yaxis: 'y2',
+      type: 'scatter',
+      mode: "markers",
+      color: "black",
+      marker: { size: 2.5, color: "black" }
+    }];
+
+    /*
+        var traces3 = [{
+          x: x,
+          y: y3,
+          name: 'WindDir_3sec',
+          line: {
+            color: "#7F7F7F"}
+
+        }];
+
+        var traces4 = [{
+          x: x,
+          y: y4,
+          name: 'Kmh_Mean',
+          line: {
+            color: "#58BBCC"}
+
+        }];
+
+        var traces5 = [{
+          x: x,
+          y: y5,
+          name: 'WindDir_MeanVect',
+          line: {
+            color: "black"}
+
+        }];
+
+
+        var traces6 = [{
+          x: x,
+          y: y6,
+          name: 'Kmh_StDev'
+
+        }];*/
+
+    var layout = {
+
+      yaxis: {},
+      yaxis:{
+          title: 'Wind Speed kmh/h',
+        autorange: false,
+        range: [0,60]
+      },
+      yaxis2: {
+        title: 'Direction',
+        titlefont: {color: 'black'},
+        tickfont: {color: 'black'},
+        overlaying: 'y',
+        side: 'right',
+        showgrid: false,
+        autorange: false,
+        range: [0,365],
+        zeroline: false
+
+
+      }
+    };
+
+
+    Plotly.newPlot('myDiv1', traces1,
+      layout);
+    /*
+        Plotly.newPlot('myDiv3', traces3,
+          {title: 'WindDir_3sec'});
+
+        Plotly.newPlot('myDiv4', traces4,
+          {title: 'Kmh_Mean'});
+
+        Plotly.newPlot('myDiv5', traces5,
+          {title: 'WindDir_MeanVect'});
+
+        Plotly.newPlot('myDiv6', traces6,
+          {title: 'Kmh_StDev'});*/
+
+  };
+  makeplot();
+  makeplotOther();
+</script>
+</html>
