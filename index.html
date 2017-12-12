@@ -4,45 +4,42 @@
   <meta charset="utf-8">
   <title>CtsApp</title>
   <base href="/">
-
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
   <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
   <script src="https://unpkg.com/frappe-charts@0.0.8/dist/frappe-charts.min.iife.js"></script>
-
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
 </head>
-<!--<body>
-  <app-root>Loading...</app-root>
-</body>-->
-
 <body>
-<!--<div id="chart"></div>-->
 <div class="container">
   <div class="card" style="width: 100%">
     <div class="card-body">
       <h4 class="card-title">Cyclone Testing Station SWIRLnet</h4>
-
       <h6 class="card-subtitle mb-2 text-muted">Tower 1 (North Ayr)</h6>
-     <!-- <p class="card-text">Wind speed data for cyclone deployment.</p>-->
-
-      <div id="myDiv1" style="width: 100%; height: 600px; padding-top: 0px"><!-- Plotly chart will be drawn inside this DIV --></div>
-      <button id="current" type="button" class="btn btn-outline-secondary">Current Data</button>
-      <button id="old" type="button" class="btn btn-outline-secondary">TC Debbie</button>
-
+      <div id="t1-wind" style="width: 100%; height: 600px; padding-top: 0px"></div>
+      <div class="btn-group" data-toggle="buttons">
+        <label class="btn btn-outline-secondary active">
+          <input type="radio" name="options" id="t1-wind-current" autocomplete="off" checked>TC Debbie
+        </label>
+        <label class="btn btn-outline-secondary">
+          <input type="radio" name="options" id="t1-wind-old" autocomplete="off">Current Data
+        </label>
+      </div>
     </div>
   </div>
   <div class="card" style="width: 100%">
     <div class="card-body">
       <h4 class="card-title">Cyclone Testing Station SWIRLnet</h4>
-
       <h6 class="card-subtitle mb-2 text-muted">Tower 1 (North Ayr)</h6>
-     <!-- <p class="card-text">Wind speed data for cyclone deployment.</p>-->
-
-      <div id="myDiv2" style="width: 100%; height: 600px; padding-top: 0px"><!-- Plotly chart will be drawn inside this DIV --></div>
-      <button id="current2" type="button" class="btn btn-outline-secondary">Current Data</button>
-      <button id="old2" type="button" class="btn btn-outline-secondary">TC Debbie</button>
-
+      <div id="t1-pressure" style="width: 100%; height: 600px; padding-top: 0px"></div>
+      <div class="btn-group" data-toggle="buttons">
+        <label class="btn btn-outline-secondary active">
+          <input type="radio" name="options" id="t1-pressure-current" autocomplete="off" checked>TC Debbie
+        </label>
+        <label class="btn btn-outline-secondary">
+          <input type="radio" name="options" id="t1-pressure-old" autocomplete="off">Current Data
+        </label>
+      </div>
     </div>
   </div>
 </div>
@@ -50,30 +47,78 @@
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script></body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.12.0/d3.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.19.4/moment.min.js"></script>
 
 <script>
 
-  $('#current').on('click', function (e) {
-    makeplotCurrent();
+  $(document).on('change', 'input:radio[id="t1-wind-old"]', function (event) {
+      makeplotWind("data/current/wind10min_pkb1.csv", "t1-wind");
   });
 
-  $('#old').on('click', function (e) {
-    makeplot();
+  $(document).on('change', 'input:radio[id="t1-wind-current"]', function (event) {
+      makeplotWind("data/old/wind10min_pkb1.csv", "t1-wind");
   });
 
-  function makeplotCurrent() {
-    Plotly.d3.csv("data/current/wind10min_pkb1.csv", function(data){ processData(data) } );
+  $(document).on('change', 'input:radio[id="t1-pressure-old"]', function (event) {
+      makeplotWeather("data/current/tenmin_pkb1.csv", "t1-pressure");
+  });
+
+  $(document).on('change', 'input:radio[id="t1-pressure-current"]', function (event) {
+      makeplotWeather("data/old/tenmin_pkb1.csv", "t1-pressure");
+  });
+
+  function makeplotWind(path, id) {
+    Plotly.d3.csv(path, function(data){ processWindData(data, id) } );
   }
 
-  function makeplot() {
-    Plotly.d3.csv("data/old/wind10min_pkb1.csv", function(data){ processData(data) } );
+  function makeplotWeather(path, id) {
+    Plotly.d3.csv(path, function(data){ processWeatherData(data, id) } );
   }
 
-  function makeplotOther() {
-    Plotly.d3.csv("data/current/tenmin_pkb1.csv", function(data){ processDataOther(data) } );
+  function parseDatesArray(x){
+    var x1=[];
+    if(x && x.length>0)
+    x.forEach(function (d) {
+      var dt=null;
+      if(d){
+        if(d.charAt(2)=='/'){
+          if(d.charAt(4)=='/'){
+            if(d.charAt(9)==':')
+              dt=moment(d, 'DD/M/YY H:mm', true).format();
+            else if(d.charAt(10)==':')
+              dt=moment(d, 'DD/M/YY HH:mm', true).format();
+          }
+          else if(d.charAt(5)=='/'){
+            if(d.charAt(10)==':')
+              dt=moment(d, 'DD/MM/YY H:mm', true).format();
+            else if(d.charAt(11)==':')
+              dt=moment(d, 'DD/MM/YY HH:mm', true).format();
+          }
+        }
+        else if(d.charAt(1)=='/'){
+          if(d.charAt(3)=='/'){
+            if(d.charAt(8)==':')
+              dt=moment(d, 'D/M/YY H:mm', true).format();
+            else if(d.charAt(9)==':')
+              dt=moment(d, 'D/M/YY HH:mm', true).format();
+          }
+          else if(d.charAt(4)=='/'){
+            if(d.charAt(9)==':')
+              dt=moment(d, 'D/MM/YY H:mm', true).format();
+            else if(d.charAt(10)==':')
+              dt=moment(d, 'D/MM/YY HH:mm', true).format();
+          }
+        }
+        else if(d.charAt(4)=='-')//2017-03-26 18:10:00
+          dt=moment(d, 'YYYY-MM-DD HH:mm:ss', true).format();
+      }
+      x1.push(dt);
+    });
+    return x1;
   }
 
-  function processData(allRows) {
+  function processWindData(allRows, id) {
     var x = [], y1 = [], y2= [];
     var y3 = [], y4 = [], y5= [], y6=[];
     for (var i=0; i<allRows.length; i++) {
@@ -86,24 +131,23 @@
       y5.push( row['WindDir_MeanVect'] );
       y6.push(row['Kmh_StDev']);
     }
-    makePlotly( x, y1, y2,y3,y4,y5,y6 );
+    var x1=parseDatesArray(x);
+    makePlotlyWind( x1, y1, y2, y3, y4, y5, y6, id);
   }
 
-  function processDataOther(allRows) {
+  function processWeatherData(allRows, id) {
     var x = [], y1 = [], y2= [];
-
     for (var i=0; i<allRows.length; i++) {
       row = allRows[i];
       x.push( row['TIMESTAMP'] );
       y1.push( row['Pressure'] );
       y2.push( row['AirTemp_Avg'] );
-
     }
-    makePlotlyOther( x, y1, y2 );
+    var x1=parseDatesArray(x);
+    makePlotlyWeather( x1, y1, y2, id);
   }
 
-  function makePlotlyOther( x, y1, y2 ){
-    var plotDiv = document.getElementById("plot");
+  function makePlotlyWeather( x, y1, y2, id ){
     var traces1 = [{
       x: x,
       y: y1,
@@ -118,11 +162,9 @@
       name: 'AirTemp_Avg',
       line: {
         color: "gray"
-
       }
     }];
     var layout = {
-
       yaxis: {title: 'Pressure hPa'},
       yaxis:{
         autorange: false,
@@ -136,54 +178,16 @@
         overlaying: 'y',
         side: 'right',
         showgrid: false,
-        //autorange: false,
         range: [0,100],
         zeroline: false
-
-
       }
     };
 
-    Plotly.newPlot('myDiv2', traces1,
+    Plotly.newPlot(id, traces1,
       layout);
-
   }
 
-  function makePlotly( x, y1, y2,y3,y4,y5,y6 ){
-    var plotDiv = document.getElementById("plot");
-    // Javascript
-    /*let data = {
-      labels: x,
-      datasets: [
-        {
-          title: "Max 3-sec Gust",
-          values: y1
-        },
-        {
-          title: "10 Minute Mean",
-          values: y4
-        }
-      ]
-    };
-
-    let chart = new Chart({
-      parent: "#chart", // or a DOM element
-      title: "Tower 1 (North Ayr)",
-      data: data,
-      type: 'line', // or 'line', 'scatter', 'pie', 'percentage'
-      show_dots: 0,
-      is_series: 1,
-      height: 400,
-      colors: ['#7cd6fd', 'violet', 'blue'],
-      // hex-codes or these preset colors;
-      // defaults (in order):
-      // ['light-blue', 'blue', 'violet', 'red',
-      // 'orange', 'yellow', 'green', 'light-green',
-      // 'purple', 'magenta', 'grey', 'dark-grey']
-      format_tooltip_x: d => (d + '').toUpperCase(),
-      format_tooltip_y: d => d + ' pts'
-    });
-*/
+  function makePlotlyWind( x, y1, y2, y3, y4, y5, y6, id){
     var traces1 = [{
       x: x,
       y: y1,
@@ -197,7 +201,6 @@
       name: '10 Minute Mean',
       line: {
         color: "gray"
-
       }
     },{
       x: x,
@@ -210,44 +213,7 @@
       marker: { size: 2.5, color: "black" }
     }];
 
-    /*
-        var traces3 = [{
-          x: x,
-          y: y3,
-          name: 'WindDir_3sec',
-          line: {
-            color: "#7F7F7F"}
-
-        }];
-
-        var traces4 = [{
-          x: x,
-          y: y4,
-          name: 'Kmh_Mean',
-          line: {
-            color: "#58BBCC"}
-
-        }];
-
-        var traces5 = [{
-          x: x,
-          y: y5,
-          name: 'WindDir_MeanVect',
-          line: {
-            color: "black"}
-
-        }];
-
-
-        var traces6 = [{
-          x: x,
-          y: y6,
-          name: 'Kmh_StDev'
-
-        }];*/
-
     var layout = {
-
       yaxis: {},
       yaxis:{
           title: 'Wind Speed kmh/h',
@@ -264,29 +230,12 @@
         autorange: false,
         range: [0,365],
         zeroline: false
-
-
       }
     };
-
-
-    Plotly.newPlot('myDiv1', traces1,
-      layout);
-    /*
-        Plotly.newPlot('myDiv3', traces3,
-          {title: 'WindDir_3sec'});
-
-        Plotly.newPlot('myDiv4', traces4,
-          {title: 'Kmh_Mean'});
-
-        Plotly.newPlot('myDiv5', traces5,
-          {title: 'WindDir_MeanVect'});
-
-        Plotly.newPlot('myDiv6', traces6,
-          {title: 'Kmh_StDev'});*/
-
+    Plotly.newPlot(id, traces1,layout);
   };
-  makeplot();
-  makeplotOther();
+
+  makeplotWind("data/old/wind10min_pkb1.csv", "t1-wind");
+  makeplotWeather("data/current/tenmin_pkb1.csv", "t1-pressure");
 </script>
 </html>
