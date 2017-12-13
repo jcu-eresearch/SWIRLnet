@@ -1,0 +1,4 @@
+#!/bin/bash
+wget -r 'ftp://jcucyclone:DBbr9MvDo@ctsdata.jcu.edu.au/'
+cd ctsdata.jcu.edu.au
+for file in *.dat; do mv "$file" "$(basename "$file" .dat).csv"; done
