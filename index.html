@@ -235,7 +235,21 @@
     Plotly.newPlot(id, traces1,layout);
   };
 
+
   makeplotWind("data/old/wind10min_pkb1.csv", "t1-wind");
   makeplotWeather("data/current/tenmin_pkb1.csv", "t1-pressure");
+
+  var d3 = Plotly.d3;
+
+  var t1w = d3.select("div[id='t1-wind']");
+  var t1w = t1w.node();
+  var t1p = d3.select("div[id='t1-pressure']");
+  var t1p = t1p.node();
+
+  window.onresize = function() {
+    Plotly.Plots.resize(t1w);
+    Plotly.Plots.resize(t1p);
+  };
+
 </script>
 </html>
