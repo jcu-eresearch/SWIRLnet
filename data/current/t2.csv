@@ -1,4 +1,4 @@
-TIMESTAMP,RECORD,Kmh_Max3Sec,WS_kmh_3SecAvg_TMx,WindDir_3sec,Kmh_Mean,WindDir_MeanVect,Kmh_StDev,Pressure
+TIMESTAMP,ROW,Kmh_Max3Sec,WS_kmh_3SecAvg_TMx,WindDir_3sec,Kmh_Mean,WindDir_MeanVect,Kmh_StDev,Pressure
 2017-12-07 00:00,4967,0,50:00.1,0,0,0,0,1003
 2017-12-07 00:10,4968,0,00:00.1,0,0,0,0,1003
 2017-12-07 00:20,4969,0,10:00.1,0,0,0,0,1003

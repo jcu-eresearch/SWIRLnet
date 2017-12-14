@@ -378,6 +378,7 @@
   function processWindData(allRows, id) {
     var x = [], y1 = [], y2= [];
     var y3 = [], y4 = [], y5= [], y6=[];
+    debugger;
     for (var i=0; i<allRows.length; i++) {
       row = allRows[i];
       x.push( row['TIMESTAMP'] );
@@ -388,6 +389,8 @@
       y5.push( row['WindDir_MeanVect'] );
       y6.push(row['Kmh_StDev']);
     }
+    debugger;
+
     makePlotlyWind(x , y1, y2, y3, y4, y5, y6, id);
   }
 

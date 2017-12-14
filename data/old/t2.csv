@@ -1,4 +1,4 @@
-TIMESTAMP,TIMESTAMP,Kmh_Max3Sec,WS_kmh_3SecAvg_TMx,WindDir_3sec,Kmh_Mean,WindDir_MeanVect,Kmh_StDev,Pressure
+TIMESTAMP,ROW,Kmh_Max3Sec,WS_kmh_3SecAvg_TMx,WindDir_3sec,Kmh_Mean,WindDir_MeanVect,Kmh_StDev,Pressure
 2017-03-23 16:40,67172,0,30:00.1,0,0,0,0,1002
 2017-03-23 16:50,67173,0,40:00.1,0,0,0,0,1003
 2017-03-23 17:00,67174,0,50:00.1,0,0,0,0,1002
