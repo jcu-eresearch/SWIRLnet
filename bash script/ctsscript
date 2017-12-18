@@ -1,4 +1,4 @@
 #!/bin/bash
-wget -r 'ftp://jcucyclone:DBbr9MvDo@ctsdata.jcu.edu.au/'
-cd ctsdata.jcu.edu.au
+scp -P 8822 jc328451@ctsdata.jcu.edu.au:/home/jcucyclone/*.dat local
+cd local
 for file in *.dat; do mv "$file" "$(basename "$file" .dat).csv"; done
