@@ -1,0 +1,61 @@
+{   
+    dateRanges:[
+        {
+            start: "",
+            end: "",
+            dataDir: "old",
+            name: "TC Debbie"
+        },
+        {
+            start:"",
+            end: "",
+            dataDir: "current",
+            name: "Current Data"
+        }
+    ],
+    locations:[
+        {
+            name:"",
+            lat:"",
+            lon:""
+
+        },
+        {
+            name:"",
+            lat:"",
+            lon:""
+
+        },
+        {
+            name:"",
+            lat:"",
+            lon:""
+
+        },
+        {
+            name:"",
+            lat:"",
+            lon:""
+
+        },
+        {
+            name:"",
+            lat:"",
+            lon:""
+
+        },
+        {
+            name:"",
+            lat:"",
+            lon:""
+
+        }
+    ],
+    thresholds:[
+        {
+            dataName:"",
+            upper:"",
+            lower:""
+        }
+    ]
+}
