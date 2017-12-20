@@ -12,15 +12,28 @@
    integrity="sha512-M2wvCLH6DSRazYeZRIm1JnYyh22purTM+FDB5CsyxtQJYeKq83arPe5wgbNmcFXGqiSH2XR8dT/fJISVA1r/zQ=="
    crossorigin=""/>
   <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.2.0/dist/MarkerCluster.css" />   
-    <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.2.0/dist/MarkerCluster.Default.css" />   
+  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.2.0/dist/MarkerCluster.Default.css" />   
+  <script src="https://use.fontawesome.com/4de41fc6df.js"></script>
     <style>
-        /*.leaflet-tooltip {
+        .leaflet-tooltip {
           background-color: transparent;
           border-color: transparent;
           color:white !important;
           box-shadow: 0px 0px;    
-        }*/
-      
+        }
+        
+        .carousel-control-next, .carousel-control-prev{
+            width: 20px;
+            color: black !important;
+        }
+        .cts-btn-group{
+            margin-left: 50px;
+        }
+        .cts-card{
+            margin-top: 30px;
+        }
+    
+        
     </style>    
     
     
@@ -28,7 +41,7 @@
 <body>
 <div class="container">
     
-  <div class="card" style="width: 100%">
+  <div class="card cts-card" style="width: 100%">
     <div class="card-body">
       <h4 class="card-title">Cyclone Testing Station SWIRLnet</h4>
       <h6 class="card-subtitle mb-2 text-muted">Towers</h6>
@@ -36,192 +49,240 @@
     </div>
   </div>
 
-  <div class="card" style="width: 100%">
+  <div class="card cts-card" style="width: 100%">
     <div class="card-body">
       <h4 class="card-title">Cyclone Testing Station SWIRLnet</h4>
       <h6 class="card-subtitle mb-2 text-muted">Tower 1 (North Ayr)</h6>
-      <div id="t1-wind" style="width: 100%; height: 600px; padding-top: 0px"></div>
-      <div class="btn-group" data-toggle="buttons">
-        <label class="btn btn-outline-secondary active">
-          <input type="radio" name="options" id="t1-wind-current" autocomplete="off" checked>TC Debbie
-        </label>
-        <label class="btn btn-outline-secondary">
-          <input type="radio" name="options" id="t1-wind-old" autocomplete="off">Current Data
-        </label>
-      </div>
-    </div>
-  </div>
-  <div class="card" style="width: 100%">
-    <div class="card-body">
-      <h4 class="card-title">Cyclone Testing Station SWIRLnet</h4>
-      <h6 class="card-subtitle mb-2 text-muted">Tower 1 (North Ayr)</h6>
-      <div id="t1-pressure" style="width: 100%; height: 600px; padding-top: 0px"></div>
-      <div class="btn-group" data-toggle="buttons">
-        <label class="btn btn-outline-secondary active">
-          <input type="radio" name="options" id="t1-pressure-current" autocomplete="off" checked>TC Debbie
-        </label>
-        <label class="btn btn-outline-secondary">
-          <input type="radio" name="options" id="t1-pressure-old" autocomplete="off">Current Data
-        </label>
-      </div>
+        <div id="carousel-1" class="carousel slide" data-ride="carousel" data-interval="false">
+          <div class="carousel-inner">
+            <div class="carousel-item active">
+              <div id="t1-wind" style="width: 100%; height: 600px; padding-top: 0px"></div>
+              <div class="btn-group cts-btn-group" data-toggle="buttons">
+                <label class="btn btn-outline-secondary active">
+                  <input type="radio" name="options" id="t1-wind-current" autocomplete="off" checked>TC Debbie
+                </label>
+                <label class="btn btn-outline-secondary">
+                  <input type="radio" name="options" id="t1-wind-old" autocomplete="off">Current Data
+                </label>
+              </div>
+            </div>
+            <div class="carousel-item">
+              <div id="t1-pressure" style="width: 100%; height: 600px; padding-top: 0px"></div>
+              <div class="btn-group cts-btn-group" data-toggle="buttons">
+                <label class="btn btn-outline-secondary active">
+                  <input type="radio" name="options" id="t1-pressure-current" autocomplete="off" checked>TC Debbie
+                </label>
+                <label class="btn btn-outline-secondary">
+                  <input type="radio" name="options" id="t1-pressure-old" autocomplete="off">Current Data
+                </label>
+              </div>
+            </div>
+          </div>
+          <a class="carousel-control-prev" href="#carousel-1" role="button" data-slide="prev">
+            <i class="fa fa-chevron-left"></i>
+          </a>
+          <a class="carousel-control-next" href="#carousel-1" role="button" data-slide="next">
+            <i class="fa fa-chevron-right"></i>
+          </a>
+        </div>    
     </div>
   </div>
 
-  <div class="card" style="width: 100%">
+  <div class="card cts-card" style="width: 100%">
     <div class="card-body">
       <h4 class="card-title">Cyclone Testing Station SWIRLnet</h4>
       <h6 class="card-subtitle mb-2 text-muted">Tower 2 (North Bowen)</h6>
-      <div id="t2-wind" style="width: 100%; height: 600px; padding-top: 0px"></div>
-      <div class="btn-group" data-toggle="buttons">
-        <label class="btn btn-outline-secondary active">
-          <input type="radio" name="options" id="t2-wind-current" autocomplete="off" checked>TC Debbie
-        </label>
-        <label class="btn btn-outline-secondary">
-          <input type="radio" name="options" id="t2-wind-old" autocomplete="off">Current Data
-        </label>
-      </div>
-    </div>
-  </div>
-  <div class="card" style="width: 100%">
-    <div class="card-body">
-      <h4 class="card-title">Cyclone Testing Station SWIRLnet</h4>
-      <h6 class="card-subtitle mb-2 text-muted">Tower 2 (North Bowen)</h6>
-      <div id="t2-pressure" style="width: 100%; height: 600px; padding-top: 0px"></div>
-      <div class="btn-group" data-toggle="buttons">
-        <label class="btn btn-outline-secondary active">
-          <input type="radio" name="options" id="t2-pressure-current" autocomplete="off" checked>TC Debbie
-        </label>
-        <label class="btn btn-outline-secondary">
-          <input type="radio" name="options" id="t2-pressure-old" autocomplete="off">Current Data
-        </label>
-      </div>
+        <div id="carousel-2" class="carousel slide" data-ride="carousel" data-interval="false">
+          <div class="carousel-inner">
+            <div class="carousel-item active">
+              <div id="t2-wind" style="width: 100%; height: 600px; padding-top: 0px"></div>
+              <div class="btn-group cts-btn-group" data-toggle="buttons">
+                <label class="btn btn-outline-secondary active">
+                  <input type="radio" name="options" id="t2-wind-current" autocomplete="off" checked>TC Debbie
+                </label>
+                <label class="btn btn-outline-secondary">
+                  <input type="radio" name="options" id="t2-wind-old" autocomplete="off">Current Data
+                </label>
+              </div>
+            </div>
+            <div class="carousel-item">
+              <div id="t2-pressure" style="width: 100%; height: 600px; padding-top: 0px"></div>
+              <div class="btn-group cts-btn-group" data-toggle="buttons">
+                <label class="btn btn-outline-secondary active">
+                  <input type="radio" name="options" id="t2-pressure-current" autocomplete="off" checked>TC Debbie
+                </label>
+                <label class="btn btn-outline-secondary">
+                  <input type="radio" name="options" id="t2-pressure-old" autocomplete="off">Current Data
+                </label>
+              </div>
+            </div>
+          </div>
+          <a class="carousel-control-prev" href="#carousel-2" role="button" data-slide="prev">
+            <i class="fa fa-chevron-left"></i>
+          </a>
+          <a class="carousel-control-next" href="#carousel-2" role="button" data-slide="next">
+            <i class="fa fa-chevron-right"></i>
+          </a>
+        </div>    
     </div>
   </div>
 
-  <div class="card" style="width: 100%">
+  <div class="card cts-card" style="width: 100%">
     <div class="card-body">
       <h4 class="card-title">Cyclone Testing Station SWIRLnet</h4>
       <h6 class="card-subtitle mb-2 text-muted">Tower 3 (South Ayr)</h6>
-      <div id="t3-wind" style="width: 100%; height: 600px; padding-top: 0px"></div>
-      <div class="btn-group" data-toggle="buttons">
-        <label class="btn btn-outline-secondary active">
-          <input type="radio" name="options" id="t3-wind-current" autocomplete="off" checked>TC Debbie
-        </label>
-        <label class="btn btn-outline-secondary">
-          <input type="radio" name="options" id="t3-wind-old" autocomplete="off">Current Data
-        </label>
-      </div>
-    </div>
-  </div>
-  <div class="card" style="width: 100%">
-    <div class="card-body">
-      <h4 class="card-title">Cyclone Testing Station SWIRLnet</h4>
-      <h6 class="card-subtitle mb-2 text-muted">Tower 3 (South Ayr)</h6>
-      <div id="t3-pressure" style="width: 100%; height: 600px; padding-top: 0px"></div>
-      <div class="btn-group" data-toggle="buttons">
-        <label class="btn btn-outline-secondary active">
-          <input type="radio" name="options" id="t3-pressure-current" autocomplete="off" checked>TC Debbie
-        </label>
-        <label class="btn btn-outline-secondary">
-          <input type="radio" name="options" id="t3-pressure-old" autocomplete="off">Current Data
-        </label>
-      </div>
+        <div id="carousel-3" class="carousel slide" data-ride="carousel" data-interval="false">
+          <div class="carousel-inner">
+            <div class="carousel-item active">
+              <div id="t3-wind" style="width: 100%; height: 600px; padding-top: 0px"></div>
+              <div class="btn-group cts-btn-group" data-toggle="buttons">
+                <label class="btn btn-outline-secondary active">
+                  <input type="radio" name="options" id="t3-wind-current" autocomplete="off" checked>TC Debbie
+                </label>
+                <label class="btn btn-outline-secondary">
+                  <input type="radio" name="options" id="t3-wind-old" autocomplete="off">Current Data
+                </label>
+              </div>
+            </div>
+            <div class="carousel-item">
+              <div id="t3-pressure" style="width: 100%; height: 600px; padding-top: 0px"></div>
+              <div class="btn-group cts-btn-group" data-toggle="buttons">
+                <label class="btn btn-outline-secondary active">
+                  <input type="radio" name="options" id="t3-pressure-current" autocomplete="off" checked>TC Debbie
+                </label>
+                <label class="btn btn-outline-secondary">
+                  <input type="radio" name="options" id="t3-pressure-old" autocomplete="off">Current Data
+                </label>
+              </div>
+            </div>
+          </div>
+          <a class="carousel-control-prev" href="#carousel-3" role="button" data-slide="prev">
+            <i class="fa fa-chevron-left"></i>
+          </a>
+          <a class="carousel-control-next" href="#carousel-3" role="button" data-slide="next">
+            <i class="fa fa-chevron-right"></i>
+          </a>
+        </div>    
     </div>
   </div>
 
-  <div class="card" style="width: 100%">
+  <div class="card cts-card" style="width: 100%">
     <div class="card-body">
       <h4 class="card-title">Cyclone Testing Station SWIRLnet</h4>
       <h6 class="card-subtitle mb-2 text-muted">Tower 4 (Home Hill)</h6>
-      <div id="t4-wind" style="width: 100%; height: 600px; padding-top: 0px"></div>
-      <div class="btn-group" data-toggle="buttons">
-        <label class="btn btn-outline-secondary active">
-          <input type="radio" name="options" id="t4-wind-current" autocomplete="off" checked>TC Debbie
-        </label>
-        <label class="btn btn-outline-secondary">
-          <input type="radio" name="options" id="t4-wind-old" autocomplete="off">Current Data
-        </label>
-      </div>
+        <div id="carousel-4" class="carousel slide" data-ride="carousel" data-interval="false">
+          <div class="carousel-inner">
+            <div class="carousel-item active">
+              <div id="t4-wind" style="width: 100%; height: 600px; padding-top: 0px"></div>
+              <div class="btn-group cts-btn-group" data-toggle="buttons">
+                <label class="btn btn-outline-secondary active">
+                  <input type="radio" name="options" id="t4-wind-current" autocomplete="off" checked>TC Debbie
+                </label>
+                <label class="btn btn-outline-secondary">
+                  <input type="radio" name="options" id="t4-wind-old" autocomplete="off">Current Data
+                </label>
+              </div>
+            </div>
+            <div class="carousel-item">
+              <div id="t4-pressure" style="width: 100%; height: 600px; padding-top: 0px"></div>
+              <div class="btn-group cts-btn-group" data-toggle="buttons">
+                <label class="btn btn-outline-secondary active">
+                  <input type="radio" name="options" id="t4-pressure-current" autocomplete="off" checked>TC Debbie
+                </label>
+                <label class="btn btn-outline-secondary">
+                  <input type="radio" name="options" id="t4-pressure-old" autocomplete="off">Current Data
+                </label>
+              </div>
+            </div>
+          </div>
+          <a class="carousel-control-prev" href="#carousel-4" role="button" data-slide="prev">
+            <i class="fa fa-chevron-left"></i>
+          </a>
+          <a class="carousel-control-next" href="#carousel-4" role="button" data-slide="next">
+            <i class="fa fa-chevron-right"></i>
+          </a>
+        </div>    
     </div>
   </div>
-  <div class="card" style="width: 100%">
-    <div class="card-body">
-      <h4 class="card-title">Cyclone Testing Station SWIRLnet</h4>
-      <h6 class="card-subtitle mb-2 text-muted">Tower 4 (Home Hill)</h6>
-      <div id="t4-pressure" style="width: 100%; height: 600px; padding-top: 0px"></div>
-      <div class="btn-group" data-toggle="buttons">
-        <label class="btn btn-outline-secondary active">
-          <input type="radio" name="options" id="t4-pressure-current" autocomplete="off" checked>TC Debbie
-        </label>
-        <label class="btn btn-outline-secondary">
-          <input type="radio" name="options" id="t4-pressure-old" autocomplete="off">Current Data
-        </label>
-      </div>
-    </div>
-  </div>
-
-  <div class="card" style="width: 100%">
-    <div class="card-body">
-      <h4 class="card-title">Cyclone Testing Station SWIRLnet</h4>
-      <h6 class="card-subtitle mb-2 text-muted">Tower 5 (South Bowen)</h6>
-      <div id="t5-wind" style="width: 100%; height: 600px; padding-top: 0px"></div>
-      <div class="btn-group" data-toggle="buttons">
-        <label class="btn btn-outline-secondary active">
-          <input type="radio" name="options" id="t5-wind-current" autocomplete="off" checked>TC Debbie
-        </label>
-        <label class="btn btn-outline-secondary">
-          <input type="radio" name="options" id="t5-wind-old" autocomplete="off">Current Data
-        </label>
-      </div>
-    </div>
-  </div>
-  <div class="card" style="width: 100%">
+ 
+  <div class="card cts-card" style="width: 100%">
     <div class="card-body">
       <h4 class="card-title">Cyclone Testing Station SWIRLnet</h4>
       <h6 class="card-subtitle mb-2 text-muted">Tower 5 (South Bowen)</h6>
-      <div id="t5-pressure" style="width: 100%; height: 600px; padding-top: 0px"></div>
-      <div class="btn-group" data-toggle="buttons">
-        <label class="btn btn-outline-secondary active">
-          <input type="radio" name="options" id="t5-pressure-current" autocomplete="off" checked>TC Debbie
-        </label>
-        <label class="btn btn-outline-secondary">
-          <input type="radio" name="options" id="t5-pressure-old" autocomplete="off">Current Data
-        </label>
-      </div>
+        <div id="carousel-5" class="carousel slide" data-ride="carousel" data-interval="false">
+          <div class="carousel-inner">
+            <div class="carousel-item active">
+              <div id="t5-wind" style="width: 100%; height: 600px; padding-top: 0px"></div>
+              <div class="btn-group cts-btn-group" data-toggle="buttons">
+                <label class="btn btn-outline-secondary active">
+                  <input type="radio" name="options" id="t5-wind-current" autocomplete="off" checked>TC Debbie
+                </label>
+                <label class="btn btn-outline-secondary">
+                  <input type="radio" name="options" id="t5-wind-old" autocomplete="off">Current Data
+                </label>
+              </div>
+            </div>
+            <div class="carousel-item">
+              <div id="t5-pressure" style="width: 100%; height: 600px; padding-top: 0px"></div>
+              <div class="btn-group cts-btn-group" data-toggle="buttons">
+                <label class="btn btn-outline-secondary active">
+                  <input type="radio" name="options" id="t5-pressure-current" autocomplete="off" checked>TC Debbie
+                </label>
+                <label class="btn btn-outline-secondary">
+                  <input type="radio" name="options" id="t5-pressure-old" autocomplete="off">Current Data
+                </label>
+              </div>
+            </div>
+          </div>
+          <a class="carousel-control-prev" href="#carousel-5" role="button" data-slide="prev">
+            <i class="fa fa-chevron-left"></i>
+          </a>
+          <a class="carousel-control-next" href="#carousel-5" role="button" data-slide="next">
+            <i class="fa fa-chevron-right"></i>
+          </a>
+        </div>    
     </div>
-  </div>
+</div>
 
-  <div class="card" style="width: 100%">
+  <div class="card cts-card" style="width: 100%">
     <div class="card-body">
       <h4 class="card-title">Cyclone Testing Station SWIRLnet</h4>
       <h6 class="card-subtitle mb-2 text-muted">Tower 6 (Proserpine)</h6>
-      <div id="t6-wind" style="width: 100%; height: 600px; padding-top: 0px"></div>
-      <div class="btn-group" data-toggle="buttons">
-        <label class="btn btn-outline-secondary active">
-          <input type="radio" name="options" id="t6-wind-current" autocomplete="off" checked>TC Debbie
-        </label>
-        <label class="btn btn-outline-secondary">
-          <input type="radio" name="options" id="t6-wind-old" autocomplete="off">Current Data
-        </label>
-      </div>
+        <div id="carousel-6" class="carousel slide" data-ride="carousel" data-interval="false">
+          <div class="carousel-inner">
+            <div class="carousel-item active">
+              <div id="t6-wind" style="width: 100%; height: 600px; padding-top: 0px"></div>
+              <div class="btn-group cts-btn-group" data-toggle="buttons">
+                <label class="btn btn-outline-secondary active">
+                  <input type="radio" name="options" id="t6-wind-current" autocomplete="off" checked>TC Debbie
+                </label>
+                <label class="btn btn-outline-secondary">
+                  <input type="radio" name="options" id="t6-wind-old" autocomplete="off">Current Data
+                </label>
+              </div>
+            </div>
+            <div class="carousel-item">
+              <div id="t6-pressure" style="width: 100%; height: 600px; padding-top: 0px"></div>
+              <div class="btn-group cts-btn-group" data-toggle="buttons">
+                <label class="btn btn-outline-secondary active">
+                  <input type="radio" name="options" id="t6-pressure-current" autocomplete="off" checked>TC Debbie
+                </label>
+                <label class="btn btn-outline-secondary">
+                  <input type="radio" name="options" id="t6-pressure-old" autocomplete="off">Current Data
+                </label>
+              </div>
+            </div>
+          </div>
+          <a class="carousel-control-prev" href="#carousel-6" role="button" data-slide="prev">
+            <i class="fa fa-chevron-left"></i>
+          </a>
+          <a class="carousel-control-next" href="#carousel-6" role="button" data-slide="next">
+            <i class="fa fa-chevron-right"></i>
+          </a>
+        </div>    
     </div>
   </div>
-  <div class="card" style="width: 100%">
-    <div class="card-body">
-      <h4 class="card-title">Cyclone Testing Station SWIRLnet</h4>
-      <h6 class="card-subtitle mb-2 text-muted">Tower 6 (Proserpine)</h6>
-      <div id="t6-pressure" style="width: 100%; height: 600px; padding-top: 0px"></div>
-      <div class="btn-group" data-toggle="buttons">
-        <label class="btn btn-outline-secondary active">
-          <input type="radio" name="options" id="t6-pressure-current" autocomplete="off" checked>TC Debbie
-        </label>
-        <label class="btn btn-outline-secondary">
-          <input type="radio" name="options" id="t6-pressure-old" autocomplete="off">Current Data
-        </label>
-      </div>
-    </div>
-  </div>
-
+ 
 </div>
 
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
@@ -233,5 +294,6 @@
 integrity="sha512-lInM/apFSqyy1o6s89K4iQUKg6ppXEgsVxT35HbzUupEVRh2Eu9Wdl4tHj7dZO0s1uvplcYGmt3498TtHq+log=="
 crossorigin=""></script>
 <script src="https://unpkg.com/leaflet.markercluster@1.2.0/dist/leaflet.markercluster.js"></script>
+<script src="js/L.LabelTextCollision.js"></script>
 <script src="js/app.js"></script>
 </html>

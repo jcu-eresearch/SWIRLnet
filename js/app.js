@@ -1,27 +1,65 @@
 
-  var mymap = L.map('mapid', {minZoom: 5, maxZoom: 10}).setView([-20.311542, 148.588719], 8); 
+ 
+
+
+
+var mymap = L.map('mapid', {minZoom: 5, maxZoom: 10}).setView([-20.311542, 148.588719], 8); 
+
 
 
 
   var marker1 = L.marker([-19.56472222, 147.39583333]).addTo(mymap);
-  marker1.bindTooltip("Tower 1 (Ayr)").openTooltip();
+  marker1.bindTooltip(L.tooltip({
+    direction: 'left',
+    permanent: true
+  })
+  .setContent('Tower 1 (Ayr)')).openTooltip();
 
   var marker2 = L.marker([-19.98027778, 148.23083333]).addTo(mymap);
-  marker2.bindTooltip("Tower 2 (North Bowen)").openTooltip();
+  marker2.bindTooltip(L.tooltip({
+    direction: 'right',
+    permanent: true  
+  })
+  .setContent('Tower 2 (North Bowen)')).openTooltip();
 
   var marker3 = L.marker([-19.58166667, 147.40500000]).addTo(mymap);
-  marker3.bindTooltip("Tower 3 (South Ayr)").openTooltip();
+  marker3.bindTooltip(L.tooltip({
+    direction: 'right',
+    permanent: true  
+  })
+  .setContent("Tower 3 (South Ayr)")).openTooltip();
 
   var marker4 = L.marker([-20.01611111, 148.24777778]).addTo(mymap);
-  marker4.bindTooltip("Tower 5 South Bowen").openTooltip();
+  marker4.bindTooltip(L.tooltip({
+    direction: 'left',
+    permanent: true  
+  })
+  .setContent("Tower 5 South Bowen")).openTooltip();
 
   var marker5 = L.marker([-20.41444444, 148.58666667]).addTo(mymap);
-  marker5.bindTooltip("Tower 6 Proserpine").openTooltip();
+  marker5.bindTooltip(L.tooltip({
+    direction: 'left',
+    permanent: true  
+  })
+  .setContent("Tower 6 Proserpine")).openTooltip();
 
   var marker6 = L.marker([-19.67166667, 147.42000000]).addTo(mymap);
-  marker6.bindTooltip("Tower 4 Home Hill").openTooltip();
+  marker6.bindTooltip(L.tooltip({
+    direction: 'left',
+    permanent: true  
+  })
+  .setContent("Tower 4 Home Hill")).openTooltip();
 
-  var group = new L.featureGroup([marker1, marker2, marker3, marker4, marker5, marker6]);
+  var marker7 = L.marker([-19.26639, 146.80569]).addTo(mymap);
+  marker7.bindTooltip(L.tooltip({
+    direction: 'left',
+    permanent: true  
+  })
+  .setContent("Townsville")).openTooltip();
+
+
+
+  var group = new L.featureGroup([marker1, marker2, marker3, marker4, marker5, marker6, marker7]);
 
   mymap.fitBounds(group.getBounds());
 
@@ -201,8 +239,8 @@
       y1.push( row['Kmh_Max3Sec'] );
       y2.push( row['WS_kmh_3SecAvg_TMx'] );
       y3.push(row['WindDir_3sec']);
-      y4.push( row['Kmh_Mean'] );
-      y5.push( row['WindDir_MeanVect'] );
+      y4.push( parseFloat(row['Kmh_Mean']).toFixed(2) );
+      y5.push( parseFloat(row['WindDir_MeanVect']).toFixed(2) );
       y6.push(row['Kmh_StDev']);
     }
     makePlotlyWind(x , y1, y2, y3, y4, y5, y6, id);
@@ -364,14 +402,43 @@
     Plotly.Plots.resize(t2p);
     Plotly.Plots.resize(t3w);
     Plotly.Plots.resize(t3p);
-
     Plotly.Plots.resize(t4w);
     Plotly.Plots.resize(t4p);
-
     Plotly.Plots.resize(t5w);
     Plotly.Plots.resize(t5p);
-
     Plotly.Plots.resize(t6w);
     Plotly.Plots.resize(t6p);
   };
+
+  $('#carousel-1').on('slide.bs.carousel', function () {
+    Plotly.Plots.resize(t1w);
+    Plotly.Plots.resize(t1p);
+  })
+
+  $('#carousel-2').on('slide.bs.carousel', function () {
+    Plotly.Plots.resize(t2w);
+    Plotly.Plots.resize(t2p);
+  })
+  
+  $('#carousel-3').on('slide.bs.carousel', function () {
+    Plotly.Plots.resize(t3w);
+    Plotly.Plots.resize(t3p);
+  })
+
+  $('#carousel-4').on('slide.bs.carousel', function () {
+    Plotly.Plots.resize(t4w);
+    Plotly.Plots.resize(t4p);
+  })
+
+  $('#carousel-5').on('slide.bs.carousel', function () {
+    Plotly.Plots.resize(t5w);
+    Plotly.Plots.resize(t5p);
+  })
+
+  $('#carousel-6').on('slide.bs.carousel', function () {
+    Plotly.Plots.resize(t6w);
+    Plotly.Plots.resize(t6p);
+  })
+
+    
 

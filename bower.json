@@ -1,0 +1,21 @@
+{
+  "name": "SWIRLnet",
+  "homepage": "https://github.com/jcu-eresearch/SWIRLnet",
+  "authors": [
+    "Saira Viqar <sairaviqar@gmail.com>"
+  ],
+  "description": "data visualisation for swirlnet CTS JCU",
+  "main": "index.html",
+  "keywords": [
+    "visualisation"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
