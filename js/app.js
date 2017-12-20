@@ -1,4 +1,40 @@
 
+  var mymap = L.map('mapid', {minZoom: 5, maxZoom: 10}).setView([-20.311542, 148.588719], 8); 
+
+
+
+  var marker1 = L.marker([-19.56472222, 147.39583333]).addTo(mymap);
+  marker1.bindTooltip("Tower 1 (Ayr)").openTooltip();
+
+  var marker2 = L.marker([-19.98027778, 148.23083333]).addTo(mymap);
+  marker2.bindTooltip("Tower 2 (North Bowen)").openTooltip();
+
+  var marker3 = L.marker([-19.58166667, 147.40500000]).addTo(mymap);
+  marker3.bindTooltip("Tower 3 (South Ayr)").openTooltip();
+
+  var marker4 = L.marker([-20.01611111, 148.24777778]).addTo(mymap);
+  marker4.bindTooltip("Tower 5 South Bowen").openTooltip();
+
+  var marker5 = L.marker([-20.41444444, 148.58666667]).addTo(mymap);
+  marker5.bindTooltip("Tower 6 Proserpine").openTooltip();
+
+  var marker6 = L.marker([-19.67166667, 147.42000000]).addTo(mymap);
+  marker6.bindTooltip("Tower 4 Home Hill").openTooltip();
+
+  var group = new L.featureGroup([marker1, marker2, marker3, marker4, marker5, marker6]);
+
+  mymap.fitBounds(group.getBounds());
+
+
+
+  
+  L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
+    attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
+    maxZoom: 18,
+    id: 'mapbox.satellite',
+    accessToken: 'pk.eyJ1Ijoic2FpcmFrIiwiYSI6ImNpcWFkeHZvZjAxcGNmbmtremEwNmV5ajkifQ.cOseeBhCXFdDPp06el09yQ'
+  }).addTo(mymap);
+
 
   $(document).on('change', 'input:radio[id="t1-wind-old"]', function (event) {
       makeplotWind("data/current/t1.csv", "t1-wind");
@@ -159,7 +195,6 @@
   function processWindData(allRows, id) {
     var x = [], y1 = [], y2= [];
     var y3 = [], y4 = [], y5= [], y6=[];
-    debugger;
     for (var i=0; i<allRows.length; i++) {
       row = allRows[i];
       x.push( row['TIMESTAMP'] );
@@ -170,8 +205,6 @@
       y5.push( row['WindDir_MeanVect'] );
       y6.push(row['Kmh_StDev']);
     }
-    debugger;
-
     makePlotlyWind(x , y1, y2, y3, y4, y5, y6, id);
   }
 
