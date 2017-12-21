@@ -3,7 +3,7 @@
 
 
 
-var mymap = L.map('mapid', {minZoom: 5, maxZoom: 10}).setView([-20.311542, 148.588719], 8); 
+var mymap = L.map('mapid', {minZoom: 7, maxZoom: 10}).setView([-20.311542, 148.588719], 8); 
 
 
 
