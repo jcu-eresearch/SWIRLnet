@@ -277,10 +277,12 @@ var mymap = L.map('mapid', {minZoom: 7, maxZoom: 10}).setView([-20.311542, 148.5
     var layout = {
       yaxis:{
         title: 'Wind Speed kmh/h',
-        autorange: true
+        autorange: true,
+        fixedrange:true
       },
       yaxis2:{
         autorange: true,
+          fixedrange:true,
         title: 'Pressure hPa',
         titlefont: {color: 'black'},
         tickfont: {color: 'black'},
@@ -317,14 +319,15 @@ var mymap = L.map('mapid', {minZoom: 7, maxZoom: 10}).setView([-20.311542, 148.5
       yaxis: 'y2',
       type: 'scatter',
       mode: "markers",
-      color: "black",
+      color: "black",   
       marker: { size: 2.5, color: "black" }
     }];
 
     var layout = {
       yaxis:{
           title: 'Wind Speed kmh/h',
-          autorange: true
+          autorange: true,
+          fixedrange:true
       },
       yaxis2: {
         title: 'Direction',
@@ -334,7 +337,9 @@ var mymap = L.map('mapid', {minZoom: 7, maxZoom: 10}).setView([-20.311542, 148.5
         side: 'right',
         showgrid: false,
         autorange: true,
-        zeroline: false
+        fixedrange: true, 
+        zeroline: false,
+        
       },
       legend: {"orientation": "h"}
     };
