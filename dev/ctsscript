@@ -1,4 +1,13 @@
 #!/bin/bash
-scp -P 8822 jc328451@ctsdata.jcu.edu.au:/home/jcucyclone/*.dat local
-cd local
-for file in *.dat; do mv "$file" "$(basename "$file" .dat).csv"; done
+scp -P 8822 jc328451@ctsdata.jcu.edu.au:/home/jcucyclone/*.dat '/srv/SWIRLnet/data/'
+scp -P 8822 jc328451@ctsdata.jcu.edu.au:/home/jcucyclone/old/*.dat '/srv/SWIRLnet/data/old/'
+scp -P 8822 jc328451@ctsdata.jcu.edu.au:/home/jcucyclone/config.json '/srv/SWIRLnet/config/'
+cd '/srv/SWIRLnet/data/'
+for file in *.dat 
+    do mv "$file" "$(basename "$file" .dat).csv" 
+done
+
+cd '/srv/SWIRLnet/data/old/'
+for file in *.dat 
+    do mv "$file" "$(basename "$file" .dat).csv" 
+done

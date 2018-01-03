@@ -73,110 +73,112 @@ var mymap = L.map('mapid', {minZoom: 7, maxZoom: 10}).setView([-20.311542, 148.5
     accessToken: 'pk.eyJ1Ijoic2FpcmFrIiwiYSI6ImNpcWFkeHZvZjAxcGNmbmtremEwNmV5ajkifQ.cOseeBhCXFdDPp06el09yQ'
   }).addTo(mymap);
 
+  var currentDir="data/processed/";
+  var oldDir="data/old/processed/"
 
   $(document).on('change', 'input:radio[id="t1-wind-old"]', function (event) {
-      makeplotWind("data/current/t1.csv", "t1-wind");
+      makeplotWind(currentDir+"t1.csv", "t1-wind");
   });
 
   $(document).on('change', 'input:radio[id="t1-wind-current"]', function (event) {
-      makeplotWind("data/old/t1.csv", "t1-wind");
+      makeplotWind(oldDir+"t1.csv", "t1-wind");
   });
 
   $(document).on('change', 'input:radio[id="t1-pressure-old"]', function (event) {
-      makeplotWeather("data/current/t1.csv", "t1-pressure");
+      makeplotWeather(currentDir+"t1.csv", "t1-pressure");
   });
 
   $(document).on('change', 'input:radio[id="t1-pressure-current"]', function (event) {
-      makeplotWeather("data/old/t1.csv", "t1-pressure");
+      makeplotWeather(oldDir+"t1.csv", "t1-pressure");
   });
 
 
   $(document).on('change', 'input:radio[id="t2-wind-old"]', function (event) {
-      makeplotWind("data/current/t2.csv", "t2-wind");
+      makeplotWind(currentDir+"t2.csv", "t2-wind");
   });
 
   $(document).on('change', 'input:radio[id="t2-wind-current"]', function (event) {
-      makeplotWind("data/old/t2.csv", "t2-wind");
+      makeplotWind(oldDir+"t2.csv", "t2-wind");
   });
 
   $(document).on('change', 'input:radio[id="t2-pressure-old"]', function (event) {
-      makeplotWeather("data/current/t2.csv", "t2-pressure");
+      makeplotWeather(currentDir+"t2.csv", "t2-pressure");
   });
 
   $(document).on('change', 'input:radio[id="t2-pressure-current"]', function (event) {
-      makeplotWeather("data/old/t2.csv", "t2-pressure");
+      makeplotWeather(oldDir+"t2.csv", "t2-pressure");
   });
 
 
   $(document).on('change', 'input:radio[id="t3-wind-old"]', function (event) {
-      makeplotWind("data/current/t3.csv", "t3-wind");
+      makeplotWind(currentDir+"t3.csv", "t3-wind");
   });
 
   $(document).on('change', 'input:radio[id="t3-wind-current"]', function (event) {
-      makeplotWind("data/old/t3.csv", "t3-wind");
+      makeplotWind(oldDir+"t3.csv", "t3-wind");
   });
 
   $(document).on('change', 'input:radio[id="t3-pressure-old"]', function (event) {
-      makeplotWeather("data/current/t3.csv", "t3-pressure");
+      makeplotWeather(currentDir+"t3.csv", "t3-pressure");
   });
 
   $(document).on('change', 'input:radio[id="t3-pressure-current"]', function (event) {
-      makeplotWeather("data/old/t3.csv", "t3-pressure");
+      makeplotWeather(oldDir+"t3.csv", "t3-pressure");
   });
 
 
 
   $(document).on('change', 'input:radio[id="t4-wind-old"]', function (event) {
-      makeplotWind("data/current/t4.csv", "t4-wind");
+      makeplotWind(currentDir+"t4.csv", "t4-wind");
   });
 
   $(document).on('change', 'input:radio[id="t4-wind-current"]', function (event) {
-      makeplotWind("data/old/t4.csv", "t4-wind");
+      makeplotWind(oldDir+"t4.csv", "t4-wind");
   });
 
   $(document).on('change', 'input:radio[id="t4-pressure-old"]', function (event) {
-      makeplotWeather("data/current/t4.csv", "t4-pressure");
+      makeplotWeather(currentDir+"t4.csv", "t4-pressure");
   });
 
   $(document).on('change', 'input:radio[id="t4-pressure-current"]', function (event) {
-      makeplotWeather("data/old/t4.csv", "t4-pressure");
+      makeplotWeather(oldDir+"t4.csv", "t4-pressure");
   });
 
 
 
   $(document).on('change', 'input:radio[id="t5-wind-old"]', function (event) {
-      makeplotWind("data/current/t5.csv", "t5-wind");
+      makeplotWind(currentDir+"t5.csv", "t5-wind");
   });
 
   $(document).on('change', 'input:radio[id="t5-wind-current"]', function (event) {
-      makeplotWind("data/old/t5.csv", "t5-wind");
+      makeplotWind(oldDir+"t5.csv", "t5-wind");
   });
 
   $(document).on('change', 'input:radio[id="t5-pressure-old"]', function (event) {
-      makeplotWeather("data/current/t5.csv", "t5-pressure");
+      makeplotWeather(currentDir+"t5.csv", "t5-pressure");
   });
 
   $(document).on('change', 'input:radio[id="t5-pressure-current"]', function (event) {
-      makeplotWeather("data/old/t5.csv", "t5-pressure");
+      makeplotWeather(oldDir+"t5.csv", "t5-pressure");
   });
 
 
 
 
   $(document).on('change', 'input:radio[id="t6-wind-old"]', function (event) {
-      makeplotWind("data/current/t6.csv", "t6-wind");
+      makeplotWind(currentDir+"t6.csv", "t6-wind");
   });
 
   $(document).on('change', 'input:radio[id="t6-wind-current"]', function (event) {
-      makeplotWind("data/old/t6.csv", "t6-wind");
+      makeplotWind(oldDir+"t6.csv", "t6-wind");
   });
 
   $(document).on('change', 'input:radio[id="t6-pressure-old"]', function (event) {
-      makeplotWeather("data/current/t6.csv", "t6-pressure");
+      makeplotWeather(currentDir+"t6.csv", "t6-pressure");
   });
 
   $(document).on('change', 'input:radio[id="t6-pressure-current"]', function (event) {
-      makeplotWeather("data/old/t6.csv", "t6-pressure");
+      makeplotWeather(oldDir+"t6.csv", "t6-pressure");
   });
 
 
@@ -347,23 +349,23 @@ var mymap = L.map('mapid', {minZoom: 7, maxZoom: 10}).setView([-20.311542, 148.5
   };
 
 
-  makeplotWind("data/old/t1.csv", "t1-wind");
-  makeplotWeather("data/old/t1.csv", "t1-pressure");
+  makeplotWind(oldDir+"t1.csv", "t1-wind");
+  makeplotWeather(oldDir+"t1.csv", "t1-pressure");
 
-  makeplotWind("data/old/t2.csv", "t2-wind");
-  makeplotWeather("data/old/t2.csv", "t2-pressure");
+  makeplotWind(oldDir+"t2.csv", "t2-wind");
+  makeplotWeather(oldDir+"t2.csv", "t2-pressure");
 
-  makeplotWind("data/old/t3.csv", "t3-wind");
-  makeplotWeather("data/old/t3.csv", "t3-pressure");
+  makeplotWind(oldDir+"t3.csv", "t3-wind");
+  makeplotWeather(oldDir+"t3.csv", "t3-pressure");
 
-  makeplotWind("data/old/t3.csv", "t4-wind");
-  makeplotWeather("data/old/t4.csv", "t4-pressure");
+  makeplotWind(oldDir+"t3.csv", "t4-wind");
+  makeplotWeather(oldDir+"t4.csv", "t4-pressure");
 
-  makeplotWind("data/old/t5.csv", "t5-wind");
-  makeplotWeather("data/old/t5.csv", "t5-pressure");
+  makeplotWind(oldDir+"t5.csv", "t5-wind");
+  makeplotWeather(oldDir+"t5.csv", "t5-pressure");
 
-  makeplotWind("data/old/t6.csv", "t6-wind");
-  makeplotWeather("data/old/t6.csv", "t6-pressure");
+  makeplotWind(oldDir+"t6.csv", "t6-wind");
+  makeplotWeather(oldDir+"t6.csv", "t6-pressure");
 
   var d3 = Plotly.d3;
 
