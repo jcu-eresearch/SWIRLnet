@@ -1,13 +1,19 @@
 #!/bin/bash
-scp -P 8822 jc328451@ctsdata.jcu.edu.au:/home/jcucyclone/*.dat '/srv/SWIRLnet/data/'
-scp -P 8822 jc328451@ctsdata.jcu.edu.au:/home/jcucyclone/old/*.dat '/srv/SWIRLnet/data/old/'
-scp -P 8822 jc328451@ctsdata.jcu.edu.au:/home/jcucyclone/config.json '/srv/SWIRLnet/config/'
-cd '/srv/SWIRLnet/data/'
+#scp -P 8822 jc328451@ctsdata.jcu.edu.au:/home/jcucyclone/*.dat '/srv/SWIRLnet/data/'
+#scp -P 8822 jc328451@ctsdata.jcu.edu.au:/home/jcucyclone/old/*.dat '/srv/SWIRLnet/data/old/'
+mkdir -p /srv/SWIRLnet/unprocessed
+scp -P 8822 -r jc328451@ctsdata.jcu.edu.au:/home/jcucyclone/* '/srv/SWIRLnet/unprocessed'
+cd '/srv/SWIRLnet/unprocessed/'
 for file in *.dat 
     do mv "$file" "$(basename "$file" .dat).csv" 
 done
 
-cd '/srv/SWIRLnet/data/old/'
+cd '/srv/SWIRLnet/unprocessed/old/'
 for file in *.dat 
     do mv "$file" "$(basename "$file" .dat).csv" 
 done
+
+mv  -v /srv/SWIRLnet/unprocessed/*.csv /srv/SWIRLnet/data/
+mv  -v /srv/SWIRLnet/unprocessed/old/*.csv /srv/SWIRLnet/data/old/
+
+mv  -v /srv/SWIRLnet/unprocessed/config.json /srv/SWIRLnet/config/
