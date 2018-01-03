@@ -1,0 +1,3 @@
+#!/bin/bash
+/srv/SWIRLnet/dev/ctsscript
+python3 /srv/SWIRLnet/dev/script.py
