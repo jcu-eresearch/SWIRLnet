@@ -2,79 +2,46 @@
  
 
 
+$.getJSON("../config/config.json", function(json) {
+        //console.log(json.locations); // this will show the info it in firebug console
 
-var mymap = L.map('mapid', {minZoom: 7, maxZoom: 10}).setView([-20.311542, 148.588719], 8); 
+        var mymap = L.map('mapid', {minZoom: 7, maxZoom: 10}).setView([-20.311542, 148.588719], 8); 
+        var mGroup=[];
 
+        if(json && json.locations && json.locations.length>0){
 
+            for (var i=0; i< json.locations.length; i++){
+                var l=json.locations[i];
+                var marker1=L.marker([l.lat, l.lon]).addTo(mymap);
+                      marker1.bindTooltip(L.tooltip({
+                        direction: l.label,
+                        permanent: true
+                      })
+                      .setContent(l.name)).openTooltip();
+                mGroup.push (
+                    marker1
 
+                );
 
-  var marker1 = L.marker([-19.56472222, 147.39583333]).addTo(mymap);
-  marker1.bindTooltip(L.tooltip({
-    direction: 'left',
-    permanent: true
-  })
-  .setContent('Tower 1 (Ayr)')).openTooltip();
+            }
+        }
+        var group = new L.featureGroup(mGroup);
 
-  var marker2 = L.marker([-19.98027778, 148.23083333]).addTo(mymap);
-  marker2.bindTooltip(L.tooltip({
-    direction: 'right',
-    permanent: true  
-  })
-  .setContent('Tower 2 (North Bowen)')).openTooltip();
+        mymap.fitBounds(group.getBounds());
 
-  var marker3 = L.marker([-19.58166667, 147.40500000]).addTo(mymap);
-  marker3.bindTooltip(L.tooltip({
-    direction: 'right',
-    permanent: true  
-  })
-  .setContent("Tower 3 (South Ayr)")).openTooltip();
-
-  var marker4 = L.marker([-20.01611111, 148.24777778]).addTo(mymap);
-  marker4.bindTooltip(L.tooltip({
-    direction: 'left',
-    permanent: true  
-  })
-  .setContent("Tower 5 South Bowen")).openTooltip();
-
-  var marker5 = L.marker([-20.41444444, 148.58666667]).addTo(mymap);
-  marker5.bindTooltip(L.tooltip({
-    direction: 'left',
-    permanent: true  
-  })
-  .setContent("Tower 6 Proserpine")).openTooltip();
-
-  var marker6 = L.marker([-19.67166667, 147.42000000]).addTo(mymap);
-  marker6.bindTooltip(L.tooltip({
-    direction: 'left',
-    permanent: true  
-  })
-  .setContent("Tower 4 Home Hill")).openTooltip();
-
-  var marker7 = L.marker([-19.26639, 146.80569]).addTo(mymap);
-  marker7.bindTooltip(L.tooltip({
-    direction: 'left',
-    permanent: true  
-  })
-  .setContent("Townsville")).openTooltip();
-
-
-
-  var group = new L.featureGroup([marker1, marker2, marker3, marker4, marker5, marker6, marker7]);
-
-  mymap.fitBounds(group.getBounds());
-
-
-
-  
-  L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
-    attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
-    maxZoom: 18,
-    id: 'mapbox.satellite',
-    accessToken: 'pk.eyJ1Ijoic2FpcmFrIiwiYSI6ImNpcWFkeHZvZjAxcGNmbmtremEwNmV5ajkifQ.cOseeBhCXFdDPp06el09yQ'
-  }).addTo(mymap);
+        L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
+        attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
+        maxZoom: 18,
+        id: 'mapbox.satellite',
+        accessToken: 'pk.eyJ1Ijoic2FpcmFrIiwiYSI6ImNpcWFkeHZvZjAxcGNmbmtremEwNmV5ajkifQ.cOseeBhCXFdDPp06el09yQ'
+        }).addTo(mymap);
+    });
 
   var currentDir="data/processed/";
   var oldDir="data/old/processed/";
+
+  //var currentDir="data/current/";
+  //var oldDir="data/old/";
 
   var t11show="old";
   var t12show="old";
@@ -515,7 +482,7 @@ var mymap = L.map('mapid', {minZoom: 7, maxZoom: 10}).setView([-20.311542, 148.5
       if(t62show=="current")    
         makeplotWeather(currentDir+"t6.csv", "t6-pressure");
       
-      console.log("refreshed");
+      
   };
 
   var interval = 1000 * 60 * 5; 
