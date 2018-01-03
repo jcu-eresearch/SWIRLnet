@@ -74,92 +74,125 @@ var mymap = L.map('mapid', {minZoom: 7, maxZoom: 10}).setView([-20.311542, 148.5
   }).addTo(mymap);
 
   var currentDir="data/processed/";
-  var oldDir="data/old/processed/"
+  var oldDir="data/old/processed/";
+
+  var t11show="old";
+  var t12show="old";
+  var t21show="old";
+  var t22show="old";
+  var t31show="old";
+  var t32show="old";
+  var t41show="old";
+  var t42show="old";
+  var t51show="old";
+  var t52show="old";
+  var t61show="old";
+  var t62show="old";
 
   $(document).on('change', 'input:radio[id="t1-wind-old"]', function (event) {
       makeplotWind(currentDir+"t1.csv", "t1-wind");
+      t11show="current";
   });
 
   $(document).on('change', 'input:radio[id="t1-wind-current"]', function (event) {
       makeplotWind(oldDir+"t1.csv", "t1-wind");
+      t11show="old";
   });
 
   $(document).on('change', 'input:radio[id="t1-pressure-old"]', function (event) {
       makeplotWeather(currentDir+"t1.csv", "t1-pressure");
+      t12show="current";
   });
 
   $(document).on('change', 'input:radio[id="t1-pressure-current"]', function (event) {
       makeplotWeather(oldDir+"t1.csv", "t1-pressure");
+      t12show="old";
   });
 
 
   $(document).on('change', 'input:radio[id="t2-wind-old"]', function (event) {
       makeplotWind(currentDir+"t2.csv", "t2-wind");
+      t21show="current";
   });
 
   $(document).on('change', 'input:radio[id="t2-wind-current"]', function (event) {
       makeplotWind(oldDir+"t2.csv", "t2-wind");
+      t21show="old";
   });
 
   $(document).on('change', 'input:radio[id="t2-pressure-old"]', function (event) {
       makeplotWeather(currentDir+"t2.csv", "t2-pressure");
+      t22show="current";
   });
 
   $(document).on('change', 'input:radio[id="t2-pressure-current"]', function (event) {
       makeplotWeather(oldDir+"t2.csv", "t2-pressure");
+      t22show="old";
   });
 
 
   $(document).on('change', 'input:radio[id="t3-wind-old"]', function (event) {
       makeplotWind(currentDir+"t3.csv", "t3-wind");
+      t31show="current";
   });
 
   $(document).on('change', 'input:radio[id="t3-wind-current"]', function (event) {
       makeplotWind(oldDir+"t3.csv", "t3-wind");
+      t31show="old";
   });
 
   $(document).on('change', 'input:radio[id="t3-pressure-old"]', function (event) {
       makeplotWeather(currentDir+"t3.csv", "t3-pressure");
+      t32show="current";
   });
 
   $(document).on('change', 'input:radio[id="t3-pressure-current"]', function (event) {
       makeplotWeather(oldDir+"t3.csv", "t3-pressure");
+      t32show="current";
   });
 
 
 
   $(document).on('change', 'input:radio[id="t4-wind-old"]', function (event) {
       makeplotWind(currentDir+"t4.csv", "t4-wind");
+      t41show="current";
   });
 
   $(document).on('change', 'input:radio[id="t4-wind-current"]', function (event) {
       makeplotWind(oldDir+"t4.csv", "t4-wind");
+      t41show="old";
   });
 
   $(document).on('change', 'input:radio[id="t4-pressure-old"]', function (event) {
       makeplotWeather(currentDir+"t4.csv", "t4-pressure");
+      t42show="current";
   });
 
   $(document).on('change', 'input:radio[id="t4-pressure-current"]', function (event) {
       makeplotWeather(oldDir+"t4.csv", "t4-pressure");
+      t42show="old";
   });
 
 
 
   $(document).on('change', 'input:radio[id="t5-wind-old"]', function (event) {
       makeplotWind(currentDir+"t5.csv", "t5-wind");
+      t51show="current";
   });
 
   $(document).on('change', 'input:radio[id="t5-wind-current"]', function (event) {
       makeplotWind(oldDir+"t5.csv", "t5-wind");
+      t51show="old";
   });
 
   $(document).on('change', 'input:radio[id="t5-pressure-old"]', function (event) {
       makeplotWeather(currentDir+"t5.csv", "t5-pressure");
+      t52show="current";
   });
 
   $(document).on('change', 'input:radio[id="t5-pressure-current"]', function (event) {
       makeplotWeather(oldDir+"t5.csv", "t5-pressure");
+      t52show="old";
   });
 
 
@@ -167,18 +200,22 @@ var mymap = L.map('mapid', {minZoom: 7, maxZoom: 10}).setView([-20.311542, 148.5
 
   $(document).on('change', 'input:radio[id="t6-wind-old"]', function (event) {
       makeplotWind(currentDir+"t6.csv", "t6-wind");
+      t61show="current";
   });
 
   $(document).on('change', 'input:radio[id="t6-wind-current"]', function (event) {
       makeplotWind(oldDir+"t6.csv", "t6-wind");
+      t61show="old";
   });
 
   $(document).on('change', 'input:radio[id="t6-pressure-old"]', function (event) {
       makeplotWeather(currentDir+"t6.csv", "t6-pressure");
+      t62show="current";
   });
 
   $(document).on('change', 'input:radio[id="t6-pressure-current"]', function (event) {
       makeplotWeather(oldDir+"t6.csv", "t6-pressure");
+      t62show="old";
   });
 
 
@@ -447,5 +484,42 @@ var mymap = L.map('mapid', {minZoom: 7, maxZoom: 10}).setView([-20.311542, 148.5
     Plotly.Plots.resize(t6p);
   })
 
-    
+  var refresh = function() {
+      if(t11show=="current")
+        makeplotWind(currentDir+"t1.csv", "t1-wind");
+      if(t12show=="current")    
+        makeplotWeather(currentDir+"t1.csv", "t1-pressure");
+      
+      if(t21show=="current")
+        makeplotWind(currentDir+"t2.csv", "t2-wind");
+      if(t22show=="current")    
+        makeplotWeather(currentDir+"t2.csv", "t2-pressure");
+      
+      if(t31show=="current")
+        makeplotWind(currentDir+"t3.csv", "t3-wind");
+      if(t32show=="current")    
+        makeplotWeather(currentDir+"t3.csv", "t3-pressure");
+      
+      if(t41show=="current")
+        makeplotWind(currentDir+"t4.csv", "t4-wind");
+      if(t42show=="current")    
+        makeplotWeather(currentDir+"t4.csv", "t4-pressure");
+      
+      if(t51show=="current")
+        makeplotWind(currentDir+"t5.csv", "t5-wind");
+      if(t52show=="current")    
+        makeplotWeather(currentDir+"t5.csv", "t5-pressure");
+      
+      if(t61show=="current")
+        makeplotWind(currentDir+"t6.csv", "t6-wind");
+      if(t62show=="current")    
+        makeplotWeather(currentDir+"t6.csv", "t6-pressure");
+      
+      console.log("refreshed");
+  };
+
+  var interval = 1000 * 60 * 5; 
+
+  setInterval(refresh, interval);
+
 
