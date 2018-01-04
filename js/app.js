@@ -2,10 +2,10 @@
  
 
 
-$.getJSON("config/config.json", function(json) {
+//$.getJSON("config/config.json", function(json1) {
         //console.log(json.locations); // this will show the info it in firebug console
 
-       /* var json={
+        var json={
             "dateRanges":[
                 {
                     "start": "2017-03-26 12:30:00",
@@ -71,7 +71,7 @@ $.getJSON("config/config.json", function(json) {
                     "lower":""
                 }
             ]
-        };*/
+        };
 
         var mymap = L.map('mapid', {minZoom: 7, maxZoom: 10}).setView([-20.311542, 148.588719], 8); 
         var mGroup=[];
@@ -103,7 +103,7 @@ $.getJSON("config/config.json", function(json) {
         id: 'mapbox.satellite',
         accessToken: 'pk.eyJ1Ijoic2FpcmFrIiwiYSI6ImNpcWFkeHZvZjAxcGNmbmtremEwNmV5ajkifQ.cOseeBhCXFdDPp06el09yQ'
         }).addTo(mymap);
-    });
+    //});
 
   var currentDir="data/processed/";
   var oldDir="data/old/processed/";
