@@ -23,7 +23,20 @@
 
                 );
 
+                var num=i+1;
+
+                $( ".t"+num ).find( "h4" ).html(l.chartHeading);
+                $( ".t"+num ).find( "h6" ).html(l.chartSubheading);
+
+                $( ".t"+num+" .t"+num+"-wind-current" ).html('<input type="radio" name="options" id="t'+num+'-wind-current" autocomplete="off" checked>'+ json.dateRanges[0].name);
+                $( ".t"+num+" .t"+num+"-wind-old" ).html('<input type="radio" name="options" id="t'+num+'-wind-old" autocomplete="off" checked>'+ json.dateRanges[1].name);
+
+                $( ".t"+num+" .t"+num+"-pressure-current" ).html('<input type="radio" name="options" id="t'+num+'-pressure-current" autocomplete="off" checked>'+json.dateRanges[0].name);
+                $( ".t"+num+" .t"+num+"-pressure-old" ).html('<input type="radio" name="options" id="t'+num+'-pressure-old" autocomplete="off" checked>'+json.dateRanges[1].name);
+
             }
+
+
         }
         var group = new L.featureGroup(mGroup);
 
@@ -35,11 +48,14 @@
         id: 'mapbox.satellite',
         accessToken: 'pk.eyJ1Ijoic2FpcmFrIiwiYSI6ImNpcWFkeHZvZjAxcGNmbmtremEwNmV5ajkifQ.cOseeBhCXFdDPp06el09yQ'
         }).addTo(mymap);
+
+
+
+
   });
 
   var currentDir="data/processed/";
   var oldDir="data/old/processed/";
-
 
   var t11show="old";
   var t12show="old";
@@ -368,7 +384,7 @@
   makeplotWind(oldDir+"t3.csv", "t3-wind");
   makeplotWeather(oldDir+"t3.csv", "t3-pressure");
 
-  makeplotWind(oldDir+"t3.csv", "t4-wind");
+  makeplotWind(oldDir+"t4.csv", "t4-wind");
   makeplotWeather(oldDir+"t4.csv", "t4-pressure");
 
   makeplotWind(oldDir+"t5.csv", "t5-wind");
