@@ -40,8 +40,6 @@ $.getJSON("../config/config.json", function(json) {
   var currentDir="data/processed/";
   var oldDir="data/old/processed/";
 
-  //var currentDir="data/current/";
-  //var oldDir="data/old/";
 
   var t11show="old";
   var t12show="old";
