@@ -2,7 +2,7 @@
  
 
 
-$.getJSON("../config/config.json", function(json1) {
+//$.getJSON("../config/config.json", function(json1) {
         //console.log(json.locations); // this will show the info it in firebug console
 
         var json={
@@ -103,7 +103,7 @@ $.getJSON("../config/config.json", function(json1) {
         id: 'mapbox.satellite',
         accessToken: 'pk.eyJ1Ijoic2FpcmFrIiwiYSI6ImNpcWFkeHZvZjAxcGNmbmtremEwNmV5ajkifQ.cOseeBhCXFdDPp06el09yQ'
         }).addTo(mymap);
-    });
+    //});
 
   var currentDir="data/processed/";
   var oldDir="data/old/processed/";
