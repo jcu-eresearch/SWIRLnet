@@ -295,7 +295,11 @@ $.getJSON("../config/config.json", function(json) {
         showgrid: false,
         zeroline: false
       },
-      legend: {"orientation": "h"}
+      legend: {
+          "orientation": "h",
+          x: 0,
+          y: -0.2
+      }
     };
 
     Plotly.newPlot(id, traces1, layout);
@@ -345,7 +349,11 @@ $.getJSON("../config/config.json", function(json) {
         zeroline: false,
         
       },
-      legend: {"orientation": "h"}
+      legend: {
+          "orientation": "h",
+          x: 0,
+          y: -0.2
+      }
     };
     Plotly.newPlot(id, traces1,layout);
   };
