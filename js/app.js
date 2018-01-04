@@ -2,8 +2,76 @@
  
 
 
-$.getJSON("../config/config.json", function(json) {
+$.getJSON("../config/config.json", function(json1) {
         //console.log(json.locations); // this will show the info it in firebug console
+
+        var json={
+            "dateRanges":[
+                {
+                    "start": "2017-03-26 12:30:00",
+                    "end": "2017-03-30 10:20:00",
+                    "dataDir": "old/",
+                    "name": "TC Debbie"
+                },
+                {
+                    "start":"",
+                    "end": "",
+                    "dataDir": "",
+                    "name": "Current Data"
+                }
+            ],
+            "locations":[
+                {
+                    "name":"Tower 1 (Ayr)",
+                    "lat":"-19.56472222",
+                    "lon":"147.39583333",
+                    "label": "left"
+
+                },
+                {
+                    "name":"Tower 2 (North Bowen)",
+                    "lat":"-19.98027778",
+                    "lon":"148.23083333",
+                    "label": "right"
+
+                },
+                {
+                    "name":"Tower 3 (South Ayr)",
+                    "lat":"-19.58166667",
+                    "lon":"147.40500000",
+                    "label": "right"
+
+                },
+                {
+                    "name":"Tower 4 Home Hill",
+                    "lat":"-19.67166667",
+                    "lon":"147.42000000",
+                    "label": "left"
+
+                },
+                {
+                    "name":"Tower 5 South Bowen",
+                    "lat":"-20.01611111",
+                    "lon":"148.24777778",
+                    "label": "left"
+
+                },
+                {
+                    "name":"Tower 6 Proserpine",
+                    "lat":"-20.41444444",
+                    "lon":"148.58666667",
+                    "label": "left"
+
+                }
+            ],
+            "thresholds":[
+                {
+                    "dataName":"",
+                    "upper":"",
+                    "lower":""
+                }
+            ]
+        };
 
         var mymap = L.map('mapid', {minZoom: 7, maxZoom: 10}).setView([-20.311542, 148.588719], 8); 
         var mGroup=[];
