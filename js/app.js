@@ -8,6 +8,8 @@
         var mymap = L.map('mapid', {minZoom: 7, maxZoom: 10}).setView([-20.311542, 148.588719], 8); 
         var mGroup=[];
 
+        //TODO: add marker for Townsville
+
         if(json && json.locations && json.locations.length>0){
 
             for (var i=0; i< json.locations.length; i++){
@@ -54,6 +56,7 @@
 
   });
 
+  //TODO: read these paths from the config file
   var currentDir="data/processed/";
   var oldDir="data/old/processed/";
 
@@ -296,7 +299,7 @@
     }];
     var layout = {
       yaxis:{
-        title: 'Wind Speed kmh/h',
+        title: 'Wind Speed km/h',
         autorange: true,
         fixedrange:true
       },
@@ -349,7 +352,7 @@
 
     var layout = {
       yaxis:{
-          title: 'Wind Speed kmh/h',
+          title: 'Wind Speed km/h',
           autorange: true,
           fixedrange:true
       },
