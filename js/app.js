@@ -1,17 +1,77 @@
 
 
 
+  var defaultCharts=[[], [], [], [], [], []];
+  var defaultChart=false;
+  //TODO: read these paths from the config file
+  var currentDir="data/processed/";
+  var oldDir="data/old/processed/";
+
+
+  var createContent= function () {
+      for (var i = 1; i < 7; i++) {
+          var content = '<div class="card cts-card t'+i+'">' +
+              '<div class="card-body">' +
+              '<h4 class="card-title"></h4>' +
+              '<h6 class="card-subtitle mb-2 text-muted"></h6>' +
+              '<div id="carousel-'+i+'" class="carousel slide" data-ride="carousel" data-interval="false">' +
+              '<div class="carousel-inner">' +
+              '<div class="carousel-item active text-center">' +
+              '<div id="t'+i+'-wind" class="cts-chart"></div>' +
+              '<div class="btn-group cts-btn-group" data-toggle="buttons">' +
+              '<label class="btn btn-outline-secondary active t'+i+'-wind-current">' +
+              '<input type="radio" name="options" id="t'+i+'-wind-current" autocomplete="off" checked>' +
+              '</label>' +
+              '<label class="btn btn-outline-secondary t'+i+'-wind-old">' +
+              '<input type="radio" name="options" id="t'+i+'-wind-old" autocomplete="off">' +
+              '</label>' +
+              '</div>' +
+              '</div>' +
+              '<div class="carousel-item text-center">' +
+              '<div id="t'+i+'-pressure" class="cts-chart"></div>' +
+              '<div class="btn-group cts-btn-group" data-toggle="buttons">' +
+              '<label class="btn btn-outline-secondary active t'+i+'-pressure-current">' +
+              '<input type="radio" name="options" id="t'+i+'-pressure-current" autocomplete="off" checked>' +
+              '</label>' +
+              '<label class="btn btn-outline-secondary t'+i+'-pressure-old">' +
+              '<input type="radio" name="options" id="t'+i+'-pressure-old" autocomplete="off">' +
+              '</label>' +
+              '</div>' +
+              '</div>' +
+              '</div>' +
+              '<a class="carousel-control-prev" href="#carousel-'+i+'" role="button" data-slide="prev">' +
+              '<i class="fa fa-chevron-circle-left"></i>' +
+              '</a>' +
+              '<a class="carousel-control-next" href="#carousel-'+i+'" role="button" data-slide="next">' +
+              '<i class="fa fa-chevron-circle-right"></i>' +
+              '</a>' +
+              '</div>' +
+              '</div>' +
+              '</div>';
+          $(".cts-content").append(content);
+      }
+  };
+  createContent();
 
   $.getJSON("config/config.json", function(json) {
 
-
         var mymap = L.map('mapid', {minZoom: 7, maxZoom: 10}).setView([-20.311542, 148.588719], 8); 
         var mGroup=[];
+        defaultChart=false;
+        var defaultDir=oldDir;
+        var otherDir=currentDir;
+        var defaultLabel=0;
+        var otherLabel=1;
+        if(json.defaultCharts==="current"){
+            defaultChart=true;
+            defaultDir=currentDir;
+            otherDir=oldDir;
+            defaultLabel=1;
+            otherLabel=0;
+        }
 
         //TODO: add marker for Townsville
-
         if(json && json.locations && json.locations.length>0){
-
             for (var i=0; i< json.locations.length; i++){
                 var l=json.locations[i];
                 var marker1=L.marker([l.lat, l.lon]).addTo(mymap);
@@ -20,25 +80,49 @@
                         permanent: true
                       })
                       .setContent(l.name)).openTooltip();
-                mGroup.push (
-                    marker1
-
-                );
-
+                mGroup.push (marker1);
                 var num=i+1;
-
-                $( ".t"+num ).find( "h4" ).html(l.chartHeading);
-                $( ".t"+num ).find( "h6" ).html(l.chartSubheading);
-
-                $( ".t"+num+" .t"+num+"-wind-current" ).html('<input type="radio" name="options" id="t'+num+'-wind-current" autocomplete="off" checked>'+ json.dateRanges[0].name);
-                $( ".t"+num+" .t"+num+"-wind-old" ).html('<input type="radio" name="options" id="t'+num+'-wind-old" autocomplete="off" checked>'+ json.dateRanges[1].name);
-
-                $( ".t"+num+" .t"+num+"-pressure-current" ).html('<input type="radio" name="options" id="t'+num+'-pressure-current" autocomplete="off" checked>'+json.dateRanges[0].name);
-                $( ".t"+num+" .t"+num+"-pressure-old" ).html('<input type="radio" name="options" id="t'+num+'-pressure-old" autocomplete="off" checked>'+json.dateRanges[1].name);
-
+                var selected=$(".t"+num);
+                selected.find( "h4" ).html(l.chartHeading);
+                selected.find( "h6" ).html(l.chartSubheading);
+                $(".t"+num+" .t"+num+"-wind-current" ).html('<input type="radio" name="options" id="t'+num+'-wind-current" autocomplete="off" checked>'+ json.dateRanges[defaultLabel].name);
+                $(".t"+num+" .t"+num+"-wind-old" ).html('<input type="radio" name="options" id="t'+num+'-wind-old" autocomplete="off" checked>'+ json.dateRanges[otherLabel].name);
+                $(".t"+num+" .t"+num+"-pressure-current" ).html('<input type="radio" name="options" id="t'+num+'-pressure-current" autocomplete="off" checked>'+json.dateRanges[defaultLabel].name);
+                $(".t"+num+" .t"+num+"-pressure-old" ).html('<input type="radio" name="options" id="t'+num+'-pressure-old" autocomplete="off" checked>'+json.dateRanges[otherLabel].name);
             }
+            for(var x=0; x< 6 ; x++){
+                for (var y=0; y<2; y++)
+                    defaultCharts[x].push(defaultChart);
+                var chartNum=x+1;
+                var colNum=0;
+                $(document).on('change', 'input:radio[id="t'+chartNum+'-wind-old"]', (function (x, chartNum, colNum, dir) {
+                    return function(event) {
+                        makeplotWind(dir + "t" + chartNum + ".csv", "t" + chartNum + "-wind");
+                        defaultCharts[x][colNum] = !(defaultCharts[x][colNum]);
+                    }
+                })(x, chartNum, colNum, otherDir));
 
+                $(document).on('change', 'input:radio[id="t'+chartNum+'-wind-current"]', (function (x, chartNum, colNum, dir) {
+                    return function(event) {
+                        makeplotWind(dir + "t" + chartNum + ".csv", "t" + chartNum + "-wind");
+                        defaultCharts[x][colNum] = !(defaultCharts[x][colNum]);
+                    }
+                })(x, chartNum, colNum, defaultDir));
 
+                $(document).on('change', 'input:radio[id="t'+chartNum+'-pressure-old"]', (function (x, chartNum, colNum, dir) {
+                    return function(event) {
+                        makeplotWeather(dir + "t" + chartNum + ".csv", "t" + chartNum + "-pressure");
+                        defaultCharts[x][colNum] = !(defaultCharts[x][colNum]);
+                    }
+                })(x, chartNum, colNum, otherDir));
+
+                $(document).on('change', 'input:radio[id="t'+chartNum+'-pressure-current"]', (function (x, chartNum, colNum, dir) {
+                    return function(event) {
+                        makeplotWeather(dir + "t" + chartNum + ".csv", "t" + chartNum + "-pressure");
+                        defaultCharts[x][colNum] = !(defaultCharts[x][colNum]);
+                    }
+                })(x, chartNum, colNum, defaultDir));
+            }
         }
         var group = new L.featureGroup(mGroup);
 
@@ -51,157 +135,20 @@
         accessToken: 'pk.eyJ1Ijoic2FpcmFrIiwiYSI6ImNpcWFkeHZvZjAxcGNmbmtremEwNmV5ajkifQ.cOseeBhCXFdDPp06el09yQ'
         }).addTo(mymap);
 
-
-
-
+        var renderDefaultCharts =function(defaults){
+          var dir=oldDir;
+          if(defaults)
+              dir=currentDir;
+          for(var x=0; x< 6 ; x++){
+              var chartNum=x+1;
+              for (var y=0; y<2; y++){
+                  makeplotWind(dir+"t"+chartNum+".csv", "t"+chartNum+"-wind");
+                  makeplotWeather(dir+"t"+chartNum+".csv", "t"+chartNum+"-pressure");
+              }
+          }
+        };
+        renderDefaultCharts(defaultChart);
   });
-
-  //TODO: read these paths from the config file
-  var currentDir="data/processed/";
-  var oldDir="data/old/processed/";
-
-  var t11show="old";
-  var t12show="old";
-  var t21show="old";
-  var t22show="old";
-  var t31show="old";
-  var t32show="old";
-  var t41show="old";
-  var t42show="old";
-  var t51show="old";
-  var t52show="old";
-  var t61show="old";
-  var t62show="old";
-
-  $(document).on('change', 'input:radio[id="t1-wind-old"]', function (event) {
-      makeplotWind(currentDir+"t1.csv", "t1-wind");
-      t11show="current";
-  });
-
-  $(document).on('change', 'input:radio[id="t1-wind-current"]', function (event) {
-      makeplotWind(oldDir+"t1.csv", "t1-wind");
-      t11show="old";
-  });
-
-  $(document).on('change', 'input:radio[id="t1-pressure-old"]', function (event) {
-      makeplotWeather(currentDir+"t1.csv", "t1-pressure");
-      t12show="current";
-  });
-
-  $(document).on('change', 'input:radio[id="t1-pressure-current"]', function (event) {
-      makeplotWeather(oldDir+"t1.csv", "t1-pressure");
-      t12show="old";
-  });
-
-
-  $(document).on('change', 'input:radio[id="t2-wind-old"]', function (event) {
-      makeplotWind(currentDir+"t2.csv", "t2-wind");
-      t21show="current";
-  });
-
-  $(document).on('change', 'input:radio[id="t2-wind-current"]', function (event) {
-      makeplotWind(oldDir+"t2.csv", "t2-wind");
-      t21show="old";
-  });
-
-  $(document).on('change', 'input:radio[id="t2-pressure-old"]', function (event) {
-      makeplotWeather(currentDir+"t2.csv", "t2-pressure");
-      t22show="current";
-  });
-
-  $(document).on('change', 'input:radio[id="t2-pressure-current"]', function (event) {
-      makeplotWeather(oldDir+"t2.csv", "t2-pressure");
-      t22show="old";
-  });
-
-
-  $(document).on('change', 'input:radio[id="t3-wind-old"]', function (event) {
-      makeplotWind(currentDir+"t3.csv", "t3-wind");
-      t31show="current";
-  });
-
-  $(document).on('change', 'input:radio[id="t3-wind-current"]', function (event) {
-      makeplotWind(oldDir+"t3.csv", "t3-wind");
-      t31show="old";
-  });
-
-  $(document).on('change', 'input:radio[id="t3-pressure-old"]', function (event) {
-      makeplotWeather(currentDir+"t3.csv", "t3-pressure");
-      t32show="current";
-  });
-
-  $(document).on('change', 'input:radio[id="t3-pressure-current"]', function (event) {
-      makeplotWeather(oldDir+"t3.csv", "t3-pressure");
-      t32show="current";
-  });
-
-
-
-  $(document).on('change', 'input:radio[id="t4-wind-old"]', function (event) {
-      makeplotWind(currentDir+"t4.csv", "t4-wind");
-      t41show="current";
-  });
-
-  $(document).on('change', 'input:radio[id="t4-wind-current"]', function (event) {
-      makeplotWind(oldDir+"t4.csv", "t4-wind");
-      t41show="old";
-  });
-
-  $(document).on('change', 'input:radio[id="t4-pressure-old"]', function (event) {
-      makeplotWeather(currentDir+"t4.csv", "t4-pressure");
-      t42show="current";
-  });
-
-  $(document).on('change', 'input:radio[id="t4-pressure-current"]', function (event) {
-      makeplotWeather(oldDir+"t4.csv", "t4-pressure");
-      t42show="old";
-  });
-
-
-
-  $(document).on('change', 'input:radio[id="t5-wind-old"]', function (event) {
-      makeplotWind(currentDir+"t5.csv", "t5-wind");
-      t51show="current";
-  });
-
-  $(document).on('change', 'input:radio[id="t5-wind-current"]', function (event) {
-      makeplotWind(oldDir+"t5.csv", "t5-wind");
-      t51show="old";
-  });
-
-  $(document).on('change', 'input:radio[id="t5-pressure-old"]', function (event) {
-      makeplotWeather(currentDir+"t5.csv", "t5-pressure");
-      t52show="current";
-  });
-
-  $(document).on('change', 'input:radio[id="t5-pressure-current"]', function (event) {
-      makeplotWeather(oldDir+"t5.csv", "t5-pressure");
-      t52show="old";
-  });
-
-
-
-
-  $(document).on('change', 'input:radio[id="t6-wind-old"]', function (event) {
-      makeplotWind(currentDir+"t6.csv", "t6-wind");
-      t61show="current";
-  });
-
-  $(document).on('change', 'input:radio[id="t6-wind-current"]', function (event) {
-      makeplotWind(oldDir+"t6.csv", "t6-wind");
-      t61show="old";
-  });
-
-  $(document).on('change', 'input:radio[id="t6-pressure-old"]', function (event) {
-      makeplotWeather(currentDir+"t6.csv", "t6-pressure");
-      t62show="current";
-  });
-
-  $(document).on('change', 'input:radio[id="t6-pressure-current"]', function (event) {
-      makeplotWeather(oldDir+"t6.csv", "t6-pressure");
-      t62show="old";
-  });
-
 
   function makeplotWind(path, id) {
     Plotly.d3.csv(path, function(data){ processWindData(data, id) } );
@@ -209,48 +156,6 @@
 
   function makeplotWeather(path, id) {
     Plotly.d3.csv(path, function(data){ processWeatherData(data, id) } );
-  }
-
-  function parseDatesArray(x){
-    var x1=[];
-    if(x && x.length>0)
-    x.forEach(function (d) {
-      var dt=null;
-      if(d){
-        if(d.charAt(2)=='/'){
-          if(d.charAt(4)=='/'){
-            if(d.charAt(9)==':')
-              dt=moment(d, 'DD/M/YY H:mm', true).format();
-            else if(d.charAt(10)==':')
-              dt=moment(d, 'DD/M/YY HH:mm', true).format();
-          }
-          else if(d.charAt(5)=='/'){
-            if(d.charAt(10)==':')
-              dt=moment(d, 'DD/MM/YY H:mm', true).format();
-            else if(d.charAt(11)==':')
-              dt=moment(d, 'DD/MM/YY HH:mm', true).format();
-          }
-        }
-        else if(d.charAt(1)=='/'){
-          if(d.charAt(3)=='/'){
-            if(d.charAt(8)==':')
-              dt=moment(d, 'D/M/YY H:mm', true).format();
-            else if(d.charAt(9)==':')
-              dt=moment(d, 'D/M/YY HH:mm', true).format();
-          }
-          else if(d.charAt(4)=='/'){
-            if(d.charAt(9)==':')
-              dt=moment(d, 'D/MM/YY H:mm', true).format();
-            else if(d.charAt(10)==':')
-              dt=moment(d, 'D/MM/YY HH:mm', true).format();
-          }
-        }
-        else if(d.charAt(4)=='-')//2017-03-26 18:10:00
-          dt=moment(d, 'YYYY-MM-DD HH:mm:ss', true).format();
-      }
-      x1.push(dt);
-    });
-    return x1;
   }
 
   function processWindData(allRows, id) {
@@ -378,58 +283,40 @@
   };
 
 
-  makeplotWind(oldDir+"t1.csv", "t1-wind");
-  makeplotWeather(oldDir+"t1.csv", "t1-pressure");
-
-  makeplotWind(oldDir+"t2.csv", "t2-wind");
-  makeplotWeather(oldDir+"t2.csv", "t2-pressure");
-
-  makeplotWind(oldDir+"t3.csv", "t3-wind");
-  makeplotWeather(oldDir+"t3.csv", "t3-pressure");
-
-  makeplotWind(oldDir+"t4.csv", "t4-wind");
-  makeplotWeather(oldDir+"t4.csv", "t4-pressure");
-
-  makeplotWind(oldDir+"t5.csv", "t5-wind");
-  makeplotWeather(oldDir+"t5.csv", "t5-pressure");
-
-  makeplotWind(oldDir+"t6.csv", "t6-wind");
-  makeplotWeather(oldDir+"t6.csv", "t6-pressure");
-
   var d3 = Plotly.d3;
 
   var t1w = d3.select("div[id='t1-wind']");
-  var t1w = t1w.node();
+   t1w = t1w.node();
   var t1p = d3.select("div[id='t1-pressure']");
-  var t1p = t1p.node();
+   t1p = t1p.node();
 
   var t2w = d3.select("div[id='t2-wind']");
-  var t2w = t2w.node();
+   t2w = t2w.node();
   var t2p = d3.select("div[id='t2-pressure']");
-  var t2p = t2p.node();
+   t2p = t2p.node();
 
 
   var t3w = d3.select("div[id='t3-wind']");
-  var t3w = t3w.node();
+   t3w = t3w.node();
   var t3p = d3.select("div[id='t3-pressure']");
-  var t3p = t3p.node();
+   t3p = t3p.node();
 
   var t4w = d3.select("div[id='t4-wind']");
-  var t4w = t4w.node();
+   t4w = t4w.node();
   var t4p = d3.select("div[id='t4-pressure']");
-  var t4p = t4p.node();
+   t4p = t4p.node();
 
 
   var t5w = d3.select("div[id='t5-wind']");
-  var t5w = t5w.node();
+   t5w = t5w.node();
   var t5p = d3.select("div[id='t5-pressure']");
-  var t5p = t5p.node();
+   t5p = t5p.node();
 
 
   var t6w = d3.select("div[id='t6-wind']");
-  var t6w = t6w.node();
+   t6w = t6w.node();
   var t6p = d3.select("div[id='t6-pressure']");
-  var t6p = t6p.node();
+   t6p = t6p.node();
 
   window.onresize = function() {
     Plotly.Plots.resize(t1w);
@@ -477,37 +364,15 @@
   })
 
   var refresh = function() {
-      if(t11show=="current")
-        makeplotWind(currentDir+"t1.csv", "t1-wind");
-      if(t12show=="current")    
-        makeplotWeather(currentDir+"t1.csv", "t1-pressure");
-      
-      if(t21show=="current")
-        makeplotWind(currentDir+"t2.csv", "t2-wind");
-      if(t22show=="current")    
-        makeplotWeather(currentDir+"t2.csv", "t2-pressure");
-      
-      if(t31show=="current")
-        makeplotWind(currentDir+"t3.csv", "t3-wind");
-      if(t32show=="current")    
-        makeplotWeather(currentDir+"t3.csv", "t3-pressure");
-      
-      if(t41show=="current")
-        makeplotWind(currentDir+"t4.csv", "t4-wind");
-      if(t42show=="current")    
-        makeplotWeather(currentDir+"t4.csv", "t4-pressure");
-      
-      if(t51show=="current")
-        makeplotWind(currentDir+"t5.csv", "t5-wind");
-      if(t52show=="current")    
-        makeplotWeather(currentDir+"t5.csv", "t5-pressure");
-      
-      if(t61show=="current")
-        makeplotWind(currentDir+"t6.csv", "t6-wind");
-      if(t62show=="current")    
-        makeplotWeather(currentDir+"t6.csv", "t6-pressure");
-      
-      
+      for(var x=0; x< 6 ; x++){
+          var chartNum=x+1;
+          for (var y=0; y<2; y++){
+              if(defaultCharts[x][y])
+                  makeplotWind(currentDir+"t"+chartNum+".csv", "t"+chartNum+"-wind");
+              if(defaultCharts[x][y])
+                  makeplotWeather(currentDir+"t"+chartNum+".csv", "t"+chartNum+"-pressure");
+          }
+      }
   };
 
   var interval = 1000 * 60 * 5; 
