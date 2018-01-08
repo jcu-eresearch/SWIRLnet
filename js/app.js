@@ -1,12 +1,13 @@
 
 
 
-  var defaultCharts=[[], [], [], [], [], []];
+  var defaultCharts=[];
   var defaultChart=false;
+  var defaultHeadings=[];
+  var otherHeadings=[];
   //TODO: read these paths from the config file
   var currentDir="data/processed/";
   var oldDir="data/old/processed/";
-
 
   var createContent= function () {
       for (var i = 1; i < 7; i++) {
@@ -53,6 +54,32 @@
   };
   createContent();
 
+  var renderDefaultCharts =function(defaults){
+      var dir=oldDir;
+      if(defaults)
+          dir=currentDir;
+      for(var x=0; x< 6 ; x++){
+          var chartNum=x+1;
+          for (var y=0; y<2; y++){
+              makeplotWind(dir+"t"+chartNum+".csv", "t"+chartNum+"-wind");
+              makeplotWeather(dir+"t"+chartNum+".csv", "t"+chartNum+"-pressure");
+          }
+      }
+  };
+
+  var setHander= function(x, chartNum, colNum, dir, tp, df, hds){
+      $(document).on('change', 'input:radio[id="t'+chartNum+tp+df+'"]',
+          (function () {
+              return function(event) {
+                  makeplotWind(dir + "t" + chartNum + ".csv", "t" + chartNum + tp);
+                  defaultCharts[x][colNum] = !(defaultCharts[x][colNum]);
+                  var selected=$(".t"+chartNum);
+                  selected.find( "h4" ).html(hds[x].h4);
+                  selected.find( "h6" ).html(hds[x].h6);
+              }
+      })());
+  };
+
   $.getJSON("config/config.json", function(json) {
 
         var mymap = L.map('mapid', {minZoom: 7, maxZoom: 10}).setView([-20.311542, 148.588719], 8); 
@@ -62,18 +89,26 @@
         var otherDir=currentDir;
         var defaultLabel=0;
         var otherLabel=1;
+        var defaultLocs=json.locationsOld? json.locationsOld: [] ;
+        var otherLocs=json.locations? json.locations: [] ;
         if(json.defaultCharts==="current"){
             defaultChart=true;
             defaultDir=currentDir;
             otherDir=oldDir;
             defaultLabel=1;
             otherLabel=0;
+            defaultLocs=json.locations ? json.locations: [];
+            otherLocs=json.locationsOld? json.locationsOld: [] ;
         }
 
+
         //TODO: add marker for Townsville
-        if(json && json.locations && json.locations.length>0){
-            for (var i=0; i< json.locations.length; i++){
-                var l=json.locations[i];
+
+        if(json &&  defaultLocs && defaultLocs.length>0){
+            for (var i=0; i< defaultLocs.length; i++){
+
+                var l=defaultLocs[i];
+
                 var marker1=L.marker([l.lat, l.lon]).addTo(mymap);
                       marker1.bindTooltip(L.tooltip({
                         direction: l.label,
@@ -82,46 +117,44 @@
                       .setContent(l.name)).openTooltip();
                 mGroup.push (marker1);
                 var num=i+1;
+
                 var selected=$(".t"+num);
                 selected.find( "h4" ).html(l.chartHeading);
                 selected.find( "h6" ).html(l.chartSubheading);
-                $(".t"+num+" .t"+num+"-wind-current" ).html('<input type="radio" name="options" id="t'+num+'-wind-current" autocomplete="off" checked>'+ json.dateRanges[defaultLabel].name);
-                $(".t"+num+" .t"+num+"-wind-old" ).html('<input type="radio" name="options" id="t'+num+'-wind-old" autocomplete="off" checked>'+ json.dateRanges[otherLabel].name);
-                $(".t"+num+" .t"+num+"-pressure-current" ).html('<input type="radio" name="options" id="t'+num+'-pressure-current" autocomplete="off" checked>'+json.dateRanges[defaultLabel].name);
-                $(".t"+num+" .t"+num+"-pressure-old" ).html('<input type="radio" name="options" id="t'+num+'-pressure-old" autocomplete="off" checked>'+json.dateRanges[otherLabel].name);
+
+                defaultHeadings.push({h4: l.chartHeading, h6: l.chartSubheading});
+
+                //Labelling the toggle buttons
+                var bg='<input type="radio" name="options" id="t';
+                var ed='" autocomplete="off" checked>';
+                if(json.dateRanges && json.dateRanges.length>1) {
+                    $(".t" + num + " .t" + num + "-wind-current").html(bg + num + '-wind-current' + ed + json.dateRanges[defaultLabel].name);
+                    $(".t" + num + " .t" + num + "-wind-old").html(bg + num + '-wind-old' + ed + json.dateRanges[otherLabel].name);
+                    $(".t" + num + " .t" + num + "-pressure-current").html(bg + num + '-pressure-current' + ed + json.dateRanges[defaultLabel].name);
+                    $(".t" + num + " .t" + num + "-pressure-old").html(bg + num + '-pressure-old' + ed + json.dateRanges[otherLabel].name);
+                }
             }
-            for(var x=0; x< 6 ; x++){
+
+            //Collect the headings for non-default locations if different from default locations
+            for(var k=0; k<otherLocs.length; k++){
+                var lo=otherLocs[k];
+                otherHeadings.push({h4: lo.chartHeading, h6: lo.chartSubheading});
+            }
+
+
+            for(var x=0; x<json.locations.length; x++){
+                defaultCharts.push([]);
                 for (var y=0; y<2; y++)
                     defaultCharts[x].push(defaultChart);
                 var chartNum=x+1;
                 var colNum=0;
-                $(document).on('change', 'input:radio[id="t'+chartNum+'-wind-old"]', (function (x, chartNum, colNum, dir) {
-                    return function(event) {
-                        makeplotWind(dir + "t" + chartNum + ".csv", "t" + chartNum + "-wind");
-                        defaultCharts[x][colNum] = !(defaultCharts[x][colNum]);
-                    }
-                })(x, chartNum, colNum, otherDir));
 
-                $(document).on('change', 'input:radio[id="t'+chartNum+'-wind-current"]', (function (x, chartNum, colNum, dir) {
-                    return function(event) {
-                        makeplotWind(dir + "t" + chartNum + ".csv", "t" + chartNum + "-wind");
-                        defaultCharts[x][colNum] = !(defaultCharts[x][colNum]);
-                    }
-                })(x, chartNum, colNum, defaultDir));
+                //handling the toggle buttons
+                setHander(x, chartNum, colNum, otherDir, "-wind", "-old", otherHeadings);
+                setHander(x, chartNum, colNum, defaultDir, "-wind", "-current", defaultHeadings);
+                setHander(x, chartNum, colNum, otherDir, "-pressure", "-old", otherHeadings);
+                setHander(x, chartNum, colNum, defaultDir, "-pressure", "-current", defaultHeadings);
 
-                $(document).on('change', 'input:radio[id="t'+chartNum+'-pressure-old"]', (function (x, chartNum, colNum, dir) {
-                    return function(event) {
-                        makeplotWeather(dir + "t" + chartNum + ".csv", "t" + chartNum + "-pressure");
-                        defaultCharts[x][colNum] = !(defaultCharts[x][colNum]);
-                    }
-                })(x, chartNum, colNum, otherDir));
-
-                $(document).on('change', 'input:radio[id="t'+chartNum+'-pressure-current"]', (function (x, chartNum, colNum, dir) {
-                    return function(event) {
-                        makeplotWeather(dir + "t" + chartNum + ".csv", "t" + chartNum + "-pressure");
-                        defaultCharts[x][colNum] = !(defaultCharts[x][colNum]);
-                    }
-                })(x, chartNum, colNum, defaultDir));
             }
         }
         var group = new L.featureGroup(mGroup);
@@ -135,18 +168,7 @@
         accessToken: 'pk.eyJ1Ijoic2FpcmFrIiwiYSI6ImNpcWFkeHZvZjAxcGNmbmtremEwNmV5ajkifQ.cOseeBhCXFdDPp06el09yQ'
         }).addTo(mymap);
 
-        var renderDefaultCharts =function(defaults){
-          var dir=oldDir;
-          if(defaults)
-              dir=currentDir;
-          for(var x=0; x< 6 ; x++){
-              var chartNum=x+1;
-              for (var y=0; y<2; y++){
-                  makeplotWind(dir+"t"+chartNum+".csv", "t"+chartNum+"-wind");
-                  makeplotWeather(dir+"t"+chartNum+".csv", "t"+chartNum+"-pressure");
-              }
-          }
-        };
+
         renderDefaultCharts(defaultChart);
   });
 
@@ -282,86 +304,37 @@
     Plotly.newPlot(id, traces1,layout);
   };
 
-
   var d3 = Plotly.d3;
+  var plots=[];
 
-  var t1w = d3.select("div[id='t1-wind']");
-   t1w = t1w.node();
-  var t1p = d3.select("div[id='t1-pressure']");
-   t1p = t1p.node();
-
-  var t2w = d3.select("div[id='t2-wind']");
-   t2w = t2w.node();
-  var t2p = d3.select("div[id='t2-pressure']");
-   t2p = t2p.node();
-
-
-  var t3w = d3.select("div[id='t3-wind']");
-   t3w = t3w.node();
-  var t3p = d3.select("div[id='t3-pressure']");
-   t3p = t3p.node();
-
-  var t4w = d3.select("div[id='t4-wind']");
-   t4w = t4w.node();
-  var t4p = d3.select("div[id='t4-pressure']");
-   t4p = t4p.node();
-
-
-  var t5w = d3.select("div[id='t5-wind']");
-   t5w = t5w.node();
-  var t5p = d3.select("div[id='t5-pressure']");
-   t5p = t5p.node();
-
-
-  var t6w = d3.select("div[id='t6-wind']");
-   t6w = t6w.node();
-  var t6p = d3.select("div[id='t6-pressure']");
-   t6p = t6p.node();
-
-  window.onresize = function() {
-    Plotly.Plots.resize(t1w);
-    Plotly.Plots.resize(t1p);
-    Plotly.Plots.resize(t2w);
-    Plotly.Plots.resize(t2p);
-    Plotly.Plots.resize(t3w);
-    Plotly.Plots.resize(t3p);
-    Plotly.Plots.resize(t4w);
-    Plotly.Plots.resize(t4p);
-    Plotly.Plots.resize(t5w);
-    Plotly.Plots.resize(t5p);
-    Plotly.Plots.resize(t6w);
-    Plotly.Plots.resize(t6p);
+  var getNodes= function(){
+      for (var i=1; i<=6; i++){
+          plots.push((d3.select('div[id="t'+i+'-wind"]')).node());
+          plots.push((d3.select('div[id="t'+i+'-pressure"]')).node());
+      }
   };
 
-  $('#carousel-1').on('slide.bs.carousel', function () {
-    Plotly.Plots.resize(t1w);
-    Plotly.Plots.resize(t1p);
-  })
+  getNodes();
 
-  $('#carousel-2').on('slide.bs.carousel', function () {
-    Plotly.Plots.resize(t2w);
-    Plotly.Plots.resize(t2p);
-  })
-  
-  $('#carousel-3').on('slide.bs.carousel', function () {
-    Plotly.Plots.resize(t3w);
-    Plotly.Plots.resize(t3p);
-  })
+  window.onresize = function() {
 
-  $('#carousel-4').on('slide.bs.carousel', function () {
-    Plotly.Plots.resize(t4w);
-    Plotly.Plots.resize(t4p);
-  })
+    plots.forEach(function (t) {
+        Plotly.Plots.resize(t);
+    });
+  };
 
-  $('#carousel-5').on('slide.bs.carousel', function () {
-    Plotly.Plots.resize(t5w);
-    Plotly.Plots.resize(t5p);
-  })
+  var initCarousel= function(){
+      for(var i=1; i<=6; i++) {
+          $('#carousel-'+i).on('slide.bs.carousel',(function (i) {
+                  return function () {
+                      Plotly.Plots.resize(plots[(i-1) * 2]);
+                      Plotly.Plots.resize(plots[(i-1) * 2 + 1]);
+                  }
+          })(i));
+      }
+  };
 
-  $('#carousel-6').on('slide.bs.carousel', function () {
-    Plotly.Plots.resize(t6w);
-    Plotly.Plots.resize(t6p);
-  })
+  initCarousel();
 
   var refresh = function() {
       for(var x=0; x< 6 ; x++){
