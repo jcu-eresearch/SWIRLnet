@@ -67,11 +67,14 @@
       }
   };
 
-  var setHander= function(x, chartNum, colNum, dir, tp, df, hds){
+  var setHandler= function(x, chartNum, colNum, dir, tp, df, hds){
       $(document).on('change', 'input:radio[id="t'+chartNum+tp+df+'"]',
           (function () {
-              return function(event) {
-                  makeplotWind(dir + "t" + chartNum + ".csv", "t" + chartNum + tp);
+              return function() {
+                  if(tp==="-wind")
+                    makeplotWind(dir + "t" + chartNum + ".csv", "t" + chartNum + tp);
+                  else if(tp==="-pressure")
+                      makeplotWeather(dir + "t" + chartNum + ".csv", "t" + chartNum + tp);
                   defaultCharts[x][colNum] = !(defaultCharts[x][colNum]);
                   var selected=$(".t"+chartNum);
                   selected.find( "h4" ).html(hds[x].h4);
@@ -91,6 +94,7 @@
         var otherLabel=1;
         var defaultLocs=json.locationsOld? json.locationsOld: [] ;
         var otherLocs=json.locations? json.locations: [] ;
+
         if(json.defaultCharts==="current"){
             defaultChart=true;
             defaultDir=currentDir;
@@ -103,7 +107,6 @@
 
 
         //TODO: add marker for Townsville
-
         if(json &&  defaultLocs && defaultLocs.length>0){
             for (var i=0; i< defaultLocs.length; i++){
 
@@ -150,10 +153,10 @@
                 var colNum=0;
 
                 //handling the toggle buttons
-                setHander(x, chartNum, colNum, otherDir, "-wind", "-old", otherHeadings);
-                setHander(x, chartNum, colNum, defaultDir, "-wind", "-current", defaultHeadings);
-                setHander(x, chartNum, colNum, otherDir, "-pressure", "-old", otherHeadings);
-                setHander(x, chartNum, colNum, defaultDir, "-pressure", "-current", defaultHeadings);
+                setHandler(x, chartNum, colNum, otherDir, "-wind", "-old", otherHeadings);
+                setHandler(x, chartNum, colNum, defaultDir, "-wind", "-current", defaultHeadings);
+                setHandler(x, chartNum, colNum, otherDir, "-pressure", "-old", otherHeadings);
+                setHandler(x, chartNum, colNum, defaultDir, "-pressure", "-current", defaultHeadings);
 
             }
         }
