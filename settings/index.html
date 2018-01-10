@@ -24,12 +24,12 @@
                 <li class="nav-item">
                     <a class="nav-link active" href="#">Current Data <span class="sr-only">(current)</span></a>
                 </li>
-                <!--<li class="nav-item">
+                <li class="nav-item">
                     <a class="nav-link" href="#">Old Data</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">Help</a>
-                </li>-->
+                </li>
             </ul>
         </nav>
         <h3 class="text-muted">SWIRLnet Settings</h3>
@@ -45,21 +45,23 @@
 
             <p>
                 <div class="form-check" style="padding-left: 20px;">
-                    <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
-                    <label class="form-check-label" for="exampleRadios1">
+                    <input class="form-check-input" type="radio" name="exampleRadios" id="old" value="option1" checked>
+                    <label class="form-check-label" for="old">
                         Old Data
                     </label>
                 </div>
                 <div class="form-check" style="padding-left: 20px;">
-                    <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2">
-                    <label class="form-check-label" for="exampleRadios2">
+                    <input class="form-check-input" type="radio" name="exampleRadios" id="current" value="option2">
+                    <label class="form-check-label" for="current">
                         Current Data
                     </label>
                 </div>
             </p>
 
             <p class="lead">You can save your settings at any time.</p>
-            <p><a class="btn btn-lg btn-primary" href="#" role="button">Save Settings</a> <a class="btn btn-lg btn-success" href="#" role="button">Apply Settings</a></p>
+            <p><a class="btn btn-lg btn-primary" id="save" href="#" role="button">Save Settings</a> <a id="apply" class="btn btn-lg btn-success" href="#" role="button">Apply Settings</a></p>
+
+
         </div>
 
         <div class="row marketing">
