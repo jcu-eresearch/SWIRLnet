@@ -13,7 +13,6 @@ for file in *.dat
     do mv "$file" "$(basename "$file" .dat).csv" 
 done
 
-
 mv  -v /srv/SWIRLnet/unprocessed/*.csv /srv/SWIRLnet/data/
 mv  -v /srv/SWIRLnet/unprocessed/old/*.csv /srv/SWIRLnet/data/old/
 

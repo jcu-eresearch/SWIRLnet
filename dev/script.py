@@ -87,7 +87,8 @@ with open(configDir+"config.json", encoding='UTF-8') as configFile:
                                     writer.writerows(j)       
             except Exception as inst:
                  pass
-                
+
+#get the headings from the files
 for x in range(1, 7):            
     df1 = pd.read_csv(dataDir+"old/"+"processed/"+"w"+str(x)+".csv", index_col=0, names=['TIMESTAMP', 'RECORD', 'Kmh_Max3Sec', 'WS_kmh_3SecAvg_TMx', 'WindDir_3sec', 'Kmh_Mean', 'WindDir_MeanVect', 'Kmh_StDev'], parse_dates=True)
 
