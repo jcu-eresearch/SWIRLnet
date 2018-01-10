@@ -1,14 +1,38 @@
 
 
 
-/*
-
-var configSettings= {
 
 
+var configSettings= {};
 
-}
 
+
+$.getJSON("../config/config.json", function(json) {
+
+    configSettings=json;
+
+    //put the
+
+    for(var i=1; i<7; i++) {
+        $("input[type=text][id=name-"+i+"]")
+            .val( json.locations[i-1].name);
+
+        $("input[type=text][id=lat-"+i+"]")
+            .val(json.locations[i-1].lat);
+
+        $("input[type=text][id=lon-"+i+"]")
+            .val(json.locations[i-1].lon);
+
+        $("input[type=text][id=label-"+i+"]")
+            .val(json.locations[i-1].label);
+
+        $("input[type=text][id=heading-"+i+"]")
+            .val(json.locations[i-1].chartHeading);
+
+        $("input[type=text][id=subheading-"+i+"]")
+            .val(json.locations[i-1].chartSubheading);
+    }
+});
 
 
 
@@ -25,10 +49,31 @@ $( "#current" ).click(function() {
 
 
 $( "#save" ).click(function() {
-    alert( "Handler for .click() called." );
+
+    for(var i=1; i<7; i++) {
+        configSettings.locations[i-1].name=($("input[type=text][id=name-"+i+"]").val());
+
+        configSettings.locations[i-1].lat=$("input[type=text][id=lat-"+i+"]")
+            .val( );
+
+        configSettings.locations[i-1].lon=$("input[type=text][id=lon-"+i+"]")
+            .val( );
+
+        configSettings.locations[i-1].label=$("input[type=text][id=label-"+i+"]")
+            .val( );
+
+        configSettings.locations[i-1].chartHeading=$("input[type=text][id=heading-"+i+"]")
+            .val();
+
+        configSettings.locations[i-1].chartSubheading=$("input[type=text][id=subheading-"+i+"]")
+            .val( );
+    }
+
+    //create a temp file for these values
+
 });
 
 
 $( "#apply" ).click(function() {
-    alert( "Handler for .click() called." );
-});*/
+    //place temp file back in its place
+});
