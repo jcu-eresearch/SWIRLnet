@@ -4,50 +4,38 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-
-
     <title>SWIRLnet Settings</title>
-
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
-
     <!-- Custom styles for this template -->
     <link href="../css/settings.css" rel="stylesheet">
 </head>
-
 <body>
-
 <div class="container">
     <header class="header clearfix">
         <nav>
-            <ul class="nav nav-pills float-right">
+            <ul class="nav nav-pills float-right mb-3" id="pills-tab" role="tablist">
                 <li class="nav-item">
-                    <a class="nav-link active" href="index.html">Current Data <span class="sr-only">(current)</span></a>
+                    <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true">Current Data</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="old.html">Old Data</a>
+                    <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false">Historical Data</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Help</a>
+                    <a class="nav-link" id="pills-contact-tab" data-toggle="pill" href="#pills-contact" role="tab" aria-controls="pills-contact" aria-selected="false">Help</a>
                 </li>
             </ul>
         </nav>
         <h3 class="text-muted">SWIRLnet Settings</h3>
     </header>
-
     <main role="main">
-
         <div class="jumbotron">
-           <!-- <h1 class="display-3">Jumbotron heading</h1>-->
             <p class="lead">Please set up your chart mode, date ranges, and locations below and click the Apply Settings button below when you are done. </p>
-
             <p class="lead">Please choose which charts appear by default: </p>
-
-            <p>
                 <div class="form-check" style="padding-left: 20px;">
-                    <input class="form-check-input" type="radio" name="exampleRadios" id="old" value="option1" checked>
+                    <input class="form-check-input" type="radio" name="exampleRadios" id="old" value="option1" >
                     <label class="form-check-label" for="old">
-                        Old Data
+                        Historical Data
                     </label>
                 </div>
                 <div class="form-check" style="padding-left: 20px;">
@@ -56,221 +44,46 @@
                         Current Data
                     </label>
                 </div>
-            </p>
-
+            <p class="lead">Please choose which charts should be visible: </p>
+                <div class="form-check" style="padding-left: 20px;">
+                    <input class="form-check-input" type="checkbox" value="" id="show-old" checked>
+                    <label class="form-check-label" for="show-old">
+                        Show Historical Data
+                    </label>
+                </div>
+                <div class="form-check" style="padding-left: 20px;">
+                    <input class="form-check-input" type="checkbox" value="" id="show-old" checked>
+                    <label class="form-check-label" for="show-old">
+                        Show Current Data
+                    </label>
+                </div>
             <p class="lead">You can save your settings at any time.</p>
-            <p><a class="btn btn-lg btn-primary" id="save" href="#" role="button">Save Settings</a> <a id="apply" class="btn btn-lg btn-success" href="#" role="button">Apply Settings</a></p>
-
-
+            <p>
+                <a class="btn btn-lg btn-primary" id="save" href="#" role="button">Save Settings</a>
+                <a class="btn btn-lg btn-primary" id="save" href="#" role="button">Preview</a>
+                <a id="apply" class="btn btn-lg btn-success" href="#" role="button">Apply Settings</a>
+            </p>
         </div>
-
-        <div class="row marketing">
-
-            <div    class="col-lg-12">
-                <h4 class="centered">Current Data Settings</h4>
-
-                <h4>Event Name</h4>
-                <p>
-                    <label for="event"></label>
-                    <input type="text" class="form-control" id="event" aria-describedby="eventHelp" placeholder="Enter the Name of the Event">
-                    <small class="form-text text-muted">This is the name of the event.</small></p>
-                </p>
-                <h4>Start and End Dates</h4>
-                <p>
-                    <label for="date-0">Start Date</label>
-                    <input type="date" class="form-control" id="date-0" aria-describedby="dateHelp" placeholder="Enter Start Date">
-                    <small class="form-text text-muted">This is the date at which data will start displaying.</small></p>
-
-                    <label for="time-0">Start Time</label>
-                    <input type="time" class="form-control" id="time-0" aria-describedby="timeHelp" placeholder="Enter Start Time">
-                    <small class="form-text text-muted">This is the time at which data will start displaying.</small></p>
-
-                    <label for="date-1">End Date</label>
-                    <input type="date" class="form-control" id="date-1" aria-describedby="dateHelp" placeholder="Enter End Date">
-                    <small class="form-text text-muted">This is the date at which data will stop displaying. Leave blank if this date is in the future</small></p>
-
-                    <label for="time-1">End Time</label>
-                    <input type="time" class="form-control" id="time-1" aria-describedby="timeHelp" placeholder="Enter End Time">
-                    <small class="form-text text-muted">This is the time at which data will stop displaying.</small></p>
-                </p>
+            <div class="tab-content" id="pills-tabContent">
+                <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+                    <div class="col-lg-12">
+                        <h4 class="centered">Current Data</h4>
+                    </div>
+                    <div class="row marketing settings-new"></div>
+                </div>
+                <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+                    <div class="col-lg-12">
+                        <h4 class="centered">Historical Data</h4>
+                    </div>
+                    <div class="row marketing settings-old"></div>
+                </div>
+                <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">Todo</div>
             </div>
-
-            <div class="col-lg-6">
-                <h4>Tower 1</h4>
-                <p>
-                    <label for="name-1">Name on Map</label>
-                    <input type="text" class="form-control" id="name-1" aria-describedby="nameHelp" placeholder="Enter Name">
-                    <small class="form-text text-muted">This is the name that appears next to the pin on the map.</small></p>
-
-                    <label for="label-1">Map Label Direction</label>
-                    <input type="text" class="form-control" id="label-1" aria-describedby="labelHelp" placeholder="Enter Label Direction">
-                    <small class="form-text text-muted">This is the direction of the Label on the map. Only "left" and "right" are allowed.</small>
-
-                    <label for="lat-1">Latitude in decimal</label>
-                    <input type="text" class="form-control" id="lat-1" aria-describedby="latHelp" placeholder="Enter Latitude">
-                    <small class="form-text text-muted">This is the latitude in decimal.</small></p>
-
-                    <label for="lon-1">Longitude in decimal</label>
-                    <input type="text" class="form-control" id="lon-1" aria-describedby="lonHelp" placeholder="Enter Longitude">
-                    <small class="form-text text-muted">This is the longitude in decimal.</small></p>
-
-                    <label for="heading-1">Chart Heading</label>
-                    <input type="text" class="form-control" id="heading-1" aria-describedby="headingHelp" placeholder="Enter Heading">
-                    <small class="form-text text-muted">This is the heading that appears on the chart.</small></p>
-
-                    <label for="subheading-1">Chart Subheading</label>
-                    <input type="text" class="form-control" id="subheading-1" aria-describedby="subheadingHelp" placeholder="Enter Subheading">
-                    <small class="form-text text-muted">This is the subheading that appears on the chart.</small>
-
-                </p>
-
-                <h4>Tower 2</h4>
-                <p>
-                    <label for="name-2">Name on Map</label>
-                    <input type="text" class="form-control" id="name-2" aria-describedby="nameHelp" placeholder="Enter Name">
-                    <small class="form-text text-muted">This is the name that appears next to the pin on the map.</small></p>
-
-                    <label for="label-2">Map Label Direction</label>
-                    <input type="text" class="form-control" id="label-2" aria-describedby="labelHelp" placeholder="Enter Label Direction">
-                    <small class="form-text text-muted">This is the direction of the Label on the map. Only "left" and "right" are allowed.</small>
-
-                    <label for="lat-2">Latitude in decimal</label>
-                    <input type="text" class="form-control" id="lat-2" aria-describedby="latHelp" placeholder="Enter Latitude">
-                    <small class="form-text text-muted">This is the latitude in decimal.</small></p>
-
-                    <label for="lon-2">Longitude in decimal</label>
-                    <input type="text" class="form-control" id="lon-2" aria-describedby="lonHelp" placeholder="Enter Longitude">
-                    <small class="form-text text-muted">This is the longitude in decimal.</small></p>
-
-                    <label for="heading-2">Chart Heading</label>
-                    <input type="text" class="form-control" id="heading-2" aria-describedby="headingHelp" placeholder="Enter Heading">
-                    <small class="form-text text-muted">This is the heading that appears on the chart.</small></p>
-
-                    <label for="subheading-2">Chart Subheading</label>
-                    <input type="text" class="form-control" id="subheading-2" aria-describedby="subheadingHelp" placeholder="Enter Subheading">
-                    <small class="form-text text-muted">This is the subheading that appears on the chart.</small>
-                </p>
-
-                <h4>Tower 3</h4>
-                <p>
-                    <label for="name-3">Name on Map</label>
-                    <input type="text" class="form-control" id="name-3" aria-describedby="nameHelp" placeholder="Enter Name">
-                    <small class="form-text text-muted">This is the name that appears next to the pin on the map.</small></p>
-
-                    <label for="label-3">Map Label Direction</label>
-                    <input type="text" class="form-control" id="label-3" aria-describedby="labelHelp" placeholder="Enter Label Direction">
-                    <small class="form-text text-muted">This is the direction of the Label on the map. Only "left" and "right" are allowed.</small>
-
-                    <label for="lat-3">Latitude in decimal</label>
-                    <input type="text" class="form-control" id="lat-3" aria-describedby="latHelp" placeholder="Enter Latitude">
-                    <small class="form-text text-muted">This is the latitude in decimal.</small></p>
-
-                    <label for="lon-3">Longitude in decimal</label>
-                    <input type="text" class="form-control" id="lon-3" aria-describedby="lonHelp" placeholder="Enter Longitude">
-                    <small class="form-text text-muted">This is the longitude in decimal.</small></p>
-
-                    <label for="heading-3">Chart Heading</label>
-                    <input type="text" class="form-control" id="heading-3" aria-describedby="headingHelp" placeholder="Enter Heading">
-                    <small class="form-text text-muted">This is the heading that appears on the chart.</small></p>
-
-                    <label for="subheading-3">Chart Subheading</label>
-                    <input type="text" class="form-control" id="subheading-3" aria-describedby="subheadingHelp" placeholder="Enter Subheading">
-                    <small class="form-text text-muted">This is the subheading that appears on the chart.</small>
-                </p>
-            </div>
-
-            <div class="col-lg-6">
-                <h4>Tower 4</h4>
-                <p>
-                    <label for="name-4">Name on Map</label>
-                    <input type="text" class="form-control" id="name-4" aria-describedby="nameHelp" placeholder="Enter Name">
-                    <small class="form-text text-muted">This is the name that appears next to the pin on the map.</small></p>
-
-                    <label for="label-4">Map Label Direction</label>
-                    <input type="text" class="form-control" id="label-4" aria-describedby="labelHelp" placeholder="Enter Label Direction">
-                    <small class="form-text text-muted">This is the direction of the Label on the map. Only "left" and "right" are allowed.</small>
-
-                    <label for="lat-4">Latitude in decimal</label>
-                    <input type="text" class="form-control" id="lat-4" aria-describedby="latHelp" placeholder="Enter Latitude">
-                    <small class="form-text text-muted">This is the latitude in decimal.</small></p>
-
-                    <label for="lon-4">Longitude in decimal</label>
-                    <input type="text" class="form-control" id="lon-4" aria-describedby="lonHelp" placeholder="Enter Longitude">
-                    <small class="form-text text-muted">This is the longitude in decimal.</small></p>
-
-                    <label for="heading-4">Chart Heading</label>
-                    <input type="text" class="form-control" id="heading-4" aria-describedby="headingHelp" placeholder="Enter Heading">
-                    <small class="form-text text-muted">This is the heading that appears on the chart.</small></p>
-
-                    <label for="subheading-4">Chart Subheading</label>
-                    <input type="text" class="form-control" id="subheading-4" aria-describedby="subheadingHelp" placeholder="Enter Subheading">
-                    <small class="form-text text-muted">This is the subheading that appears on the chart.</small>
-                </p>
-
-                <h4>Tower 5</h4>
-                <p>
-                    <label for="name-5">Name on Map</label>
-                    <input type="text" class="form-control" id="name-5" aria-describedby="nameHelp" placeholder="Enter Name">
-                    <small class="form-text text-muted">This is the name that appears next to the pin on the map.</small></p>
-
-                    <label for="label-5">Map Label Direction</label>
-                    <input type="text" class="form-control" id="label-5" aria-describedby="labelHelp" placeholder="Enter Label Direction">
-                    <small class="form-text text-muted">This is the direction of the Label on the map. Only "left" and "right" are allowed.</small>
-
-                    <label for="lat-5">Latitude in decimal</label>
-                    <input type="text" class="form-control" id="lat-5" aria-describedby="latHelp" placeholder="Enter Latitude">
-                    <small class="form-text text-muted">This is the latitude in decimal.</small></p>
-
-                    <label for="lon-5">Longitude in decimal</label>
-                    <input type="text" class="form-control" id="lon-5" aria-describedby="lonHelp" placeholder="Enter Longitude">
-                    <small class="form-text text-muted">This is the longitude in decimal.</small></p>
-
-                    <label for="heading-5">Chart Heading</label>
-                    <input type="text" class="form-control" id="heading-5" aria-describedby="headingHelp" placeholder="Enter Heading">
-                    <small class="form-text text-muted">This is the heading that appears on the chart.</small></p>
-
-                    <label for="subheading-5">Chart Subheading</label>
-                    <input type="text" class="form-control" id="subheading-5" aria-describedby="subheadingHelp" placeholder="Enter Subheading">
-                    <small class="form-text text-muted">This is the subheading that appears on the chart.</small>
-                </p>
-
-                <h4>Tower 6</h4>
-                <p>
-                    <label for="name-6">Name on Map</label>
-                    <input type="text" class="form-control" id="name-6" aria-describedby="nameHelp" placeholder="Enter Name">
-                    <small class="form-text text-muted">This is the name that appears next to the pin on the map.</small></p>
-
-                    <label for="label-6">Map Label Direction</label>
-                    <input type="text" class="form-control" id="label-6" aria-describedby="labelHelp" placeholder="Enter Label Direction">
-                    <small class="form-text text-muted">This is the direction of the Label on the map. Only "left" and "right" are allowed.</small>
-
-                    <label for="lat-6">Latitude in decimal</label>
-                    <input type="text" class="form-control" id="lat-6" aria-describedby="latHelp" placeholder="Enter Latitude">
-                    <small class="form-text text-muted">This is the latitude in decimal.</small></p>
-
-                    <label for="lon-6">Longitude in decimal</label>
-                    <input type="text" class="form-control" id="lon-6" aria-describedby="lonHelp" placeholder="Enter Longitude">
-                    <small class="form-text text-muted">This is the longitude in decimal.</small></p>
-
-                    <label for="heading-6">Chart Heading</label>
-                    <input type="text" class="form-control" id="heading-6" aria-describedby="headingHelp" placeholder="Enter Heading">
-                    <small class="form-text text-muted">This is the heading that appears on the chart.</small></p>
-
-                    <label for="subheading-6">Chart Subheading</label>
-                    <input type="text" class="form-control" id="subheading-6" aria-describedby="subheadingHelp" placeholder="Enter Subheading">
-                    <small class="form-text text-muted">This is the subheading that appears on the chart.</small>
-                </p>
-            </div>
-        </div>
-
     </main>
-
     <footer class="footer">
         <p>&copy; JCU Swirlnet 2017</p>
     </footer>
-
 </div> <!-- /container -->
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
