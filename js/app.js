@@ -8,6 +8,7 @@
   //TODO: read these paths from the config file
   var currentDir="data/processed/";
   var oldDir="data/old/processed/";
+  var maxRange=150;
 
   var createContent= function () {
       for (var i = 1; i < 7; i++) {
@@ -19,25 +20,9 @@
               '<div class="carousel-inner">' +
               '<div class="carousel-item active text-center">' +
               '<div id="t'+i+'-wind" class="cts-chart"></div>' +
-              '<div class="btn-group cts-btn-group" data-toggle="buttons">' +
-              '<label class="btn btn-outline-secondary active t'+i+'-wind-current">' +
-              '<input type="radio" name="options" id="t'+i+'-wind-current" autocomplete="off" checked>' +
-              '</label>' +
-              '<label class="btn btn-outline-secondary t'+i+'-wind-old">' +
-              '<input type="radio" name="options" id="t'+i+'-wind-old" autocomplete="off">' +
-              '</label>' +
-              '</div>' +
               '</div>' +
               '<div class="carousel-item text-center">' +
               '<div id="t'+i+'-pressure" class="cts-chart"></div>' +
-              '<div class="btn-group cts-btn-group" data-toggle="buttons">' +
-              '<label class="btn btn-outline-secondary active t'+i+'-pressure-current">' +
-              '<input type="radio" name="options" id="t'+i+'-pressure-current" autocomplete="off" checked>' +
-              '</label>' +
-              '<label class="btn btn-outline-secondary t'+i+'-pressure-old">' +
-              '<input type="radio" name="options" id="t'+i+'-pressure-old" autocomplete="off">' +
-              '</label>' +
-              '</div>' +
               '</div>' +
               '</div>' +
               '<a class="carousel-control-prev" href="#carousel-'+i+'" role="button" data-slide="prev">' +
@@ -46,6 +31,14 @@
               '<a class="carousel-control-next" href="#carousel-'+i+'" role="button" data-slide="next">' +
               '<i class="fa fa-chevron-circle-right"></i>' +
               '</a>' +
+              '</div>' +
+              '<div class="btn-group cts-btn-group" data-toggle="buttons">' +
+              '<label class="btn btn-outline-secondary active t'+i+'-wind-current">' +
+              '<input type="radio" name="options" id="t'+i+'-wind-current" autocomplete="off" checked>' +
+              '</label>' +
+              '<label class="btn btn-outline-secondary t'+i+'-wind-old">' +
+              '<input type="radio" name="options" id="t'+i+'-wind-old" autocomplete="off">' +
+              '</label>' +
               '</div>' +
               '</div>' +
               '</div>';
@@ -71,10 +64,8 @@
       $(document).on('change', 'input:radio[id="t'+chartNum+tp+df+'"]',
           (function () {
               return function() {
-                  if(tp==="-wind")
-                    makeplotWind(dir + "t" + chartNum + ".csv", "t" + chartNum + tp);
-                  else if(tp==="-pressure")
-                      makeplotWeather(dir + "t" + chartNum + ".csv", "t" + chartNum + tp);
+                  makeplotWind(dir + "t" + chartNum + ".csv", "t" + chartNum +"-wind");
+                  makeplotWeather(dir + "t" + chartNum + ".csv", "t" + chartNum +"-pressure");
                   defaultCharts[x][colNum] = !(defaultCharts[x][colNum]);
                   var selected=$(".t"+chartNum);
                   selected.find( "h4" ).html(hds[x].h4);
@@ -82,6 +73,8 @@
               }
       })());
   };
+
+  var ranges={};
 
   $.getJSON("config/config.json", function(json) {
 
@@ -105,6 +98,13 @@
             otherLocs=json.locationsOld? json.locationsOld: [] ;
         }
 
+        if(json.showOld==="false" || json.showCurrent==="false"){
+            $(".cts-btn-group").hide();
+        }
+
+        if(json.yAxesLimits && json.yAxesLimits.wind && json.yAxesLimits.wind.length>1){
+          maxRange=json.yAxesLimits.wind[1];
+        }
 
         //TODO: add marker for Townsville
         if(json &&  defaultLocs && defaultLocs.length>0){
@@ -230,19 +230,21 @@
     var layout = {
       yaxis:{
         title: 'Wind Speed km/h',
-        autorange: true,
-        fixedrange:true
+        autorange: false,
+        fixedrange:true,
+        range: [0, maxRange]
       },
       yaxis2:{
-        autorange: true,
-          fixedrange:true,
+        autorange: false,
+        fixedrange:true,
         title: 'Pressure hPa',
         titlefont: {color: 'black'},
         tickfont: {color: 'black'},
         overlaying: 'y',
         side: 'right',
         showgrid: false,
-        zeroline: false
+        zeroline: false,
+        range: [960, 1020]
       },
       legend: {
           "orientation": "h",
@@ -283,8 +285,9 @@
     var layout = {
       yaxis:{
           title: 'Wind Speed km/h',
-          autorange: true,
-          fixedrange:true
+          autorange: false,
+          fixedrange:true,
+          range:[0,maxRange]
       },
       yaxis2: {
         title: 'Direction',
@@ -293,10 +296,10 @@
         overlaying: 'y',
         side: 'right',
         showgrid: false,
-        autorange: true,
+        autorange: false,
         fixedrange: true, 
         zeroline: false,
-        
+        range: [0,360]
       },
       legend: {
           "orientation": "h",

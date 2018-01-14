@@ -25,6 +25,6 @@
     height: 600px;
     padding-top: 0px;
 }
-h4, h6 {
-    text-align: center;
+h4, h6, .card-body {
+    text-align: center !important;
 }

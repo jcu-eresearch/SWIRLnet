@@ -43,20 +43,21 @@
                     <label class="form-check-label" for="current">
                         Current Data
                     </label>
-                </div>
-            <p class="lead">Please choose which charts should be visible: </p>
-                <div class="form-check" style="padding-left: 20px;">
-                    <input class="form-check-input" type="checkbox" value="" id="show-old" checked>
-                    <label class="form-check-label" for="show-old">
-                        Show Historical Data
+                </div><br>
+            <p class="lead">Please choose if non-default charts should be visible: </p>
+                <div class="form-check show-charts" style="padding-left: 20px;">
+                    <input class="form-check-input" type="checkbox" value="" id="show-charts" checked>
+                    <label class="form-check-label show-charts-label" for="show-charts">
+                        Show Data
                     </label>
                 </div>
-                <div class="form-check" style="padding-left: 20px;">
-                    <input class="form-check-input" type="checkbox" value="" id="show-old" checked>
-                    <label class="form-check-label" for="show-old">
-                        Show Current Data
-                    </label>
-                </div>
+            <br>
+            <p class="lead">Please choose Y-Axis limits for wind speed:</p>
+            <p>
+                <input type="number" class="form-control" id="wind-axis" aria-describedby="eventHelp" >
+                <small class="form-text text-muted">This is the Maximum Value of Wind Speed which will appear on the Axis.</small>
+            </p>
+            <br>
             <p class="lead">You can save your settings at any time.</p>
             <p>
                 <a class="btn btn-lg btn-primary" id="save" href="#" role="button">Save Settings</a>
@@ -64,21 +65,22 @@
                 <a id="apply" class="btn btn-lg btn-success" href="#" role="button">Apply Settings</a>
             </p>
         </div>
-            <div class="tab-content" id="pills-tabContent">
-                <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
-                    <div class="col-lg-12">
-                        <h4 class="centered">Current Data</h4>
-                    </div>
-                    <div class="row marketing settings-new"></div>
+
+        <div class="tab-content" id="pills-tabContent">
+            <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+                <div class="col-lg-12">
+                    <h4 class="centered">Current Data</h4>
                 </div>
-                <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
-                    <div class="col-lg-12">
-                        <h4 class="centered">Historical Data</h4>
-                    </div>
-                    <div class="row marketing settings-old"></div>
-                </div>
-                <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">Todo</div>
+                <div class="row marketing settings-new"></div>
             </div>
+            <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+                <div class="col-lg-12">
+                    <h4 class="centered">Historical Data</h4>
+                </div>
+                <div class="row marketing settings-old"></div>
+            </div>
+            <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">Todo</div>
+        </div>
     </main>
     <footer class="footer">
         <p>&copy; JCU Swirlnet 2017</p>

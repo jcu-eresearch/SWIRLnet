@@ -27,6 +27,7 @@ var addMetaData= function(parentDiv, event){
         '</div>' +
         '<div class="col-lg-6 sensor-col-1"></div>' +
         '<div class="col-lg-6 sensor-col-2"></div>';
+
     $(parentDiv).append(sensorMetaData);
 
 };
@@ -86,8 +87,13 @@ var getTimeToText= function(dt){
 $.getJSON("../config/config.json", function(json) {
 
     configSettings=json;
-    var event="-old";
 
+    if(json.yAxesLimits && json.yAxesLimits.wind && json.yAxesLimits.wind.length>1){
+        $("input[type=number][id=wind-axis]")
+            .val(json.yAxesLimits.wind[1]);
+    }
+
+    var event="-old";
     for(var k=0;k<=1; k++) {
         var start = getDateToText(new Date(json.dateRanges[k].start));
         var end = getDateToText(new Date(json.dateRanges[k].end));
@@ -99,69 +105,117 @@ $.getJSON("../config/config.json", function(json) {
             .val(json.dateRanges[k].name);
         event="-current";
     }
-
-
     for(var j=1;j<=2; j++) {
         for (var i = 1; i < 7; i++) {
             $("input[type=text][id=name-" + i + event+"]")
                 .val(json.locations[i - 1].name);
-
             $("input[type=text][id=lat-" + i +event+ "]")
                 .val(json.locations[i - 1].lat);
-
             $("input[type=text][id=lon-" + i +event+ "]")
                 .val(json.locations[i - 1].lon);
-
             $("input[type=text][id=label-" + i+event+ "]")
                 .val(json.locations[i - 1].label);
-
             $("input[type=text][id=heading-" + i +event+ "]")
                 .val(json.locations[i - 1].chartHeading);
-
             $("input[type=text][id=subheading-" + i +event+ "]")
                 .val(json.locations[i - 1].chartSubheading);
         }
         event="-old";
     }
-
     if(json.defaultCharts==="current") {
         $('#' + "current").prop('checked', true);
+        $('.' + "show-charts-label").html("Show Historical Charts");
+        if(json.showOld==="true")
+            $('#' + "show-charts").prop('checked', true);
+        else
+            $('#' + "show-charts").prop('checked', false);
     }
     else{
         $('#' + "old").prop('checked', true);
+        $('.' + "show-charts-label").html("Show Current Charts");
+        if(json.showCurrent==="true")
+            $('.' + "show-charts").prop('checked', true);
+        else
+            $('.' + "show-charts").prop('checked', false);
     }
+
 });
+
+$( ".show-charts" ).click(function() {
+    configSettings.showCharts=$("input[type=checkbox][id=show-charts]").val();
+});
+
+var toggleCharts= function(event){
+    if(event==="current")
+        $('.' + "show-charts-label").html("Show Historical Charts");
+    else
+        $('.' + "show-charts-label").html("Show Current Charts");
+
+    if (configSettings.showCharts === "true")
+        $('.' + "show-charts").prop('checked', true);
+    else
+        $('.' + "show-charts").prop('checked', false);
+};
 
 $( "#old" ).click(function() {
     configSettings.defaultCharts="old";
+    toggleCharts("old");
 });
 
 $( "#current" ).click(function() {
     configSettings.defaultCharts="current";
+    toggleCharts("current");
 });
 
-$( "#save" ).click(function() {
-
-    for(var i=1; i<7; i++) {
-        configSettings.locations[i-1].name=($("input[type=text][id=name-"+i+"]").val());
-
-        configSettings.locations[i-1].lat=$("input[type=text][id=lat-"+i+"]")
-            .val( );
-
-        configSettings.locations[i-1].lon=$("input[type=text][id=lon-"+i+"]")
-            .val( );
-
-        configSettings.locations[i-1].label=$("input[type=text][id=label-"+i+"]")
-            .val( );
-
-        configSettings.locations[i-1].chartHeading=$("input[type=text][id=heading-"+i+"]")
-            .val();
-
-        configSettings.locations[i-1].chartSubheading=$("input[type=text][id=subheading-"+i+"]")
-            .val( );
+var saveData= function(){
+    var event="-current";
+    var loc=["locations", "locationsOld"];
+    for(var j=0;j<2; j++) {
+        for (var i = 1; i < 7; i++) {
+            configSettings[loc[j]][i - 1].name =
+                ($("input[type=text][id=name-" + i + event + "]").val());
+            configSettings[loc[j]][i - 1].lat =
+                $("input[type=text][id=lat-" + i + event + "]").val();
+            configSettings[loc[j]][i - 1].lon =
+                $("input[type=text][id=lon-" + i + event + "]").val();
+            configSettings[loc[j]][i - 1].label =
+                $("input[type=text][id=label-" + i + event + "]").val();
+            configSettings[loc[j]][i - 1].chartHeading =
+                $("input[type=text][id=heading-" + i + event + "]").val();
+            configSettings[loc[j]][i - 1].chartSubheading =
+                $("input[type=text][id=subheading-" + i + event + "]").val();
+        }
+        event="-old";
     }
-    //create a temp file for these values
-});
+
+    if(configSettings.yAxesLimits && configSettings.yAxesLimits.wind && configSettings.yAxesLimits.wind.length>1){
+        configSettings.yAxesLimits.wind[1]$("input[type=number][id=wind-axis]").val();
+    }
+
+    var event="-old";
+    for(var k=0;k<=1; k++) {
+        //TODO: put this into date ranges
+        $("input[type=date][id=date-start"+event+"]").val();
+        $("input[type=date][id=date-end"+event+"]").val();
+        $("input[type=time][id=time-start"+event+"]").val();
+        $("input[type=time][id=time-end"+event+"]").val();
+        $("input[type=text][id=event"+event+"]").val();
+        event="-current";
+    }
+
+    configSettings.showCurrent="true";
+    configSettings.showOld="true";
+
+    if(configSettings.defaultCharts==="current" && !configSettings.showCharts){
+        configSettings.showCurrent="true";
+        configSettings.showOld="false";
+    }
+    else if (!configSettings.showCharts){
+        configSettings.showCurrent="false";
+        configSettings.showOld="true";
+    }
+};
+$( "#save" ).click(saveData);
 
 
 $( "#apply" ).click(function() {
