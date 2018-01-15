@@ -26,10 +26,10 @@
               '</div>' +
               '</div>' +
               '<a class="carousel-control-prev" href="#carousel-'+i+'" role="button" data-slide="prev">' +
-              '<i class="fa fa-chevron-circle-left"></i>' +
+              '<i class="fa fa-chevron-circle-left" data-toggle="tooltip" data-placement="left" title="Click to view previous chart"></i>' +
               '</a>' +
-              '<a class="carousel-control-next" href="#carousel-'+i+'" role="button" data-slide="next">' +
-              '<i class="fa fa-chevron-circle-right"></i>' +
+              '<a class="carousel-control-next" href="#carousel-'+i+'" role="button" data-slide="next" data-toggle="tooltip" data-placement="left" title="Click to view next graph">' +
+              '<i class="fa fa-chevron-circle-right" data-toggle="tooltip" data-placement="left" title="Click to view next chart"></i>' +
               '</a>' +
               '</div>' +
               '<div class="btn-group cts-btn-group" data-toggle="buttons">' +
@@ -75,6 +75,10 @@
   };
 
   var ranges={};
+
+  $(function () {
+      $('[data-toggle="tooltip"]').tooltip()
+  })
 
   $.getJSON("config/config.json", function(json) {
 
