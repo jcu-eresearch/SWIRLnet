@@ -189,7 +189,7 @@ var saveData= function(){
     }
 
     if(configSettings.yAxesLimits && configSettings.yAxesLimits.wind && configSettings.yAxesLimits.wind.length>1){
-        configSettings.yAxesLimits.wind[1]$("input[type=number][id=wind-axis]").val();
+        configSettings.yAxesLimits.wind[1]=$("input[type=number][id=wind-axis]").val();
     }
 
     var event="-old";
