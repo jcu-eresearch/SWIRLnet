@@ -104,7 +104,7 @@
             otherLocs=json.locationsOld? json.locationsOld: [] ;
         }
 
-        if( (json.defaultCharts==="current" && json.showOld==="false") ||  (json.defaultCharts==="old" && json.showCurrent==="false")){
+        if( (json.defaultCharts==="current" && !json.showOld) ||  (json.defaultCharts==="old" && !json.showCurrent)){
             $(".cts-btn-group").hide();
         }
 
