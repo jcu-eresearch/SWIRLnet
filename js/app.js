@@ -28,7 +28,7 @@
               '<a class="carousel-control-prev" href="#carousel-'+i+'" role="button" data-slide="prev">' +
               '<i class="fa fa-chevron-circle-left" data-toggle="tooltip" data-placement="left" title="Click to view previous chart"></i>' +
               '</a>' +
-              '<a class="carousel-control-next" href="#carousel-'+i+'" role="button" data-slide="next" data-toggle="tooltip" data-placement="left" title="Click to view next graph">' +
+              '<a class="carousel-control-next" href="#carousel-'+i+'" role="button" data-slide="next" >' +
               '<i class="fa fa-chevron-circle-right" data-toggle="tooltip" data-placement="left" title="Click to view next chart"></i>' +
               '</a>' +
               '</div>' +
