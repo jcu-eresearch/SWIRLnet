@@ -119,8 +119,16 @@ $.getJSON("config/config.json", function(json) {
             var l=defaultLocs[i];
 
 
-            function definePopup() {
-                var popupText =  "<b>Image: </b><a href='"+'test/image.jpg'+"' target=\"_blank\">"+"<img src='"+'test/image.jpg'+"'</img></a>";
+            function definePopup(id) {
+                var popupText = '<video id="my-video" class="video-js" controls preload="auto" width="640" height="264"\n' +
+                    '           data-setup="{}">\n' +
+                    '        <source src="Test/Camera'+id+'.mp4" type=\'video/mp4\'>\n' +
+                    '\n' +
+                    '        <p class="vjs-no-js">\n' +
+                    '            To view this video please enable JavaScript, and consider upgrading to a web browser that\n' +
+                    '            <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>\n' +
+                    '        </p>\n' +
+                    '    </video>';
                 return popupText;
             }
 
@@ -132,9 +140,16 @@ $.getJSON("config/config.json", function(json) {
             })
             .setContent(l.name)).openTooltip();
 
-            marker1.bindPopup(
-                definePopup()
-            );
+            debugger;
+            if(l.name.includes("Tower 1"))
+                marker1.bindPopup(
+                    definePopup(1)
+                );
+
+            if(l.name.includes("Tower 2"))
+                marker1.bindPopup(
+                    definePopup(2)
+                );
 
             mGroup.push (marker1);
             var num=i+1;
