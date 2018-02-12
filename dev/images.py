@@ -39,6 +39,9 @@ with open(configDir+"config.json", encoding='UTF-8') as configFile:
         oldDir = item.get("oldDir")
         newDir= item.get("newDir")
 
+
+
+
         if not checkDate(oldStart) :
             oldEnd = datetime.datetime.now()
             oldStart = oldEnd - datetime.timedelta(days=3)
@@ -68,7 +71,14 @@ with open(configDir+"config.json", encoding='UTF-8') as configFile:
                     l= len(filename)
                     date=datetime.datetime.strptime(filename[l-23: l-4], "%Y_%m_%d_%H_%M_%S")
                     if date>=oldStart and date<=oldEnd :
+                        if not os.path.exists(os.path.dirname(fileDir)):
+                            try:
+                                os.makedirs(os.path.dirname(fileDir))
+                            except OSError as exc: # Guard against race condition
+                                if exc.errno != errno.EEXIST:
+                                    raise
                         os.rename(unprocessedDir+oldDir+filename, fileDir+filename)
+
             except Exception as inst:
                 pass
 
@@ -80,6 +90,13 @@ with open(configDir+"config.json", encoding='UTF-8') as configFile:
                     l= len(filename)
                     date=datetime.datetime.strptime(filename[l-23: l-4], "%Y_%m_%d_%H_%M_%S")
                     if date>=newStart and date<=newEnd :
+                        if not os.path.exists(os.path.dirname(fileDir)):
+                            try:
+                                os.makedirs(os.path.dirname(fileDir))
+                            except OSError as exc: # Guard against race condition
+                                if exc.errno != errno.EEXIST:
+                                    raise
                         os.rename(unprocessedDir+newDir+filename, fileDir+filename)
+                        
             except Exception as inst:
                 pass
