@@ -121,13 +121,13 @@
                 function definePopup(id, source1, source2) {
                     var popupText = '<video id="my-video" class="video-js" controls preload="auto" width="640" height="264"\n' +
                         '           data-setup="{}">\n' +
-                        '        <source src="data/old/Camera'+id+'.mp4" type=\'video/mp4\'>\n' +
+                        '<source src="'+source1+'" type=\'video/mp4\'>\n' +
                         '\n' +
-                        '        <p class="vjs-no-js">\n' +
-                        '            To view this video please enable JavaScript, and consider upgrading to a web browser that\n' +
-                        '            <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>\n' +
-                        '        </p>\n' +
-                        '    </video>';
+                        '<p class="vjs-no-js">\n' +
+                        'To view this video please enable JavaScript, and consider upgrading to a web browser that\n' +
+                        '<a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>\n' +
+                        '</p>\n' +
+                        '</video>';
                     return popupText;
                 }
 
@@ -138,16 +138,16 @@
                       })
                       .setContent(l.name)).openTooltip();
 
-               /* if(l.name.includes("Tower 1"))
+                if(l.name.includes("Tower 1"))
                     marker1.bindPopup(
-                        definePopup(1, "data/old/Camera", "data/ccfc")
+                        definePopup(1, "data/old/Camera1/Camera1.mp4", "data/ccfc")
                     );
 
                 if(l.name.includes("Tower 2"))
                     marker1.bindPopup(
-                        definePopup(2, "data/old/Camera", "data/ccfc")
+                        definePopup(2, "data/old/Camera2/Camera2.mp4", "data/ccfc")
                     );
-                      */
+
 
                 mGroup.push (marker1);
                 var num=i+1;
