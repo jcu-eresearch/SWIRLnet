@@ -1,6 +1,6 @@
-ffmpeg -r 15 -pattern_type glob -i '/srv/SWIRLnet/data/ccfc1/*.jpg' -s 1280x720 -vcodec libx264 /srv/SWIRLnet/data/ccfc1/Camera1.mp4
-ffmpeg -r 15 -pattern_type glob -i '/srv/SWIRLnet/data/ccfc2/*.jpg' -s 1280x720 -vcodec libx264 /srv/SWIRLnet/data/ccfc2/Camera2.mp4
+ffmpeg -r 15 -pattern_type glob -i '/srv/SWIRLnet/data/ccfc1/*.jpg' -s 1280x720 -vcodec libx264 -y /srv/SWIRLnet/data/ccfc1/Camera1.mp4
+ffmpeg -r 15 -pattern_type glob -i '/srv/SWIRLnet/data/ccfc2/*.jpg' -s 1280x720 -vcodec libx264 -y /srv/SWIRLnet/data/ccfc2/Camera2.mp4
 
-ffmpeg -r 15 -pattern_type glob -i '/srv/SWIRLnet/data/old/Camera1/*.jpg' -s 1280x720 -vcodec libx264 /srv/SWIRLnet/data/old/Camera1/Camera1.mp4
-ffmpeg -r 15 -pattern_type glob -i '/srv/SWIRLnet/data/old/Camera2/*.jpg' -s 1280x720 -vcodec libx264 /srv/SWIRLnet/data/old/Camera2/Camera2.mp4
+ffmpeg -r 15 -pattern_type glob -i '/srv/SWIRLnet/data/old/Camera1/*.jpg' -s 1280x720 -vcodec libx264 -y /srv/SWIRLnet/data/old/Camera1/Camera1.mp4
+ffmpeg -r 15 -pattern_type glob -i '/srv/SWIRLnet/data/old/Camera2/*.jpg' -s 1280x720 -vcodec libx264 -y /srv/SWIRLnet/data/old/Camera2/Camera2.mp4
 
