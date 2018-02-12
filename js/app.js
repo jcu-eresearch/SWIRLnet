@@ -138,7 +138,7 @@
                       })
                       .setContent(l.name)).openTooltip();
 
-                /*if(l.name.includes("Tower 1"))
+                if(l.name.includes("Tower 1"))
                     marker1.bindPopup(
                         definePopup(1, "data/old/Camera1/Camera1.mp4", "data/ccfc")
                     );
@@ -147,7 +147,7 @@
                     marker1.bindPopup(
                         definePopup(2, "data/old/Camera2/Camera2.mp4", "data/ccfc")
                     );
-*/
+
 
                 mGroup.push (marker1);
                 var num=i+1;
