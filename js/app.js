@@ -119,7 +119,7 @@
                 var l=defaultLocs[i];
 
                 function definePopup(id, source1, source2) {
-                    var popupText = '<video id="my-video" class="video-js" controls preload="auto" width="640" height="264"\n' +
+                    var popupText = '<video id="my-video" class="video-js" controls preload="auto" width="300" height="225"\n' +
                         '           data-setup="{}">\n' +
                         '<source src="'+source1+'" type=\'video/mp4\'>\n' +
                         '\n' +
