@@ -84,9 +84,9 @@
 
   $.getJSON("config/config.json", function(json) {
 
-        var mymap = L.map('mapid', {minZoom: 7, maxZoom: 10}).setView([-20.311542, 148.588719], 8);
+        var mymap = L.map('mapid', {/*minZoom: 7, maxZoom: 10*/}).setView([-20.311542, 148.588719], 8);
 
-       /* $.getJSON("data/TC_Debbie_Track.json", function(json) {
+        $.getJSON("data/track.json", function(json) {
 
             var myStyle = {
                 "color": "#ff7800",
@@ -109,7 +109,7 @@
                     return L.circleMarker(latlng, geojsonMarkerOptions);
                 }
             }).addTo(mymap);
-        });*/
+        });
 
 
 
@@ -161,10 +161,10 @@
 
                 var marker1=L.marker([l.lat, l.lon]).addTo(mymap);
                       marker1.bindTooltip(L.tooltip({
-                        direction: l.label,
-                        permanent: true
+                        direction: l.label//,
+                        //permanent: true
                       })
-                      .setContent(l.name)).openTooltip();
+                      .setContent(l.name));//.openTooltip();
 
                 if(l.name.includes("Tower 1"))
                     marker1.bindPopup(
@@ -223,13 +223,16 @@
 
         mymap.fitBounds(group.getBounds());
 
-        L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
-        attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
-        maxZoom: 18,
-        id: 'mapbox.satellite',
-        accessToken: 'pk.eyJ1Ijoic2FpcmFrIiwiYSI6ImNpcWFkeHZvZjAxcGNmbmtremEwNmV5ajkifQ.cOseeBhCXFdDPp06el09yQ'
-        }).addTo(mymap);
+        /*L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
+            attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
+            maxZoom: 18,
+            id: 'mapbox.streets-basic',
+            accessToken: 'pk.eyJ1Ijoic2FpcmFrIiwiYSI6ImNpcWFkeHZvZjAxcGNmbmtremEwNmV5ajkifQ.cOseeBhCXFdDPp06el09yQ'
+        }).addTo(mymap);*/
 
+        L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+              attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(mymap);
 
         renderDefaultCharts(defaultChart);
   });
