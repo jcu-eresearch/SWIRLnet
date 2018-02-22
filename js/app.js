@@ -84,7 +84,35 @@
 
   $.getJSON("config/config.json", function(json) {
 
-        var mymap = L.map('mapid', {minZoom: 7, maxZoom: 10}).setView([-20.311542, 148.588719], 8); 
+        var mymap = L.map('mapid', {minZoom: 7, maxZoom: 10}).setView([-20.311542, 148.588719], 8);
+
+       /* $.getJSON("data/TC_Debbie_Track.json", function(json) {
+
+            var myStyle = {
+                "color": "#ff7800",
+                "weight": 1,
+                "opacity": 0.65
+            };
+
+            var geojsonMarkerOptions = {
+                radius: 8,
+                fillColor: "#ff7800",
+                color: "#000",
+                weight: 1,
+                opacity: 1,
+                fillOpacity: 0.8
+            };
+
+            var layer = L.geoJson(json, {
+                style: myStyle,
+                pointToLayer: function (feature, latlng) {
+                    return L.circleMarker(latlng, geojsonMarkerOptions);
+                }
+            }).addTo(mymap);
+        });*/
+
+
+
         var mGroup=[];
         defaultChart=false;
         var defaultDir=oldDir;
