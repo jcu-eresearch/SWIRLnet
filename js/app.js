@@ -89,15 +89,15 @@
         $.getJSON("data/track.json", function(json) {
 
             var myStyle = {
-                "color": "#ff7800",
+                "color": "#e57373",
                 "weight": 1,
                 "opacity": 0.65
             };
 
             var geojsonMarkerOptions = {
                 radius: 8,
-                fillColor: "#ff7800",
-                color: "#000",
+                fillColor: "#e57373",
+                color: "#e57373",
                 weight: 1,
                 opacity: 1,
                 fillOpacity: 0.8
@@ -223,16 +223,17 @@
 
         mymap.fitBounds(group.getBounds());
 
-        /*L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
+        L.tileLayer( 'https://api.mapbox.com/styles/v1/sairak/cjdy5fkdy8nsv2sm1prs6hb3i/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1Ijoic2FpcmFrIiwiYSI6ImNpcWFkeHZvZjAxcGNmbmtremEwNmV5ajkifQ.cOseeBhCXFdDPp06el09yQ'//'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}'
+            , {
             attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
-            maxZoom: 18,
-            id: 'mapbox.streets-basic',
-            accessToken: 'pk.eyJ1Ijoic2FpcmFrIiwiYSI6ImNpcWFkeHZvZjAxcGNmbmtremEwNmV5ajkifQ.cOseeBhCXFdDPp06el09yQ'
-        }).addTo(mymap);*/
-
-        L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-              attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+            maxZoom: 18//,
+            //id: 'mapbox.light-copy',
+            //accessToken: 'pk.eyJ1Ijoic2FpcmFrIiwiYSI6ImNpcWFkeHZvZjAxcGNmbmtremEwNmV5ajkifQ.cOseeBhCXFdDPp06el09yQ', //'pk.eyJ1Ijoic2FpcmFrIiwiYSI6ImNpcWFkeHZvZjAxcGNmbmtremEwNmV5ajkifQ.cOseeBhCXFdDPp06el09yQ'
         }).addTo(mymap);
+
+        /*L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+              attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(mymap);*/
 
         renderDefaultCharts(defaultChart);
   });
