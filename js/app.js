@@ -84,7 +84,7 @@
 
   $.getJSON("config/config.json", function(json) {
 
-        var mymap = L.map('mapid', {/*minZoom: 7, maxZoom: 10*/}).setView([-20.311542, 148.588719], 8);
+        var mymap = L.map('mapid', { maxZoom: 10}).setView([-20.311542, 148.588719], 8);
 
         $.getJSON("data/track.json", function(json) {
 
@@ -108,7 +108,7 @@
                 pointToLayer: function (feature, latlng) {
                     return L.circleMarker(latlng, geojsonMarkerOptions);
                 }
-            }).addTo(mymap);
+            });//.addTo(mymap);
         });
 
 
@@ -161,10 +161,10 @@
 
                 var marker1=L.marker([l.lat, l.lon]).addTo(mymap);
                       marker1.bindTooltip(L.tooltip({
-                        direction: l.label//,
-                        //permanent: true
+                        direction: l.label,
+                        permanent: true
                       })
-                      .setContent(l.name));//.openTooltip();
+                      .setContent(l.name)).openTooltip();
 
                 if(l.name.includes("Tower 1"))
                     marker1.bindPopup(
@@ -223,14 +223,15 @@
 
         mymap.fitBounds(group.getBounds());
 
-        L.tileLayer( 'https://api.mapbox.com/styles/v1/sairak/cjdy5fkdy8nsv2sm1prs6hb3i/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1Ijoic2FpcmFrIiwiYSI6ImNpcWFkeHZvZjAxcGNmbmtremEwNmV5ajkifQ.cOseeBhCXFdDPp06el09yQ'//'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}'
+        L.tileLayer( 'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}'
             , {
             attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
-            maxZoom: 18//,
-            //id: 'mapbox.light-copy',
-            //accessToken: 'pk.eyJ1Ijoic2FpcmFrIiwiYSI6ImNpcWFkeHZvZjAxcGNmbmtremEwNmV5ajkifQ.cOseeBhCXFdDPp06el09yQ', //'pk.eyJ1Ijoic2FpcmFrIiwiYSI6ImNpcWFkeHZvZjAxcGNmbmtremEwNmV5ajkifQ.cOseeBhCXFdDPp06el09yQ'
+            maxZoom: 18,
+            id: 'mapbox.satellite',
+            accessToken: 'pk.eyJ1Ijoic2FpcmFrIiwiYSI6ImNpcWFkeHZvZjAxcGNmbmtremEwNmV5ajkifQ.cOseeBhCXFdDPp06el09yQ'
         }).addTo(mymap);
 
+        //'https://api.mapbox.com/styles/v1/sairak/cjdy5fkdy8nsv2sm1prs6hb3i/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1Ijoic2FpcmFrIiwiYSI6ImNpcWFkeHZvZjAxcGNmbmtremEwNmV5ajkifQ.cOseeBhCXFdDPp06el09yQ'
         /*L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
               attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
         }).addTo(mymap);*/
