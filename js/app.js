@@ -172,7 +172,7 @@
               pointToLayer: function (feature, latlng) {
                   return L.circleMarker(latlng, geojsonMarkerOptions);
               }
-          });.addTo(map);
+          }).addTo(map);
       });
 
   };
