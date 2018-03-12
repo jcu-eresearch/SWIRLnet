@@ -412,7 +412,13 @@
           maxRange=json.yAxesLimits.wind[1];
         }
 
-        //TODO: add marker for Townsville
+        var towerIcon = L.icon({
+          iconUrl: 'images/tower.png',
+          iconSize:     [30, 30], // size of the icon
+          iconAnchor:   [15, 15], // point of the icon which will correspond to marker's location
+          popupAnchor:  [-3, -30] // point from which the popup should open relative to the iconAnchor
+        });
+
         if(json &&  defaultLocs && defaultLocs.length>0){
             for (var i=0; i< defaultLocs.length; i++){
 
@@ -421,9 +427,11 @@
                 var marker1=L.marker([l.lat, l.lon]).addTo(mymap);
                       marker1.bindTooltip(L.tooltip({
                         direction: l.label,
-                        permanent: true
+                        //permanent: true
                       })
-                      .setContent(l.name)).openTooltip();
+                      .setContent(l.chartHeading));//.openTooltip();
+
+                marker1.bindPopup("SWIRLnet "+l.name);
 
                 mGroup.push (marker1);
                 var num=i+1;
@@ -476,7 +484,7 @@
                 '<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>,'+
                 'Imagery © <a href="http://mapbox.com">Mapbox</a>',
             maxZoom: 18,
-            id: 'mapbox.satellite',
+            id: 'mapbox.streets-satellite',
             accessToken: 'pk.eyJ1Ijoic2FpcmFrIiwiYSI6ImNpcWFkeHZvZjAxcGNmbmtremEwNmV5ajkifQ.cOseeBhCXFdDPp06el09yQ'
         }).addTo(mymap);
 
@@ -488,6 +496,48 @@
 
         //read the config file and decide to do this
         //renderShapeFiles(mymap);
+
+
+        //Adding popups to the markers
+        L.geoJson({features:[]},{
+            onEachFeature:function popUp(f,l){
+              var out = [];
+              if (f.properties){
+                  for(var key in f.properties){
+                      out.push(key+": "+f.properties[key]);
+                  }
+                  l.bindPopup(out.join("<br />"));
+              }
+            }
+        }).addTo(mymap);
+
+        var lastZoom;
+        mymap.on('zoomend', ( function(mymap){
+              return function() {
+                  var zoom = mymap.getZoom();
+                  if (zoom < 7 && (!lastZoom || lastZoom >= 7)) {
+                      mymap.eachLayer(function(l) {
+                          if (l.getTooltip) {
+                              var toolTip = l.getTooltip();
+                              if (toolTip) {
+                                  mymap.closeTooltip(toolTip);
+                              }
+                          }
+                      });
+                  } else if (zoom >= 7 && (!lastZoom || lastZoom < 7)) {
+                      mymap.eachLayer(function(l) {
+                          if (l.getTooltip) {
+                              var toolTip = l.getTooltip();
+                              if (toolTip) {
+                                  mymap.addLayer(toolTip);
+                              }
+                          }
+                      });
+                  }
+                  lastZoom = zoom;
+              };
+          })(mymap)
+        );
 
         renderDefaultCharts(defaultChart);
   });
