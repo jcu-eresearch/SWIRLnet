@@ -74,8 +74,8 @@
   var hideDiv= function(id){
       $(".t"+id).css({
           'position':'absolute',
-          'left':'-1000px',
-          'top':'-1000px'
+          'left':'-2000px',
+          'top':'-2000px'
       });
   };
 

@@ -31,10 +31,10 @@ with open(configDir+"config.json", encoding='UTF-8') as configFile:
 
     for item in jsonDates:
 
-        oldStart = item.get("oldStartDate")
-        oldEnd= item.get("oldEndDate")
-        newStart = item.get("newStartDate")
-        newEnd= item.get("newEndDate")
+        oldStart = item.get("oldStart")
+        oldEnd= item.get("oldEnd")
+        newStart = item.get("newStart")
+        newEnd= item.get("newEnd")
 
         oldDir = item.get("oldDir")
         newDir= item.get("newDir")
