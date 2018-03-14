@@ -1,0 +1,23 @@
+{
+  "name": "swirlnet",
+  "version": "1.0.0",
+  "description": "Cyclone Testing Station SWIRLnet data visualisation",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jcu-eresearch/SWIRLnet.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jcu-eresearch/SWIRLnet/issues"
+  },
+  "homepage": "https://github.com/jcu-eresearch/SWIRLnet#readme",
+  "dependencies": {
+    "video.js": "^6.7.3"
+  },
+  "devDependencies": {}
+}
