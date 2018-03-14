@@ -177,55 +177,49 @@
 
   };
 
-  var renderShapeFiles = function(map){
+  var renderShapeFiles = function(mymap){
 
-      //The wind areas
+
+
       var shpfile = new L.Shapefile('data/windarea.zip', {
-          style:function(feature){
-              return {
-                  color:"#ef5350",
-                  weight: 0.5,
-                  strokeOpacity: 0.4,
-                  fillColor:"#ef5350",
-                  fillOpacity:.3
-              }
-          },
-          onEachFeature: function(feature, layer) {
-              /*
-              layer.bindPopup("Low", {
-                closeButton: false,
-                offset: L.point(0, -10)
-              });
-              layer.on('mouseover', function() { l
-                layer.openPopup();
-              });
-              layer.on('mouseout', function() {
-                layer.closePopup();
-              });
-              */
-              if (feature.properties) {
-                  layer.bindPopup(Object.keys(feature.properties).map(function(k) {
-                      if(k==="windtype" )
-                          return "Wind Type" + ": " +feature.properties[k] +"<br>";
-                      if(k==="fcastTime" )
-                          return "Forecast Time" + ": " + feature.properties[k] +"<br>";
-                      if(k==="marineType")
-                          return  "Marine Type" + ": " +feature.properties[k]+"<br>";
-                      else
-                          return;
-                  }).join(""), {
-                      maxHeight: 200
-                  });
+
+              style:function(feature){
+                  return {color:"#ef5350", weight: 0.5, strokeOpacity: 0.4, fillColor:"#ef5350",fillOpacity:.3}
+              },
+
+              onEachFeature: function(feature, layer) {
+
+                  /*layer.bindPopup("Low", {closeButton: false, offset: L.point(0, -10)});
+                  layer.on('mouseover', function() { layer.openPopup(); });
+                  layer.on('mouseout', function() { layer.closePopup(); });*/
+
+                  if (feature.properties) {
+
+                      layer.bindPopup(Object.keys(feature.properties).map(function(k) {
+                          if(k==="windtype" )
+                              return "Wind Type" + ": " +feature.properties[k] +"<br>";
+                          if(k==="fcastTime" )
+                              return "Forecast Time" + ": " + feature.properties[k] +"<br>";
+                          if(k==="marineType")
+                              return  "Marine Type" + ": " +feature.properties[k]+"<br>";
+                          else
+                              return;
+                      }).join(""), {
+                          maxHeight: 200
+                      });
+                  }
+
               }
           }
-      });
-      shpfile.addTo(map);
 
-      //The cyclone track
+      );
+      shpfile.addTo(mymap);
+
       var shpfile1 = new L.Shapefile('data/track.zip', {
           style:function(feature){
               return {color:"#ef5350", weight: 1, strokeOpacity: 1, fillColor:"#ef5350",fillOpacity: 0.8}
           },
+
           onEachFeature: function(feature, layer) {
               if (feature.properties) {
                   layer.bindPopup(Object.keys(feature.properties).map(function(k) {
@@ -236,39 +230,24 @@
               }
           }
       });
-      shpfile1.addTo(map);
+      shpfile1.addTo(mymap);
 
-      //The watch areas
+
+
       var shpfile2 = new L.Shapefile('data/areas.zip', {
+
           style:function(feature){
+
               if (feature.properties && feature.properties.areaType==="Warning Area") {
-                  return {
-                      color:"#f57f17",
-                      weight: 1,
-                      strokeOpacity: 0.2,
-                      fillColor:"#f57f17",
-                      fillOpacity:.5
-                  }
+                  return {color:"#f57f17", weight: 1, strokeOpacity: 0.2, fillColor:"#f57f17",fillOpacity:.5}
               }
               if (feature.properties && feature.properties.areaType==="Likely Tracks Area") {
-                  return {
-                      color:"#e0e0e0",
-                      weight: 1,
-                      strokeOpacity: 1,
-                      fillColor:"#e0e0e0",
-                      fillOpacity:0.2
-                  }
+                  return {color:"#e0e0e0", weight: 1, strokeOpacity: 1, fillColor:"#e0e0e0",fillOpacity:0.2}
               }
-              else{
-                  return {
-                      color:"#F4C182",
-                      weight: 1,
-                      strokeOpacity: 0.6,
-                      fillColor:"#F4C182",
-                      fillOpacity:.4
-                  }
-              }
+              else
+                  return {color:"#F4C182", weight: 1, strokeOpacity: 0.6, fillColor:"#F4C182",fillOpacity:.4}
           },
+
           onEachFeature: function(feature, layer) {
               if (feature.properties) {
                   layer.bindPopup(Object.keys(feature.properties).map(function(k) {
@@ -284,11 +263,14 @@
                       maxHeight: 200
                   });
               }
-          }
-      });
-      shpfile2.addTo(map);
 
-      //Label the cyclone track
+          }
+
+
+
+      }); shpfile2.addTo(mymap);
+
+
       var shpfile3 = new L.Shapefile('data/fix.zip', {
           pointToLayer: function(feature, latlng) {
               /* return L.circleMarker(latlng, {
@@ -316,6 +298,7 @@
                           iconPath='images/five.png'; break;
                   }
               }
+
               var greenIcon = L.icon({
                   iconUrl: iconPath,
                   iconSize:     [24, 24], // size of the icon
@@ -323,8 +306,9 @@
               });
               return L.marker(latlng, {icon: greenIcon});
           },
+
           onEachFeature: function(feature, layer) {
-             if (feature.properties) {
+              if (feature.properties) {
                   layer.bindPopup(Object.keys(feature.properties).map(function(k) {
                       if(k==="fixTimeQLD" ) {
                           var str = feature.properties[k].replace("ESTX", "");
@@ -338,8 +322,11 @@
                       maxHeight: 200
                   });
               }
+
           }
-      }); shpfile3.addTo(map);
+
+      }); shpfile3.addTo(mymap);
+
 
       var legend = L.control({position: 'bottomright'});
 
@@ -363,7 +350,7 @@
           return div;
       };
 
-      legend.addTo(map);
+      legend.addTo(mymap);
   };
 
   var defineVideoPopup = function(id, source1, source2) {
@@ -383,7 +370,17 @@
 
         var mymap = L.map('mapid', { maxZoom: 10}).setView([-20.311542, 148.588719], 8);
 
-        renderTrack(mymap, "data/old/track/track.json");
+        L.tileLayer( 'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}'
+          , {
+              attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, '+
+              '<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>,'+
+              'Imagery © <a href="http://mapbox.com">Mapbox</a>',
+              maxZoom: 18,
+              id: 'mapbox.streets-satellite',
+              accessToken: 'pk.eyJ1Ijoic2FpcmFrIiwiYSI6ImNpcWFkeHZvZjAxcGNmbmtremEwNmV5ajkifQ.cOseeBhCXFdDPp06el09yQ'
+        }).addTo(mymap);
+
+        mymap.setZoom(6);
 
         var mGroup=[];
         defaultChart=false;
@@ -427,7 +424,7 @@
                 var marker1=L.marker([l.lat, l.lon]).addTo(mymap);
                       marker1.bindTooltip(L.tooltip({
                         direction: l.label,
-                        //permanent: true
+                        permanent: true
                       })
                       .setContent(l.chartHeading));//.openTooltip();
 
@@ -476,26 +473,9 @@
         }
         var group = new L.featureGroup(mGroup);
 
-        mymap.fitBounds(group.getBounds());
 
-        L.tileLayer( 'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}'
-            , {
-            attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, '+
-                '<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>,'+
-                'Imagery © <a href="http://mapbox.com">Mapbox</a>',
-            maxZoom: 18,
-            id: 'mapbox.streets-satellite',
-            accessToken: 'pk.eyJ1Ijoic2FpcmFrIiwiYSI6ImNpcWFkeHZvZjAxcGNmbmtremEwNmV5ajkifQ.cOseeBhCXFdDPp06el09yQ'
-        }).addTo(mymap);
-
-        //'https://api.mapbox.com/styles/v1/sairak/cjdy5fkdy8nsv2sm1prs6hb3i/tiles/256/{z}/{x}/{y}?'+
-        //    'access_token=pk.eyJ1Ijoic2FpcmFrIiwiYSI6ImNpcWFkeHZvZjAxcGNmbmtremEwNmV5ajkifQ.cOseeBhCXFdDPp06el09yQ'
-        /*L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-              attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-        }).addTo(mymap);*/
-
-        //read the config file and decide to do this
-        //renderShapeFiles(mymap);
+        renderShapeFiles(mymap);
+        //renderTrack(mymap, "data/old/track/track.json");
 
 
         //Adding popups to the markers
