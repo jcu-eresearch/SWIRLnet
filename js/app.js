@@ -311,7 +311,7 @@
               if (feature.properties) {
                   layer.bindPopup(Object.keys(feature.properties).map(function(k) {
                       if(k==="fixTimeQLD" ) {
-                          var str = feature.properties[k].replace("ESTX", "");
+                          var str = feature.properties[k].replace("ESTX", " AEST ");
                           return str + "<br>";
                       }
                       if(k==="category")
