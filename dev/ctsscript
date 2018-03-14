@@ -16,5 +16,5 @@ done
 mv  -v /srv/SWIRLnet/unprocessed/*.csv /srv/SWIRLnet/data/
 mv  -v /srv/SWIRLnet/unprocessed/old/*.csv /srv/SWIRLnet/data/old/
 
-mv  -v /srv/SWIRLnet/unprocessed/config.json /srv/SWIRLnet/config/
+#mv  -v /srv/SWIRLnet/unprocessed/config.json /srv/SWIRLnet/config/
 chmod o+r /srv/SWIRLnet/config/config.json
