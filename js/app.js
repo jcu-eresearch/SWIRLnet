@@ -328,7 +328,7 @@
       }); shpfile3.addTo(mymap);
 
 
-      var legend = L.control({position: 'bottomright'});
+      var legend = L.control({position: 'bottomleft'});
 
       legend.onAdd = function () {
           var div = L.DomUtil.create('div', 'info legend');
@@ -381,6 +381,7 @@
         }).addTo(mymap);
 
         mymap.setZoom(6);
+        mymap.scrollWheelZoom.disable();
 
         var mGroup=[];
         defaultChart=false;
