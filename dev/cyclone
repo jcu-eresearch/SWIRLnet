@@ -1,0 +1,73 @@
+#!/bin/bash
+
+function readJson {
+  UNAMESTR=`uname`
+  if [[ "$UNAMESTR" == 'Linux' ]]; then
+    SED_EXTENDED='-r'
+  elif [[ "$UNAMESTR" == 'Darwin' ]]; then
+    SED_EXTENDED='-E'
+  fi;
+
+  VALUE=`grep -m 1 "\"${2}\"" ${1} | sed ${SED_EXTENDED} 's/^ *//;s/.*: *"//;s/",?//'`
+
+  if [ ! "$VALUE" ]; then
+    echo "Error: Cannot find \"${2}\" in ${1}" >&2;
+    exit 1;
+  else
+    echo $VALUE ;
+  fi;
+}
+
+AUTO=`readJson /srv/SWIRLnet/config/config.json updateNewCyclone` || exit 1;
+
+if [ "$AUTO" = "true" ]
+then
+
+
+    DIR="/srv/SWIRLnet/data"
+
+    ftp -n ftp2.bom.gov.au << END
+    user ftp your_name@your_e-mail_address
+    cd /anon/gen/fwo
+    binary
+    newer IDQ65248.zip $DIR/IDQ65248.zip
+    newer IDQ65249.zip $DIR/IDQ65249.zip
+    newer IDQ65250.zip $DIR/IDQ65250.zip
+
+    unzip $DIR/IDQ65248.zip -d $DIR
+    unzip $DIR/IDQ65249.zip -d $DIR
+    unzip $DIR/IDQ65250.zip -d $DIR
+
+    ID=IDQ65248
+    NAME="$ID.areas"
+    zip areas1.zip $DIR/$NAME.dbf $DIR/$NAME.prj $DIR/$NAME.shp $DIR/$NAME.shx
+    NAME="$ID.fix"
+    zip fix1.zip $DIR/$NAME.dbf $DIR/$NAME.prj $DIR/$NAME.shp $DIR/$NAME.shx
+    NAME="$ID.track"
+    zip track1.zip $DIR/$NAME.dbf $DIR/$NAME.prj $DIR/$NAME.shp $DIR/$NAME.shx
+    NAME="$ID.windarea"
+    zip windarea1.zip $DIR/$NAME.dbf $DIR/$NAME.prj $DIR/$NAME.shp $DIR/$NAME.shx
+
+    ID=IDQ65249
+    NAME="$ID.areas"
+    zip areas2.zip $DIR/$NAME.dbf $DIR/$NAME.prj $DIR/$NAME.shp $DIR/$NAME.shx
+    NAME="$ID.fix"
+    zip fix2.zip $DIR/$NAME.dbf $DIR/$NAME.prj $DIR/$NAME.shp $DIR/$NAME.shx
+    NAME="$ID.track"
+    zip track2.zip $DIR/$NAME.dbf $DIR/$NAME.prj $DIR/$NAME.shp $DIR/$NAME.shx
+    NAME="$ID.windarea"
+    zip windarea2.zip $DIR/$NAME.dbf $DIR/$NAME.prj $DIR/$NAME.shp $DIR/$NAME.shx
+
+    ID=IDQ65250
+    NAME="$ID.areas"
+    zip areas3.zip $DIR/$NAME.dbf $DIR/$NAME.prj $DIR/$NAME.shp $DIR/$NAME.shx
+    NAME="$ID.fix"
+    zip fix3.zip $DIR/$NAME.dbf $DIR/$NAME.prj $DIR/$NAME.shp $DIR/$NAME.shx
+    NAME="$ID.track"
+    zip track3.zip $DIR/$NAME.dbf $DIR/$NAME.prj $DIR/$NAME.shp $DIR/$NAME.shx
+    NAME="$ID.windarea"
+    zip windarea3.zip $DIR/$NAME.dbf $DIR/$NAME.prj $DIR/$NAME.shp $DIR/$NAME.shx
+
+    quit
+    END
+fi

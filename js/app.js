@@ -392,6 +392,9 @@
         var defaultLocs=json.locationsOld? json.locationsOld: [] ;
         var otherLocs=json.locations? json.locations: [] ;
 
+        var showNewCyclone = json.showNewCyclone? json.showNewCyclone: false;
+        var showOldCyclone = json.showOldCyclone? json.showOldCyclone: false;
+
         if(json.defaultCharts==="current"){
             defaultChart=true;
             defaultDir=currentDir;
@@ -474,9 +477,11 @@
         }
         var group = new L.featureGroup(mGroup);
 
+        if(showNewCyclone)
+            renderShapeFiles(mymap);
 
-        renderShapeFiles(mymap);
-        //renderTrack(mymap, "data/old/track/track.json");
+        if(showOldCyclone)
+            renderTrack(mymap, "data/old/track.json");
 
 
         //Adding popups to the markers
@@ -519,6 +524,7 @@
               };
           })(mymap)
         );
+
 
         renderDefaultCharts(defaultChart);
   });
