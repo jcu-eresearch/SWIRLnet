@@ -380,7 +380,7 @@
               accessToken: 'pk.eyJ1Ijoic2FpcmFrIiwiYSI6ImNpcWFkeHZvZjAxcGNmbmtremEwNmV5ajkifQ.cOseeBhCXFdDPp06el09yQ'
         }).addTo(mymap);
 
-        mymap.setZoom(5);
+        //mymap.setZoom(5);
         mymap.scrollWheelZoom.disable();
 
         var mGroup=[];
@@ -476,6 +476,8 @@
             }
         }
         var group = new L.featureGroup(mGroup);
+
+        mymap.setBounds(group);
 
         if(showNewCyclone)
             renderShapeFiles(mymap);
