@@ -477,7 +477,7 @@
         }
         var group = new L.featureGroup(mGroup);
 
-        mymap.setBounds(group);
+        //mymap.fitBounds(group);
 
         if(showNewCyclone)
             renderShapeFiles(mymap);
