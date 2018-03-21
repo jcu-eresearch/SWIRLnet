@@ -479,11 +479,11 @@
 
         mymap.fitBounds(group.getBounds());
 
-        if(showNewCyclone)
+        /*if(showNewCyclone)
             renderShapeFiles(mymap);
 
         if(showOldCyclone)
-            renderTrack(mymap, "data/old/track.json");
+            renderTrack(mymap, "data/old/track.json");*/
 
 
         //Adding popups to the markers
