@@ -1,73 +1,109 @@
 #!/bin/bash
 
-function readJson {
-  UNAMESTR=`uname`
-  if [[ "$UNAMESTR" == 'Linux' ]]; then
-    SED_EXTENDED='-r'
-  elif [[ "$UNAMESTR" == 'Darwin' ]]; then
-    SED_EXTENDED='-E'
-  fi;
+var=$(python3.6 /srv/SWIRLnet/dev/check.py)
 
-  VALUE=`grep -m 1 "\"${2}\"" ${1} | sed ${SED_EXTENDED} 's/^ *//;s/.*: *"//;s/",?//'`
+if [ "$var" == "True" ]; then
 
-  if [ ! "$VALUE" ]; then
-    echo "Error: Cannot find \"${2}\" in ${1}" >&2;
-    exit 1;
-  else
-    echo $VALUE ;
-  fi;
-}
+rm /srv/SWIRLnet/data/cyclone/*
 
-AUTO=`readJson /srv/SWIRLnet/config/config.json updateNewCyclone` || exit 1;
+ftp -n ftp2.bom.gov.au << END
+user ftp your_name@your_e-mail_address
+cd anon/gen/fwo/
+binary
+newer IDQ65248.zip /srv/SWIRLnet/data/cyclone/IDQ65248.zip
+newer IDQ65249.zip /srv/SWIRLnet/data/cyclone/IDQ65249.zip
+newer IDQ65250.zip /srv/SWIRLnet/data/cyclone/IDQ65250.zip
+newer IDD65409.zip /srv/SWIRLnet/data/cyclone/IDD65409.zip
 
-if [ "$AUTO" = "true" ]
-then
+newer IDD65401.zip /srv/SWIRLnet/data/cyclone/IDD65401.zip
+newer IDD65402.zip /srv/SWIRLnet/data/cyclone/IDD65402.zip
+newer IDQ65251.zip /srv/SWIRLnet/data/cyclone/IDQ65251.zip
+newer IDW60283.zip /srv/SWIRLnet/data/cyclone/IDW60283.zip
 
+newer IDW60266.zip /srv/SWIRLnet/data/cyclone/IDW60266.zip
+newer IDW60267.zip /srv/SWIRLnet/data/cyclone/IDW60267.zip
+newer IDW60268.zip /srv/SWIRLnet/data/cyclone/IDW60268.zip
+newer IDD65408.zip /srv/SWIRLnet/data/cyclone/IDD65408.zip
+quit
 
-    DIR="/srv/SWIRLnet/data"
+END
 
-    ftp -n ftp2.bom.gov.au << END
-    user ftp your_name@your_e-mail_address
-    cd /anon/gen/fwo
-    binary
-    newer IDQ65248.zip $DIR/IDQ65248.zip
-    newer IDQ65249.zip $DIR/IDQ65249.zip
-    newer IDQ65250.zip $DIR/IDQ65250.zip
+cd '/srv/SWIRLnet/data/cyclone'
 
-    unzip $DIR/IDQ65248.zip -d $DIR
-    unzip $DIR/IDQ65249.zip -d $DIR
-    unzip $DIR/IDQ65250.zip -d $DIR
+unzip -o IDQ65248.zip
+unzip -o IDQ65249.zip
+unzip -o IDQ65250.zip
+unzip -o IDD65409.zip
 
-    ID=IDQ65248
-    NAME="$ID.areas"
-    zip areas1.zip $DIR/$NAME.dbf $DIR/$NAME.prj $DIR/$NAME.shp $DIR/$NAME.shx
-    NAME="$ID.fix"
-    zip fix1.zip $DIR/$NAME.dbf $DIR/$NAME.prj $DIR/$NAME.shp $DIR/$NAME.shx
-    NAME="$ID.track"
-    zip track1.zip $DIR/$NAME.dbf $DIR/$NAME.prj $DIR/$NAME.shp $DIR/$NAME.shx
-    NAME="$ID.windarea"
-    zip windarea1.zip $DIR/$NAME.dbf $DIR/$NAME.prj $DIR/$NAME.shp $DIR/$NAME.shx
+unzip -o IDD65401.zip
+unzip -o IDD65402.zip
+unzip -o IDQ65251.zip
+unzip -o IDW60283.zip
 
-    ID=IDQ65249
-    NAME="$ID.areas"
-    zip areas2.zip $DIR/$NAME.dbf $DIR/$NAME.prj $DIR/$NAME.shp $DIR/$NAME.shx
-    NAME="$ID.fix"
-    zip fix2.zip $DIR/$NAME.dbf $DIR/$NAME.prj $DIR/$NAME.shp $DIR/$NAME.shx
-    NAME="$ID.track"
-    zip track2.zip $DIR/$NAME.dbf $DIR/$NAME.prj $DIR/$NAME.shp $DIR/$NAME.shx
-    NAME="$ID.windarea"
-    zip windarea2.zip $DIR/$NAME.dbf $DIR/$NAME.prj $DIR/$NAME.shp $DIR/$NAME.shx
+unzip -o IDW60266.zip
+unzip -o IDW60268.zip
+unzip -o IDW60269.zip
+unzip -o IDD65408.zip
 
-    ID=IDQ65250
-    NAME="$ID.areas"
-    zip areas3.zip $DIR/$NAME.dbf $DIR/$NAME.prj $DIR/$NAME.shp $DIR/$NAME.shx
-    NAME="$ID.fix"
-    zip fix3.zip $DIR/$NAME.dbf $DIR/$NAME.prj $DIR/$NAME.shp $DIR/$NAME.shx
-    NAME="$ID.track"
-    zip track3.zip $DIR/$NAME.dbf $DIR/$NAME.prj $DIR/$NAME.shp $DIR/$NAME.shx
-    NAME="$ID.windarea"
-    zip windarea3.zip $DIR/$NAME.dbf $DIR/$NAME.prj $DIR/$NAME.shp $DIR/$NAME.shx
+NAME="IDW60266"
+zip ${NAME}.areas.zip ${NAME}.areas.*
+zip ${NAME}.fix.zip ${NAME}.fix.*
+zip ${NAME}.track.zip ${NAME}.track.*
+zip ${NAME}.windarea.zip ${NAME}.windarea.*
+NAME="IDD65401"
+zip ${NAME}.areas.zip ${NAME}.areas.*
+zip ${NAME}.fix.zip ${NAME}.fix.*
+zip ${NAME}.track.zip ${NAME}.track.*
+zip ${NAME}.windarea.zip ${NAME}.windarea.*
+NAME="IDQ65248"
+zip ${NAME}.areas.zip ${NAME}.areas.*
+zip ${NAME}.fix.zip ${NAME}.fix.*
+zip ${NAME}.track.zip ${NAME}.track.*
+zip ${NAME}.windarea.zip ${NAME}.windarea.*
+NAME="IDW60267"
+zip ${NAME}.areas.zip ${NAME}.areas.*
+zip ${NAME}.fix.zip ${NAME}.fix.*
+zip ${NAME}.track.zip ${NAME}.track.*
+zip ${NAME}.windarea.zip ${NAME}.windarea.*
+NAME="IDD65402"
+zip ${NAME}.areas.zip ${NAME}.areas.*
+zip ${NAME}.fix.zip ${NAME}.fix.*
+zip ${NAME}.track.zip ${NAME}.track.*
+zip ${NAME}.windarea.zip ${NAME}.windarea.*
+NAME="IDQ65249"
+zip ${NAME}.areas.zip ${NAME}.areas.*
+zip ${NAME}.fix.zip ${NAME}.fix.*
+zip ${NAME}.track.zip ${NAME}.track.*
+zip ${NAME}.windarea.zip ${NAME}.windarea.*
+NAME="IDW60268"
+zip ${NAME}.areas.zip ${NAME}.areas.*
+zip ${NAME}.fix.zip ${NAME}.fix.*
+zip ${NAME}.track.zip ${NAME}.track.*
+zip ${NAME}.windarea.zip ${NAME}.windarea.*
+NAME="IDQ65251"
+zip ${NAME}.areas.zip ${NAME}.areas.*
+zip ${NAME}.fix.zip ${NAME}.fix.*
+zip ${NAME}.track.zip ${NAME}.track.*
+zip ${NAME}.windarea.zip ${NAME}.windarea.*
+NAME="IDQ65250"
+zip ${NAME}.areas.zip ${NAME}.areas.*
+zip ${NAME}.fix.zip ${NAME}.fix.*
+zip ${NAME}.track.zip ${NAME}.track.*
+zip ${NAME}.windarea.zip ${NAME}.windarea.*
+NAME="IDD65408"
+zip ${NAME}.areas.zip ${NAME}.areas.*
+zip ${NAME}.fix.zip ${NAME}.fix.*
+zip ${NAME}.track.zip ${NAME}.track.*
+zip ${NAME}.windarea.zip ${NAME}.windarea.*
+NAME="IDW60283"
+zip ${NAME}.areas.zip ${NAME}.areas.*
+zip ${NAME}.fix.zip ${NAME}.fix.*
+zip ${NAME}.track.zip ${NAME}.track.*
+zip ${NAME}.windarea.zip ${NAME}.windarea.*
+NAME="IDD65409"
+zip ${NAME}.areas.zip ${NAME}.areas.*
+zip ${NAME}.fix.zip ${NAME}.fix.*
+zip ${NAME}.track.zip ${NAME}.track.*
+zip ${NAME}.windarea.zip ${NAME}.windarea.*
 
-    quit
-    END
 fi
