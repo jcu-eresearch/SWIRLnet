@@ -175,7 +175,7 @@ var renderTrack= function(map, trackFile) {
 
 
 
-var mymap = L.map('mapid', { maxZoom: 10}).setView([-15.86944, 132.04453], 5);
+var mymap = L.map('mapid', { maxZoom: 10}).setView([-22.86944, 132.04453], 4);
 
 //Latitude:-28.86944°. Longitude:153.04453°
 L.tileLayer( 'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
