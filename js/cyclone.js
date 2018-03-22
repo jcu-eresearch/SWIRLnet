@@ -1,5 +1,40 @@
 var renderShapeFiles = function(mymap, path){
 
+    var shpfile2 = new L.Shapefile(path +  '.areas.zip', {
+
+        style:function(feature){
+
+            if (feature.properties && feature.properties.areaType==="Warning Area") {
+                return {color:"#f57f17", weight: 1, strokeOpacity: 0.2, fillColor:"#f57f17",fillOpacity:.5}
+            }
+            if (feature.properties && feature.properties.areaType==="Likely Tracks Area") {
+                return {color:"#e0e0e0", weight: 1, strokeOpacity: 1, fillColor:"#e0e0e0",fillOpacity:0.2}
+            }
+            else
+                return {color:"#F4C182", weight: 1, strokeOpacity: 0.6, fillColor:"#F4C182",fillOpacity:.4}
+        },
+
+        onEachFeature: function(feature, layer) {
+            if (feature.properties) {
+                layer.bindPopup(Object.keys(feature.properties).map(function(k) {
+                    if(k==="areaType" )
+                        return feature.properties[k] +"<br>";
+                    if(k==="fcastTime" )
+                        return "Forecast Time" + ": " + feature.properties[k] +"<br>";
+                    if(k==="extent")
+                        return "Extent" + ": " + feature.properties[k]+"<br>";
+                    else
+                        return;
+                }).join(""), {
+                    maxHeight: 200
+                });
+            }
+
+        }
+
+
+
+    }); shpfile2.addTo(mymap);
     var shpfile = new L.Shapefile(path + '.windarea.zip', {
 
             style:function(feature){
@@ -51,41 +86,7 @@ var renderShapeFiles = function(mymap, path){
     });
     shpfile1.addTo(mymap);
 
-    var shpfile2 = new L.Shapefile(path +  '.areas.zip', {
 
-        style:function(feature){
-
-            if (feature.properties && feature.properties.areaType==="Warning Area") {
-                return {color:"#f57f17", weight: 1, strokeOpacity: 0.2, fillColor:"#f57f17",fillOpacity:.5}
-            }
-            if (feature.properties && feature.properties.areaType==="Likely Tracks Area") {
-                return {color:"#e0e0e0", weight: 1, strokeOpacity: 1, fillColor:"#e0e0e0",fillOpacity:0.2}
-            }
-            else
-                return {color:"#F4C182", weight: 1, strokeOpacity: 0.6, fillColor:"#F4C182",fillOpacity:.4}
-        },
-
-        onEachFeature: function(feature, layer) {
-            if (feature.properties) {
-                layer.bindPopup(Object.keys(feature.properties).map(function(k) {
-                    if(k==="areaType" )
-                        return feature.properties[k] +"<br>";
-                    if(k==="fcastTime" )
-                        return "Forecast Time" + ": " + feature.properties[k] +"<br>";
-                    if(k==="extent")
-                        return "Extent" + ": " + feature.properties[k]+"<br>";
-                    else
-                        return;
-                }).join(""), {
-                    maxHeight: 200
-                });
-            }
-
-        }
-
-
-
-    }); shpfile2.addTo(mymap);
 
     var shpfile3 = new L.Shapefile(path +  '.fix.zip', {
         pointToLayer: function(feature, latlng) {
