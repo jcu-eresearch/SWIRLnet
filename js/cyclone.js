@@ -145,6 +145,33 @@ var renderShapeFiles = function(mymap, path){
 
 };
 
+var renderTrack= function(map, trackFile) {
+    $.getJSON(trackFile, function(json) {
+
+        var myStyle = {
+            "color": "#e57373",
+            "weight": 1,
+            "opacity": 0.65
+        };
+
+        var geojsonMarkerOptions = {
+            radius: 8,
+            fillColor: "#e57373",
+            color: "#e57373",
+            weight: 1,
+            opacity: 1,
+            fillOpacity: 0.8
+        };
+
+        var layer = L.geoJson(json, {
+            style: myStyle,
+            pointToLayer: function (feature, latlng) {
+                return L.circleMarker(latlng, geojsonMarkerOptions);
+            }
+        }).addTo(map);
+    });
+
+};
 
 
 
@@ -193,7 +220,18 @@ var names= ["IDW60266", "IDD65401", "IDQ65248",
     "IDD65408",  "IDW60283" ,   "IDD65409"
 ];
 
-names.forEach(function(n){
 
-   renderShapeFiles(mymap, 'data/cyclone/'+n )
+$.getJSON("config/config.json", function(json) {
+    var showNewCyclone = json.showNewCyclone? json.showNewCyclone: false;
+    var showOldCyclone = json.showOldCyclone? json.showOldCyclone: false;
+
+    if(showNewCyclone){
+        names.forEach(function(n){
+            renderShapeFiles(mymap, 'data/cyclone/'+n )
+        });
+    }
+
+    if(showOldCyclone)
+        renderTrack(mymap, "data/old/track.json");
 });
+
