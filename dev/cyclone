@@ -1,10 +1,10 @@
 #!/bin/bash
 
+rm /srv/SWIRLnet/data/cyclone/*
+
 var=$(python3.6 /srv/SWIRLnet/dev/check.py)
 
 if [ "$var" == "True" ]; then
-
-rm /srv/SWIRLnet/data/cyclone/*
 
 ftp -n ftp2.bom.gov.au << END
 user ftp your_name@your_e-mail_address
