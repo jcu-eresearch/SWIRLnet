@@ -409,8 +409,8 @@
             $(".cts-btn-group").hide();
         }
 
-        if(json.yAxesLimits && json.yAxesLimits.wind && json.yAxesLimits.wind.length>1){
-          maxRange=json.yAxesLimits.wind[1];
+        if(json.yAxisLimits && json.yAxisLimits.wind && json.yAxisLimits.wind.length>1){
+          maxRange=json.yAxisLimits.wind[1];
         }
 
         var towerIcon = L.icon({
