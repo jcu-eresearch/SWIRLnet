@@ -1,4 +1,4 @@
-var renderShapeFiles = function(mymap, path, name){
+var renderShapeFiles = function(mymap, path){
 
     var shpfile2 = new L.Shapefile(path +  '.areas.zip', {
 
@@ -85,6 +85,8 @@ var renderShapeFiles = function(mymap, path, name){
         }
     });
     shpfile1.addTo(mymap);
+
+
 
     var shpfile3 = new L.Shapefile(path +  '.fix.zip', {
         pointToLayer: function(feature, latlng) {
@@ -226,44 +228,7 @@ $.getJSON("config/config.json", function(json) {
 
     if(showNewCyclone){
         names.forEach(function(n){
-            $.ajax({
-                type: "GET",
-                url: 'data/cyclone/'+n+".gml",
-                dataType: "xml",
-                success: xmlParser
-            });
-            function xmlParser(xml) {
-                var xml = $(xml);
-                var name= "";
-                var start="";
-                var split=[];
-
-                // find the name of the cyclone
-                if(xml.find('distName')){
-                    name = xml.find('distName').text();
-                }
-
-                // invisible marker with name
-                if(xml.find('lineString') ){
-                    var ls= xml.find('lineString');
-                    if(ls[0] && ls[0].children && ls[0].children[0]) {
-                        start = xml.find('lineString')[0].children[0].textContent;
-                        split = start.split("\n");
-                        if(split.length>0) {
-                            split = split[split.length - 1].split(",");
-                            if(split && split.length>0) {
-                                var marker1 = L.marker([split[1], split[0]], {opacity: 0.01}).addTo(mymap);
-                                marker1.bindTooltip(L.tooltip({
-                                    direction: 'top',
-                                    permanent: true
-                                }).setContent(name)).openTooltip();
-                            }
-                        }
-                    }
-                }
-
-                renderShapeFiles(mymap, 'data/cyclone/'+n);
-            }
+            renderShapeFiles(mymap, 'data/cyclone/'+n )
         });
     }
 
