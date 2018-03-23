@@ -1,61 +1,154 @@
-{   
-    dateRanges:[
-        {
-            start: "",
-            end: "",
-            dataDir: "old",
-            name: "TC Debbie"
-        },
-        {
-            start:"",
-            end: "",
-            dataDir: "current",
-            name: "Current Data"
-        }
-    ],
-    locations:[
-        {
-            name:"",
-            lat:"",
-            lon:""
-
-        },
-        {
-            name:"",
-            lat:"",
-            lon:""
-
-        },
-        {
-            name:"",
-            lat:"",
-            lon:""
-
-        },
-        {
-            name:"",
-            lat:"",
-            lon:""
-
-        },
-        {
-            name:"",
-            lat:"",
-            lon:""
-
-        },
-        {
-            name:"",
-            lat:"",
-            lon:""
-
-        }
-    ],
-    thresholds:[
-        {
-            dataName:"",
-            upper:"",
-            lower:""
-        }
+{
+  "locations": [
+    {
+      "name": "Tower 1 (Ayr)",
+      "lat": "-19.56472222",
+      "lon": "147.39583333",
+      "label": "left",
+      "chartHeading": "Tower 1",
+      "chartSubheading": "Ayr"
+    },
+    {
+      "name": "Tower 2 (North Bowen)",
+      "lat": "-19.98027778",
+      "lon": "148.23083333",
+      "label": "right",
+      "chartHeading": "Tower 2",
+      "chartSubheading": "North Bowen"
+    },
+    {
+      "name": "Tower 3 (South Ayr)",
+      "lat": "-19.58166667",
+      "lon": "147.40500000",
+      "label": "right",
+      "chartHeading": "Tower 3",
+      "chartSubheading": "South Ayr"
+    },
+    {
+      "name": "Tower 4 (Home Hill)",
+      "lat": "-19.67166667",
+      "lon": "147.42000000",
+      "label": "left",
+      "chartHeading": "Tower 4",
+      "chartSubheading": "Home Hill"
+    },
+    {
+      "name": "Tower 5 (South Bowen)",
+      "lat": "-20.01611111",
+      "lon": "148.24777778",
+      "label": "left",
+      "chartHeading": "Tower 5",
+      "chartSubheading": "South Bowen"
+    },
+    {
+      "name": "Tower 6 (Proserpine)",
+      "lat": "-20.41444444",
+      "lon": "148.58666667",
+      "label": "left",
+      "chartHeading": "Tower 6",
+      "chartSubheading": "Proserpine"
+    }
+  ],
+  "locationsOld": [
+    {
+      "name": "Tower 1 (Ayr)",
+      "lat": "-19.56472222",
+      "lon": "147.39583333",
+      "label": "left",
+      "chartHeading": "Tower 1",
+      "chartSubheading": "Ayr"
+    },
+    {
+      "name": "Tower 2 (North Bowen)",
+      "lat": "-19.98",
+      "lon": "148.23",
+      "label": "right",
+      "chartHeading": "Tower 2",
+      "chartSubheading": "North Bowen"
+    },
+    {
+      "name": "Tower 3 (South Ayr)",
+      "lat": "-19.58166667",
+      "lon": "147.40500000",
+      "label": "right",
+      "chartHeading": "Tower 3",
+      "chartSubheading": "South Ayr"
+    },
+    {
+      "name": "Tower 4 (Home Hill)",
+      "lat": "-19.67166667",
+      "lon": "147.42000000",
+      "label": "left",
+      "chartHeading": "Tower 4",
+      "chartSubheading": "Home Hill"
+    },
+    {
+      "name": "Tower 5 (South Bowen)",
+      "lat": "-20.01611111",
+      "lon": "148.24777778",
+      "label": "left",
+      "chartHeading": "Tower 5",
+      "chartSubheading": "South Bowen"
+    },
+    {
+      "name": "Tower 6 (Proserpine)",
+      "lat": "-20.41444444",
+      "lon": "148.58666667",
+      "label": "left",
+      "chartHeading": "Tower 6",
+      "chartSubheading": "Proserpine"
+    }
+  ],
+  "dateRanges": [
+    {
+      "start": "2017-03-26 12:30:00",
+      "end": "2017-03-30 10:20:00",
+      "dataDir": "old/",
+      "name": "TC Debbie"
+    },
+    {
+      "start": "",
+      "end": "NaN-aN-aN ",
+      "dataDir": "",
+      "name": "Current Data"
+    }
+  ],
+  "defaultCharts": "old",
+  "showOld": "true",
+  "showCurrent": "true",
+  "yAxisLimits": {
+    "wind": [
+      0,
+      150
     ]
+  },
+  "showOldCyclone": false,
+  "showNewCyclone": true,
+  "updateNewCyclone": true,
+  "cameraDateRanges": [
+    {
+      "name": "Camera1",
+      "oldStart": "2017-03-26 12:30:00",
+      "oldEnd": "2017-03-30 10:20:00",
+      "newStart": "",
+      "newEnd": "",
+      "oldDir": "old/Camera1/",
+      "newDir": "ccfc1/",
+      "mode": "old",
+      "display": "true",
+      "update": "false"
+    },
+    {
+      "name": "Camera2",
+      "oldStart": "2017-03-26 12:30:00",
+      "oldEnd": "2017-03-30 10:20:00",
+      "newStart": "",
+      "newEnd": "",
+      "oldDir": "old/Camera2/",
+      "newDir": "ccfc2/",
+      "mode": "old",
+      "display": "true",
+      "update": "false"
+    }
+  ]
 }
