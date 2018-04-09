@@ -1,96 +1,41 @@
-<html lang="en">
+<!doctype html>
+<html>
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <title>SWIRLnet Settings</title>
-    <!-- Bootstrap core CSS -->
+    <title>CTS Charts</title>
+    <base href="/">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
-    <!-- Custom styles for this template -->
-    <link href="../css/settings.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css"
+          integrity="sha512-M2wvCLH6DSRazYeZRIm1JnYyh22purTM+FDB5CsyxtQJYeKq83arPe5wgbNmcFXGqiSH2XR8dT/fJISVA1r/zQ=="
+          crossorigin=""/>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.2.0/dist/MarkerCluster.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.2.0/dist/MarkerCluster.Default.css" />
+    <link rel="stylesheet" href="css/app.css" />
+    <!--<link href="http://vjs.zencdn.net/6.6.3/video-js.css" rel="stylesheet">-->
+    <link href="node_modules/video.js/dist/video-js.css" rel="stylesheet">
+    <script src="https://use.fontawesome.com/4de41fc6df.js"></script>
+
 </head>
 <body>
-<div class="container">
-    <header class="header clearfix">
-        <nav>
-            <ul class="nav nav-pills float-right mb-3" id="pills-tab" role="tablist">
-                <li class="nav-item">
-                    <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true">Current Data</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false">Historical Data</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" id="pills-contact-tab" data-toggle="pill" href="#pills-contact" role="tab" aria-controls="pills-contact" aria-selected="false">Help</a>
-                </li>
-            </ul>
-        </nav>
-        <h3 class="text-muted">SWIRLnet Settings</h3>
-    </header>
-    <main role="main">
-        <div class="jumbotron">
-            <p class="lead">Please set up your chart mode, date ranges, and locations below and click the Apply Settings button below when you are done. </p>
-            <p class="lead">Please choose which charts appear by default: </p>
-                <div class="form-check" style="padding-left: 20px;">
-                    <input class="form-check-input" type="radio" name="exampleRadios" id="old" value="option1" >
-                    <label class="form-check-label" for="old">
-                        Historical Data
-                    </label>
-                </div>
-                <div class="form-check" style="padding-left: 20px;">
-                    <input class="form-check-input" type="radio" name="exampleRadios" id="current" value="option2">
-                    <label class="form-check-label" for="current">
-                        Current Data
-                    </label>
-                </div><br>
-            <p class="lead">Please choose if non-default charts should be visible: </p>
-                <div class="form-check show-charts" style="padding-left: 20px;">
-                    <input class="form-check-input" type="checkbox" value="" id="show-charts" checked>
-                    <label class="form-check-label show-charts-label" for="show-charts">
-                        Show Data
-                    </label>
-                </div>
-            <br>
-            <p class="lead">Please choose Y-Axis limits for wind speed:</p>
-            <p>
-                <input type="number" class="form-control" id="wind-axis" aria-describedby="eventHelp" >
-                <small class="form-text text-muted">This is the Maximum Value of Wind Speed which will appear on the Axis.</small>
-            </p>
-            <br>
-            <p class="lead">You can save your settings at any time.</p>
-            <p>
-                <a class="btn btn-lg btn-primary" id="save" href="#" role="button">Save Settings</a>
-                <a class="btn btn-lg btn-primary" id="save" href="#" role="button">Preview</a>
-                <a id="apply" class="btn btn-lg btn-success" href="#" role="button">Apply Settings</a>
-            </p>
-        </div>
-
-        <div class="tab-content" id="pills-tabContent">
-            <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
-                <div class="col-lg-12">
-                    <h4 class="centered">Current Data</h4>
-                </div>
-                <div class="row marketing settings-new"></div>
-            </div>
-            <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
-                <div class="col-lg-12">
-                    <h4 class="centered">Historical Data</h4>
-                </div>
-                <div class="row marketing settings-old"></div>
-            </div>
-            <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">Todo</div>
-        </div>
-    </main>
-    <footer class="footer">
-        <p>&copy; JCU Swirlnet 2017</p>
-    </footer>
-</div> <!-- /container -->
+<div class="cts-content"></div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+
+</body>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.12.0/d3.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.19.4/moment.min.js"></script>
-<script src="../js/settings.js"></script>
-</body>
+<script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js"
+        integrity="sha512-lInM/apFSqyy1o6s89K4iQUKg6ppXEgsVxT35HbzUupEVRh2Eu9Wdl4tHj7dZO0s1uvplcYGmt3498TtHq+log=="
+        crossorigin=""></script>
+<script src="https://unpkg.com/leaflet.markercluster@1.2.0/dist/leaflet.markercluster.js"></script>
+<!--<script src="http://vjs.zencdn.net/6.6.3/video.js"></script>-->
+<script src="node_modules/video.js/dist/video.js"></script>
+<script src="js/map.js"></script>
+<script src="js/dash.js"></script>
+<script src='shape/leaflet.shpfile.js'></script>
+<script src='shape/shp.js'></script>
+
 </html>
