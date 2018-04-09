@@ -4,12 +4,23 @@ var swirlnetSections = {
     d3: Plotly.d3,
     maxRange : 150,
 
-    setMaxRange: function(x){
-        this.maxRange = x;
+    init: function (dir, parent, event){
+        this.createNav(parent, event);
+        this.createTowers(parent, event);
+        for(var x=1; x<= 6 ; x++){
+            this.makeplotWind(dir+"t"+x+".csv", "t"+x+event+"-wind");
+            this.makeplotWeather(dir+"t"+x+".csv", "t"+x+event+"-pressure");
+        }
+        this.getNodes(event);
+        this.initComponents(event);
+        this.addClickHandlers(event);
+
+        var interval = 1000 * 60 * 5;
+        setInterval(this.refresh, interval);
     },
 
-    makeplotWind: function makeplotWind(path, id) {
-        Plotly.d3.csv(path, function(data){ processWindData(data, id) } );
+    setMaxRange: function(x){
+        this.maxRange = x;
     },
 
     createNav: function (parent, id) {
@@ -29,22 +40,22 @@ var swirlnetSections = {
     },
 
     createVideo: function (parent, id, source, name) {
-    var vid = '<div class="card cts-card t'+id+'" >' +
-        '<div class="card-body">' +
-        '<h4 class="card-title">'+name+'</h4>' +
-        '<h6 class="card-subtitle mb-2 text-muted">Timelapse Video</h6>' +
-        '<video id="my-video" class="video-js  vjs-default-skin vjs-4-3" controls preload="auto"  height="auto" width="auto"' +
-        'data-setup="{}">' +
-        '<source src="'+source+'" type="video/mp4">' +
-        '<p class="vjs-no-js">' +
-        'To view this video please enable JavaScript, and consider upgrading to a web browser that' +
-        '<a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>' +
-        '</p>' +
-        '</video>' +
-        '</div>' +
-        '</div>';
-    $(parent).append(vid);
-},
+        var vid = '<div class="card cts-card t'+id+'" >' +
+            '<div class="card-body">' +
+            '<h4 class="card-title">'+name+'</h4>' +
+            '<h6 class="card-subtitle mb-2 text-muted">Timelapse Video</h6>' +
+            '<video id="my-video" class="video-js  vjs-default-skin vjs-4-3" controls preload="auto"  height="auto" width="auto"' +
+            'data-setup="{}">' +
+            '<source src="'+source+'" type="video/mp4">' +
+            '<p class="vjs-no-js">' +
+            'To view this video please enable JavaScript, and consider upgrading to a web browser that' +
+            '<a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>' +
+            '</p>' +
+            '</video>' +
+            '</div>' +
+            '</div>';
+        $(parent).append(vid);
+    },
 
     createTowers: function (parent, event) {
         for (var i = 1; i < 7; i++) {
@@ -68,14 +79,6 @@ var swirlnetSections = {
                 '<i class="fa fa-chevron-circle-right" data-toggle="tooltip" data-placement="left" title="Click to view next chart"></i>' +
                 '</a>' +
                 '</div>' +
-                '<div class="btn-group cts-btn-group" data-toggle="buttons">' +
-                '<label class="btn btn-outline-secondary active t'+i+event+'-wind-current">' +
-                '<input type="radio" name="options" id="t'+i+event+'-wind-current" autocomplete="off" checked>' +
-                '</label>' +
-                '<label class="btn btn-outline-secondary t'+i+event+'-wind-old">' +
-                '<input type="radio" name="options" id="t'+i+event+'-wind-old" autocomplete="off">' +
-                '</label>' +
-                '</div>' +
                 '</div>' +
                 '</div>';
             $(parent).append(content);
@@ -83,13 +86,25 @@ var swirlnetSections = {
     },
 
     makeplotWeather: function(path, id) {
-        Plotly.d3.csv(path, function(data){ processWeatherData(data, id) } );
+        Plotly.d3.csv(path, (function (self) {
+            return function (data) {
+                self.processWeatherData(data, id, self)
+            };
+        })(this));
     },
 
-    hideExcept: function(id){
+    makeplotWind: function makeplotWind(path, id) {
+        Plotly.d3.csv(path, (function (self) {
+            return function (data) {
+                self.processWindData(data, id, self);
+            };
+        })(this));
+    },
+
+    hideExcept: function(id, event){
         for(var i=1; i<=8; i++){
             if(i != id)
-                hideDiv(i);
+                this.hideDiv(i+event);
         }
     },
 
@@ -108,34 +123,20 @@ var swirlnetSections = {
         });
     },
 
-    processWindData: function(allRows, id) {
-        var x = [], y1 = [], y2= [];
-        var y3 = [], y4 = [], y5= [], y6=[];
-        for (var i=0; i<allRows.length; i++) {
-            row = allRows[i];
-            x.push( row['TIMESTAMP'] );
-            y1.push( row['Kmh_Max3Sec'] );
-            y2.push( row['WS_kmh_3SecAvg_TMx'] );
-            y3.push(row['WindDir_3sec']);
-            y4.push( parseFloat(row['Kmh_Mean']).toFixed(2) );
-            y5.push( parseFloat(row['WindDir_MeanVect']).toFixed(2) );
-            y6.push(row['Kmh_StDev']);
+    addClickHandlers: function (event) {
+        for (var i=1; i<9 ; i++){
+            $( "#move-"+i+ event).click(
+                (function (i, self, event) {
+                    return function() {
+                        debugger;
+                        self.showDiv(i+event);
+                        self.hideExcept(i,event);
+                    }
+                })(i, this, event));
         }
-        makePlotlyWind(x , y1, y2, y3, y4, y5, y6, id);
     },
 
-    processWeatherData: function(allRows, id) {
-        var x = [], y1 = [], y2= [];
-        for (var i=0; i<allRows.length; i++) {
-            row = allRows[i];
-            x.push( row['TIMESTAMP'] );
-            y1.push( row['Kmh_Max3Sec'] );
-            y2.push( row['Pressure'] );
-        }
-        makePlotlyWeather(x , y1, y2, id);
-    },
-
-    makePlotlyWeather: function( x, y1, y2, id ){
+    makePlotlyWeather: function( x, y1, y2, id , self){
         var traces1 = [{
             x: x,
             y: y1,
@@ -157,7 +158,7 @@ var swirlnetSections = {
                 title: 'Wind Speed km/h',
                 autorange: false,
                 fixedrange:true,
-                range: [0, maxRange]
+                range: [0, self.maxRange]
             },
             yaxis2:{
                 autorange: false,
@@ -180,7 +181,7 @@ var swirlnetSections = {
         Plotly.newPlot(id, traces1, layout);
     },
 
-    makePlotlyWind: function( x, y1, y2, y3, y4, y5, y6, id){
+    makePlotlyWind: function( x, y1, y2, y3, y4, y5, y6, id, self){
         var traces1 = [{
             x: x,
             y: y1,
@@ -211,7 +212,7 @@ var swirlnetSections = {
                 title: 'Wind Speed km/h',
                 autorange: false,
                 fixedrange:true,
-                range:[0,maxRange]
+                range:[0, self.maxRange]
             },
             yaxis2: {
                 title: 'Direction',
@@ -232,5 +233,75 @@ var swirlnetSections = {
             }
         };
         Plotly.newPlot(id, traces1,layout);
+    },
+
+    processWindData: function(allRows, id, self) {
+        var x = [], y1 = [], y2= [];
+        var y3 = [], y4 = [], y5= [], y6=[];
+        for (var i=0; i<allRows.length; i++) {
+            row = allRows[i];
+            x.push( row['TIMESTAMP'] );
+            y1.push( row['Kmh_Max3Sec'] );
+            y2.push( row['WS_kmh_3SecAvg_TMx'] );
+            y3.push(row['WindDir_3sec']);
+            y4.push( parseFloat(row['Kmh_Mean']).toFixed(2) );
+            y5.push( parseFloat(row['WindDir_MeanVect']).toFixed(2) );
+            y6.push(row['Kmh_StDev']);
+        }
+        self.makePlotlyWind(x , y1, y2, y3, y4, y5, y6, id, self);
+    },
+
+    processWeatherData: function(allRows, id, self) {
+        var x = [], y1 = [], y2= [];
+        for (var i=0; i<allRows.length; i++) {
+            row = allRows[i];
+            x.push( row['TIMESTAMP'] );
+            y1.push( row['Kmh_Max3Sec'] );
+            y2.push( row['Pressure'] );
+        }
+        self.makePlotlyWeather(x , y1, y2, id, self);
+    },
+
+    resize: function() {
+        this.plots.forEach(function (t) {
+            Plotly.Plots.resize(t);
+        });
+    },
+
+    initComponents: function(event){
+        for(var i=1; i<=6; i++) {
+            $('#carousel-'+i+event).on('slide.bs.carousel',(function (i, self) {
+                return function () {
+                    debugger;
+                    //two plots for each tower
+                    Plotly.Plots.resize(self.plots[(i-1) * 2]);
+                    Plotly.Plots.resize(self.plots[(i-1) * 2 + 1]);
+
+                    if(self.plots.length>12 && self.plots.length<=24) {
+                        Plotly.Plots.resize(self.plots[((i - 1) * 2)+12]);
+                        Plotly.Plots.resize(self.plots[((i - 1) * 2) + 13]);
+                    }
+                }
+            })(i, this));
+        }
+        for(var i=2; i<=8; i++){
+            this.hideDiv(i+event);
+        }
+    },
+
+    getNodes: function(event){
+        for (var i=1; i<=6; i++){
+            this.plots.push((d3.select('div[id="t'+i+event+'-wind"]')).node());
+            this.plots.push((d3.select('div[id="t'+i+event+'-pressure"]')).node());
+        }
+    },
+
+    refresh: function(dir, event) {
+        for(var x=0; x< 6 ; x++){
+            var chartNum=x+1;
+            this.makeplotWind(dir+"t"+chartNum+".csv", "t"+chartNum+event+"-wind");
+            this.makeplotWeather(dir+"t"+chartNum+".csv", "t"+chartNum+event+"-pressure");
+        }
     }
+
 };

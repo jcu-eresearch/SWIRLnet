@@ -2,6 +2,9 @@ var swirlnetDashboard = (function (){
 
     var historicalMap= Object.create(swirlnetMap);
     var currentMap= Object.create(swirlnetMap);
+
+    var historicalTowers= Object.create(swirlnetSections);
+
     var init = function (settings) {
         historicalMap.initMap({
             parent: ".cts-content",
@@ -9,13 +12,36 @@ var swirlnetDashboard = (function (){
             id : "historicalMap"
         });
         historicalMap.addMarkers(settings["locationsOld"]);
+        historicalTowers.init("data/old/processed/", ".cts-content", 'historical');
+
         currentMap.initMap({
             parent: ".cts-content",
             title: "SWIRLnet Current Data",
             id : "currentMap"
         });
         currentMap.addMarkers(settings["locations"]);
+        historicalTowers.init("data/processed/", ".cts-content", 'current');
+
+
+
+        window.onresize = function() {
+            historicalTowers.resize();
+            currentTowers.resize();
+        };
+
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip({
+                trigger : 'hover'
+            });
+        });
+
+        $('#selector button').click(function() {
+            $(this).addClass('active').siblings().removeClass('active');
+        });
     };
+
+
+
     return {
         init: init
     };
@@ -23,8 +49,10 @@ var swirlnetDashboard = (function (){
 
 $.getJSON("config/config.json", function(json) {
   swirlnetDashboard.init(json);
+
 });
 
+/*
 
 //TODO: read these paths from the config file
 var currentDir="data/processed/";
@@ -63,18 +91,11 @@ var addClickHandlers = function () {
 };
 
 addClickHandlers();
-$('#selector button').click(function() {
-    $(this).addClass('active').siblings().removeClass('active');
 
-});
 
 var ranges={};
 
-$(function () {
-    $('[data-toggle="tooltip"]').tooltip({
-        trigger : 'hover'
-    });
-});
+
 
 
 $.getJSON("config/config.json", function(json) {
@@ -103,7 +124,7 @@ var getNodes= function(){
     }
 };
 
-getNodes();
+
 
 window.onresize = function() {
 
@@ -126,6 +147,7 @@ var initComponents= function(){
     }
 };
 
+getNodes();
 initComponents();
 
 var refresh = function() {
@@ -145,3 +167,4 @@ var interval = 1000 * 60 * 5;
 setInterval(refresh, interval);
 
 
+*/
