@@ -25,7 +25,7 @@ var swirlnetDashboard = (function (){
             currentTowers.init("data-preview/processed/", ".cts-content",
                 'current', settings["locations"],
                 ["data-preview/timelapse/ccfc1/Camera1.mp4",
-                    "data-preview/timelapse/old/ccfc2/Camera2.mp4"],
+                    "data-preview/timelapse/ccfc2/Camera2.mp4"],
                 false);
         }
 
@@ -44,8 +44,8 @@ var swirlnetDashboard = (function (){
             historicalMap.renderTrack('data-preview/old/track.json');
             historicalTowers.init("data-preview/old/processed/", ".cts-content",
                 'historical', settings["locationsOld"],
-                ["data-preview/old/Camera1/Camera1.mp4",
-                    "data-preview/old/Camera2/Camera2.mp4"],
+                ["data-preview/timelapse/old/Camera1/Camera1.mp4",
+                    "data-preview/timelapse/old/Camera2/Camera2.mp44"],
                 true);
         }
 
