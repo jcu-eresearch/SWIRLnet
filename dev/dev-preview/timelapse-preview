@@ -1,0 +1,13 @@
+
+
+ffmpeg -r 15 -pattern_type glob -i '/srv/SWIRLnet/data-preview/timelapse/ccfc1/*.jpg' -s 1280x720 -vcodec libx264 -pix_fmt yuv420p -y /srv/SWIRLnet/data-preview/timelapse/ccfc1/Camera1_.mp4
+ffmpeg -r 15 -pattern_type glob -i '/srv/SWIRLnet/data-preview/timelapse/ccfc2/*.jpg' -s 1280x720 -vcodec libx264 -pix_fmt yuv420p -y /srv/SWIRLnet/data-preview/timelapse/ccfc2/Camera2_.mp4
+
+mv /srv/SWIRLnet/data-preview/timelapse/ccfc1/Camera1_.mp4 /srv/SWIRLnet/data-preview/timelapse/ccfc1/Camera1.mp4
+mv /srv/SWIRLnet/data-preview/timelapse/ccfc2/Camera2_.mp4 /srv/SWIRLnet/data-preview/timelapse/ccfc2/Camera2.mp4
+
+ffmpeg -r 15 -pattern_type glob -i '/srv/SWIRLnet/data-preview/timelapse/old/Camera1/*.jpg' -s 1280x720 -vcodec libx264 -pix_fmt yuv420p -y /srv/SWIRLnet/data-preview/timelapse/old/Camera1/Camera1_.mp4
+ffmpeg -r 15 -pattern_type glob -i '/srv/SWIRLnet/data-preview/timelapse/old/Camera2/*.jpg' -s 1280x720 -vcodec libx264 -pix_fmt yuv420p -y /srv/SWIRLnet/data-preview/timelapse/old/Camera2/Camera2_.mp4
+
+mv /srv/SWIRLnet/data-preview/timelapse/old/Camera1/Camera1_.mp4 /srv/SWIRLnet/data-preview/timelapse/old/Camera1/Camera1.mp4
+mv /srv/SWIRLnet/data-preview/timelapse/old/Camera2/Camera2_.mp4 /srv/SWIRLnet/data-preview/timelapse/old/Camera2/Camera2.mp4
