@@ -34,6 +34,8 @@ var swirlnetMap = {
             accessToken: this.accessToken
         }).addTo(this.mapObject);
         this.mapObject.scrollWheelZoom.disable();
+
+
     },
 
     addMarkers: function (locations) {
@@ -56,6 +58,7 @@ var swirlnetMap = {
 
     renderTrack: function (trackFile) {
         if (!this.mapObject) return;
+
         $.getJSON(trackFile,  (function (mapObject) {
             return function (json) {
                 var myStyle = {

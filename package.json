@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/jcu-eresearch/SWIRLnet#readme",
   "dependencies": {
+    "@mapbox/togeojson": "^0.16.0",
     "video.js": "^6.7.3"
   },
   "devDependencies": {},

@@ -298,7 +298,7 @@ var swirlnetSections = {
         for(var i=1; i<=6; i++) {
             $('#carousel-'+i+event).on('slide.bs.carousel',(function (i, self) {
                 return function () {
-                    debugger;
+                    
                     //two plots for each tower
                     Plotly.Plots.resize(self.plots[(i-1) * 2]);
                     Plotly.Plots.resize(self.plots[(i-1) * 2 + 1]);
@@ -311,7 +311,7 @@ var swirlnetSections = {
             })(i, this));
         }
         for(var i=2; i<=8; i++){
-            debugger;
+            
             this.hideDiv(i+event);
         }
     },

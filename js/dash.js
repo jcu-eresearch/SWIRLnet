@@ -7,27 +7,42 @@ var swirlnetDashboard = (function (){
     var currentTowers= Object.create(swirlnetSections);
 
     var init = function (settings) {
-        historicalMap.initMap({
-            parent: ".cts-content",
-            title: "SWIRLnet TC Debbie",
-            id : "historicalMap"
-        });
-        historicalMap.addMarkers(settings["locationsOld"]);
-        historicalTowers.init("data/old/processed/", ".cts-content",
-            'historical', settings["locationsOld"],
-            ["data/old/Camera1/Camera1.mp4", "data/old/Camera2/Camera2.mp4"],
-            true);
 
-        currentMap.initMap({
-            parent: ".cts-content",
-            title: "SWIRLnet Current Data",
-            id : "currentMap"
-        });
-        currentMap.addMarkers(settings["locations"]);
-        currentTowers.init("data/processed/", ".cts-content",
-            'current', settings["locations"],
-            ["data/ccfc1/Camera1.mp4", "data/old/ccfc2/Camera2.mp4"],
-            false);
+        if(settings.showOld){
+            historicalMap.initMap({
+                parent: ".cts-content",
+                title: "SWIRLnet TC Debbie",
+                id : "historicalMap"
+            });
+            historicalMap.addMarkers(settings["locationsOld"]);
+            historicalMap.renderTrack('data/old/TC_Debbie_Track.json');
+            historicalTowers.init("data/old/processed/", ".cts-content",
+                'historical', settings["locationsOld"],
+                ["data/old/Camera1/Camera1.mp4", "data/old/Camera2/Camera2.mp4"],
+                true);
+        }
+
+        if(settings.showCurrent){
+            currentMap.initMap({
+                parent: ".cts-content",
+                title: "SWIRLnet Current Data",
+                id : "currentMap"
+            });
+            currentMap.addMarkers(settings["locations"]);
+            currentTowers.init("data/processed/", ".cts-content",
+                'current', settings["locations"],
+                ["data/ccfc1/Camera1.mp4", "data/old/ccfc2/Camera2.mp4"],
+                false);
+
+
+        }
+
+        if(settings.showCombined){
+
+        }
+
+
+
 
 
 
