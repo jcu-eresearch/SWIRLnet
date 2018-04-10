@@ -37,13 +37,6 @@ var swirlnetDashboard = (function (){
 
         }
 
-        if(settings.showCombined){
-
-        }
-
-
-
-
 
 
         window.onresize = function() {
@@ -69,8 +62,10 @@ var swirlnetDashboard = (function (){
     };
 })();
 
-$.getJSON("config/config-preview.json", function(json) {
-  swirlnetDashboard.init(json);
+$(document).ready(function() {
+    $.ajaxSetup({ cache: false });
+    $.getJSON("config/config-preview.json", function (json) {
+        swirlnetDashboard.init(json);
 
-});
-
+    });
+})

@@ -2,3 +2,4 @@ config/
 data/
 data/old
 unprocessed/
+node_modules/
