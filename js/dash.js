@@ -22,11 +22,14 @@ var swirlnetDashboard = (function (){
             currentMap.addMarkers(settings["locations"]);
             currentMap.fitBounds();
             currentMap.showCyclone();
+            if(settings.yAxisLimits && settings.yAxisLimits.wind  && settings.yAxisLimits.wind[1])
+                currentTowers.setMaxRange(settings.yAxisLimits.wind[1]);
             currentTowers.init("data-preview/processed/", ".cts-content",
                 'current', settings["locations"],
                 ["data-preview/timelapse/ccfc1/Camera1.mp4",
                     "data-preview/timelapse/ccfc2/Camera2.mp4"],
                 false);
+
         }
 
         if(settings.showOld){
@@ -42,11 +45,14 @@ var swirlnetDashboard = (function (){
             historicalMap.addMarkers(settings["locationsOld"]);
             historicalMap.fitBounds();
             historicalMap.renderTrack('data-preview/old/track.json');
+            if(settings.yAxisLimits && settings.yAxisLimits.windOld  && settings.yAxisLimits.windOld[1])
+                historicalTowers.setMaxRange(settings.yAxisLimits.windOld[1]);
             historicalTowers.init("data-preview/old/processed/", ".cts-content",
                 'historical', settings["locationsOld"],
                 ["data-preview/timelapse/old/Camera1/Camera1.mp4",
                     "data-preview/timelapse/old/Camera2/Camera2.mp4"],
                 true);
+
         }
 
 
