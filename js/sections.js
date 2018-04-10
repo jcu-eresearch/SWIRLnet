@@ -17,7 +17,6 @@ var swirlnetSections = {
             }
         }
 
-
         var interval = 1000 * 60 * 5;
         setInterval(this.refresh, interval);
 
@@ -26,8 +25,8 @@ var swirlnetSections = {
             this.createVideo(parent, 8 + event, sources[1], 'Camera 2');
         }
         else {
-            this.createVideo(parent, 7 + event, '', 'Camera 1');
-            this.createVideo(parent, 8 + event, '', 'Camera 2');
+            this.createVideoAlternate(parent, 7 + event, '', 'Camera 1');
+            this.createVideoAlternate(parent, 8 + event, '', 'Camera 2');
         }
 
         this.getNodes(event);
@@ -69,6 +68,17 @@ var swirlnetSections = {
             '<a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>' +
             '</p>' +
             '</video>' +
+            '</div>' +
+            '</div>';
+        $(parent).append(vid);
+    },
+
+    createVideoAlternate: function (parent, id, source, name) {
+        var vid = '<div class="cts-chart card cts-card t'+id+'" >' +
+            '<div class="card-body">' +
+            '<h4 class="card-title">'+name+'</h4>' +
+            '<h6 class="card-subtitle mb-2 text-muted">Timelapse Video</h6>' +
+            'No video available at this time'+
             '</div>' +
             '</div>';
         $(parent).append(vid);
