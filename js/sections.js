@@ -4,19 +4,29 @@ var swirlnetSections = {
     d3: Plotly.d3,
     maxRange : 150,
 
-    init: function (dir, parent, event){
+    init: function (dir, parent, event, loc, sources ){
         this.createNav(parent, event);
         this.createTowers(parent, event);
         for(var x=1; x<= 6 ; x++){
             this.makeplotWind(dir+"t"+x+".csv", "t"+x+event+"-wind");
             this.makeplotWeather(dir+"t"+x+".csv", "t"+x+event+"-pressure");
+            var selected=$(".t"+x+event);
+            if(loc && loc.lenght<=x) {
+                selected.find("h4").html(loc[x - 1].name);
+                selected.find("h6").html(loc[x - 1].place);
+            }
         }
-        this.getNodes(event);
-        this.initComponents(event);
-        this.addClickHandlers(event);
+
 
         var interval = 1000 * 60 * 5;
         setInterval(this.refresh, interval);
+
+        this.createVideo(parent, 7+event, sources[0], 'Camera 1');
+        this.createVideo(parent, 8+event, sources[1], 'Camera 2');
+        this.getNodes(event);
+        this.addClickHandlers(event);
+        this.initComponents(event);
+
     },
 
     setMaxRange: function(x){
@@ -128,7 +138,6 @@ var swirlnetSections = {
             $( "#move-"+i+ event).click(
                 (function (i, self, event) {
                     return function() {
-                        debugger;
                         self.showDiv(i+event);
                         self.hideExcept(i,event);
                     }
@@ -285,6 +294,7 @@ var swirlnetSections = {
             })(i, this));
         }
         for(var i=2; i<=8; i++){
+            debugger;
             this.hideDiv(i+event);
         }
     },

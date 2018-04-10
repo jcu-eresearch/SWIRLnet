@@ -4,6 +4,7 @@ var swirlnetDashboard = (function (){
     var currentMap= Object.create(swirlnetMap);
 
     var historicalTowers= Object.create(swirlnetSections);
+    var currentTowers= Object.create(swirlnetSections);
 
     var init = function (settings) {
         historicalMap.initMap({
@@ -12,7 +13,9 @@ var swirlnetDashboard = (function (){
             id : "historicalMap"
         });
         historicalMap.addMarkers(settings["locationsOld"]);
-        historicalTowers.init("data/old/processed/", ".cts-content", 'historical');
+        historicalTowers.init("data/old/processed/", ".cts-content",
+            'historical', settings["locationsOld"],
+            ["data/old/Camera1/Camera1.mp4", "data/old/Camera2/Camera2.mp4"]);
 
         currentMap.initMap({
             parent: ".cts-content",
@@ -20,7 +23,9 @@ var swirlnetDashboard = (function (){
             id : "currentMap"
         });
         currentMap.addMarkers(settings["locations"]);
-        historicalTowers.init("data/processed/", ".cts-content", 'current');
+        currentTowers.init("data/processed/", ".cts-content",
+            'current', settings["locations"],
+            ["data/ccfc1/Camera1.mp4", "data/old/ccfc2/Camera2.mp4"]);
 
 
 
