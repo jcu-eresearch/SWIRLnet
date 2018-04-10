@@ -20,6 +20,7 @@ var swirlnetDashboard = (function (){
                 id : "currentMap"
             });
             currentMap.addMarkers(settings["locations"]);
+            currentMap.fitBounds();
             currentMap.showCyclone();
             currentTowers.init("data-preview/processed/", ".cts-content",
                 'current', settings["locations"],
@@ -39,6 +40,7 @@ var swirlnetDashboard = (function (){
                 id : "historicalMap"
             });
             historicalMap.addMarkers(settings["locationsOld"]);
+            historicalMap.fitBounds();
             historicalMap.renderTrack('data-preview/old/track.json');
             historicalTowers.init("data-preview/old/processed/", ".cts-content",
                 'historical', settings["locationsOld"],
