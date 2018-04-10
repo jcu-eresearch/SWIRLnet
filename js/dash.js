@@ -15,7 +15,7 @@ var swirlnetDashboard = (function (){
                 id : "historicalMap"
             });
             historicalMap.addMarkers(settings["locationsOld"]);
-            historicalMap.renderTrack('data/old/TC_Debbie_Track.json');
+            historicalMap.renderTrack('data/old/track.json');
             historicalTowers.init("data/old/processed/", ".cts-content",
                 'historical', settings["locationsOld"],
                 ["data/old/Camera1/Camera1.mp4", "data/old/Camera2/Camera2.mp4"],
