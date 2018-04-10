@@ -455,7 +455,7 @@
             //Collect the headings for non-default locations if different from default locations
             for(var k=0; k<otherLocs.length; k++){
                 var lo=otherLocs[k];
-                otherHeadings.push({h4: lo.name, h6: lo.place});
+                otherHeadings.push({h4: lo.chartHeading, h6: lo.chartSubheading });
             }
 
 
