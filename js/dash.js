@@ -8,12 +8,15 @@ var swirlnetDashboard = (function (){
 
     var init = function (settings) {
 
-
+        if(!settings) return;
 
         if(settings.showCurrent){
+            var title = "SWIRLnet Current Data";
+            if(settings["dateRanges"] && settings["dateRanges"][1] )
+                title= settings["dateRanges"][1].name;
             currentMap.initMap({
                 parent: ".cts-content",
-                title: "SWIRLnet Current Data",
+                title: title,
                 id : "currentMap"
             });
             currentMap.addMarkers(settings["locations"]);
@@ -25,9 +28,13 @@ var swirlnetDashboard = (function (){
         }
 
         if(settings.showOld){
+            title = "SWIRLnet Historical Data";
+            if(settings["dateRanges"] && settings["dateRanges"][0] )
+                title= settings["dateRanges"][0].name;
+
             historicalMap.initMap({
                 parent: ".cts-content",
-                title: "SWIRLnet TC Debbie",
+                title: title,
                 id : "historicalMap"
             });
             historicalMap.addMarkers(settings["locationsOld"]);
