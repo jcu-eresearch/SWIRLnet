@@ -45,7 +45,7 @@ var swirlnetDashboard = (function (){
             historicalTowers.init("data-preview/old/processed/", ".cts-content",
                 'historical', settings["locationsOld"],
                 ["data-preview/timelapse/old/Camera1/Camera1.mp4",
-                    "data-preview/timelapse/old/Camera2/Camera2.mp44"],
+                    "data-preview/timelapse/old/Camera2/Camera2.mp4"],
                 true);
         }
 
