@@ -15,7 +15,8 @@ var swirlnetDashboard = (function (){
         historicalMap.addMarkers(settings["locationsOld"]);
         historicalTowers.init("data/old/processed/", ".cts-content",
             'historical', settings["locationsOld"],
-            ["data/old/Camera1/Camera1.mp4", "data/old/Camera2/Camera2.mp4"]);
+            ["data/old/Camera1/Camera1.mp4", "data/old/Camera2/Camera2.mp4"],
+            true);
 
         currentMap.initMap({
             parent: ".cts-content",
@@ -25,7 +26,8 @@ var swirlnetDashboard = (function (){
         currentMap.addMarkers(settings["locations"]);
         currentTowers.init("data/processed/", ".cts-content",
             'current', settings["locations"],
-            ["data/ccfc1/Camera1.mp4", "data/old/ccfc2/Camera2.mp4"]);
+            ["data/ccfc1/Camera1.mp4", "data/old/ccfc2/Camera2.mp4"],
+            false);
 
 
 
