@@ -14,7 +14,8 @@ for file in *.dat
 done
 
 cp -R /srv/SWIRLnet/unprocessed /srv/SWIRLnet/data-preview
-
+mv -v /srv/SWIRLnet/data-preview/unprocessed/*.csv /srv/SWIRLnet/data-preview/
+mv  -v /srv/SWIRLnet/data-preview/unprocessed/old/*.csv /srv/SWIRLnet/data-preview/old/
 
 mv  -v /srv/SWIRLnet/unprocessed/*.csv /srv/SWIRLnet/data/
 mv  -v /srv/SWIRLnet/unprocessed/old/*.csv /srv/SWIRLnet/data/old/
