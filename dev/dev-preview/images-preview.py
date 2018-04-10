@@ -9,8 +9,8 @@ import os
 import json
 
 
-unprocessedDir= "/srv/SWIRLnet/data-preview/"
-dataDir ="/srv/SWIRLnet/data-preview/timelapse"
+unprocessedDir= "/srv/SWIRLnet/data-preview/unprocessed/"
+dataDir ="/srv/SWIRLnet/data-preview/timelapse/"
 configDir="/srv/SWIRLnet/config/"
 
 
