@@ -8,6 +8,22 @@ var swirlnetDashboard = (function (){
 
     var init = function (settings) {
 
+
+
+        if(settings.showCurrent){
+            currentMap.initMap({
+                parent: ".cts-content",
+                title: "SWIRLnet Current Data",
+                id : "currentMap"
+            });
+            currentMap.addMarkers(settings["locations"]);
+            currentMap.showCyclone();
+            currentTowers.init("data/processed/", ".cts-content",
+                'current', settings["locations"],
+                ["data/ccfc1/Camera1.mp4", "data/old/ccfc2/Camera2.mp4"],
+                false);
+        }
+
         if(settings.showOld){
             historicalMap.initMap({
                 parent: ".cts-content",
@@ -21,22 +37,6 @@ var swirlnetDashboard = (function (){
                 ["data/old/Camera1/Camera1.mp4", "data/old/Camera2/Camera2.mp4"],
                 true);
         }
-
-        if(settings.showCurrent){
-            currentMap.initMap({
-                parent: ".cts-content",
-                title: "SWIRLnet Current Data",
-                id : "currentMap"
-            });
-            currentMap.addMarkers(settings["locations"]);
-            currentTowers.init("data/processed/", ".cts-content",
-                'current', settings["locations"],
-                ["data/ccfc1/Camera1.mp4", "data/old/ccfc2/Camera2.mp4"],
-                false);
-
-
-        }
-
 
 
         window.onresize = function() {
