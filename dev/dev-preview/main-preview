@@ -1,5 +1,6 @@
 #!/bin/bash
 
-python3.6 /srv/SWIRLnet/dev/script-preview.py
-python3.6 /srv/SWIRLnet/dev/images-preview.py
-/srv/SWIRLnet/dev/timelapse-preview
+
+python3.6 /srv/SWIRLnet/dev/dev-preview/script-preview.py
+python3.6 /srv/SWIRLnet/dev/dev-preview/images-preview.py
+/srv/SWIRLnet/dev/dev-preview/timelapse-preview
