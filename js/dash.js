@@ -44,7 +44,7 @@ var swirlnetDashboard = (function (){
             });
             historicalMap.addMarkers(settings["locationsOld"]);
             historicalMap.fitBounds();
-            historicalMap.renderTrack('data-preview/old/track.json');
+            historicalMap.renderTrack('data-preview/old/cyclone-track.geojson');
             if(settings.yAxisLimits && settings.yAxisLimits.windOld  && settings.yAxisLimits.windOld[1])
                 historicalTowers.setMaxRange(settings.yAxisLimits.windOld[1]);
             historicalTowers.init("data-preview/old/processed/", ".cts-content",
@@ -54,7 +54,6 @@ var swirlnetDashboard = (function (){
                 true);
 
         }
-
 
         window.onresize = function() {
             historicalTowers.resize();

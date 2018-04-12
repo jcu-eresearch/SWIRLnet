@@ -4,3 +4,5 @@
 python3.6 /srv/SWIRLnet/dev/dev-preview/script-preview.py
 python3.6 /srv/SWIRLnet/dev/dev-preview/images-preview.py
 /srv/SWIRLnet/dev/dev-preview/timelapse-preview
+
+togeojson /srv/SWIRLnet/data-preview/old/*.kml > /srv/SWIRLnet/data-preview/old/cyclone-track.geojson
