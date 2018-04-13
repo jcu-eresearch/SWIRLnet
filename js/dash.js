@@ -11,24 +11,60 @@ var swirlnetDashboard = (function (){
         if(!settings) return;
 
         if(settings.showCurrent){
+
+            // The default title for the map
             var title = "SWIRLnet Current Data";
+
+            // If the title is available
             if(settings["dateRanges"] && settings["dateRanges"][1] )
                 title= settings["dateRanges"][1].name;
+
+            // Initialize the Map
             currentMap.initMap({
                 parent: ".cts-content",
                 title: title,
                 id : "currentMap"
             });
+
+            // Add markers
             currentMap.addMarkers(settings["locations"]);
             currentMap.fitBounds();
             currentMap.showCyclone();
-            if(settings.yAxisLimits && settings.yAxisLimits.wind  && settings.yAxisLimits.wind[1])
+
+            if(settings.yAxisLimits &&
+                settings.yAxisLimits.wind  &&
+                settings.yAxisLimits.wind[1])
                 currentTowers.setMaxRange(settings.yAxisLimits.wind[1]);
-            currentTowers.init("data-preview/processed/", ".cts-content",
-                'current', settings["locations"],
-                ["data-preview/timelapse/ccfc1/Camera1.mp4",
-                    "data-preview/timelapse/ccfc2/Camera2.mp4"],
-                false);
+
+            var displayCameras = [false, false];
+            var cameraNames = ['Camera1', 'Camera2'];
+            if(settings.cameraDateRanges && settings.cameraDateRanges.length>1){
+                for(var i=0; i< settings.cameraDateRanges.length ; i++){
+                    if(settings.cameraDateRanges[i].display)
+                        displayCameras[i]= settings.cameraDateRanges[i].display;
+                    if(settings.cameraDateRanges[i].name)
+                        cameraNames[i] = settings.cameraDateRanges[i].name;
+                }
+            }
+
+            currentTowers.init(
+                "data-preview/processed/",
+                ".cts-content",
+                'current',
+                settings["locations"],
+                [
+                    {
+                        source: "data-preview/timelapse/ccfc1/Camera1.mp4",
+                        display: displayCameras[0],
+                        name : cameraNames[0]
+                    },
+                    {
+                        source: "data-preview/timelapse/ccfc2/Camera2.mp4",
+                        display: displayCameras[1],
+                        name : cameraNames[1]
+                    }
+                ]
+            );
 
         }
 
@@ -45,13 +81,42 @@ var swirlnetDashboard = (function (){
             historicalMap.addMarkers(settings["locationsOld"]);
             historicalMap.fitBounds();
             historicalMap.renderTrack('data-preview/old/cyclone-track.geojson');
-            if(settings.yAxisLimits && settings.yAxisLimits.windOld  && settings.yAxisLimits.windOld[1])
+
+            if(settings.yAxisLimits &&
+                settings.yAxisLimits.windOld  &&
+                settings.yAxisLimits.windOld[1])
                 historicalTowers.setMaxRange(settings.yAxisLimits.windOld[1]);
-            historicalTowers.init("data-preview/old/processed/", ".cts-content",
-                'historical', settings["locationsOld"],
-                ["data-preview/timelapse/old/Camera1/Camera1.mp4",
-                    "data-preview/timelapse/old/Camera2/Camera2.mp4"],
-                true);
+
+            var displayCameras = [false, false];
+            var cameraNames = ['Camera1', 'Camera2'];
+            if(settings.cameraDateRanges && settings.cameraDateRanges.length>1){
+                for(var i=0; i< settings.cameraDateRanges.length ; i++){
+                    if(settings.cameraDateRanges[i].displayOld)
+                        displayCameras[i]= settings.cameraDateRanges[i].displayOld;
+                    if(settings.cameraDateRanges[i].name)
+                        cameraNames[i] = settings.cameraDateRanges[i].name;
+                }
+            }
+
+            historicalTowers.init(
+                "data-preview/old/processed/",
+                ".cts-content",
+                'historical',
+                settings["locationsOld"],
+                [
+                    {
+                        source: "data-preview/timelapse/old/Camera1/Camera1.mp4",
+                        display: displayCameras[0],
+                        name : cameraNames[0]
+
+                    },
+                    {
+                        source: "data-preview/timelapse/old/Camera2/Camera2.mp4",
+                        display: displayCameras[1],
+                        name : cameraNames[1]
+                    }
+                ]
+            );
 
         }
 

@@ -4,7 +4,7 @@ var swirlnetSections = {
     d3: Plotly.d3,
     maxRange : 150,
 
-    init: function (dir, parent, event, loc, sources, includeCameras ){
+    init: function (dir, parent, event, loc, includeCameras ){
         this.createNav(parent, event);
         this.createTowers(parent, event);
         for(var x=1; x<= 6 ; x++){
@@ -20,13 +20,18 @@ var swirlnetSections = {
         var interval = 1000 * 60 * 5;
         setInterval(this.refresh, interval);
 
-        if(includeCameras) {
-            this.createVideo(parent, 7 + event, sources[0], 'Camera 1');
-            this.createVideo(parent, 8 + event, sources[1], 'Camera 2');
+        if(includeCameras && includeCameras[0] && includeCameras[0].display) {
+            this.createVideo(parent, 7 + event, includeCameras[0].source, includeCameras[0].name);
         }
         else {
-            this.createVideoAlternate(parent, 7 + event, '', 'Camera 1');
-            this.createVideoAlternate(parent, 8 + event, '', 'Camera 2');
+            this.createVideoAlternate(parent, 7 + event, '', includeCameras[0].name);
+        }
+
+        if(includeCameras && includeCameras[1] && includeCameras[1].display) {
+            this.createVideo(parent, 8 + event, includeCameras[1].source, includeCameras[1].name);
+        }
+        else {
+            this.createVideoAlternate(parent, 8 + event, '', includeCameras[1].name);
         }
 
         this.getNodes(event);
