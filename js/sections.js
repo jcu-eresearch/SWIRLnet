@@ -88,7 +88,7 @@ var swirlnetSections = {
             '<div class="card-body">' +
             '<h4 class="card-title">'+name+'</h4>' +
             '<h6 class="card-subtitle mb-2 text-muted">Timelapse Video</h6>' +
-            '<video id="my-video" class="video-js  vjs-default-skin vjs-4-3" controls preload="auto"  height="auto" width="auto"' +
+            '<video id="video'+id+'" class="video-js  vjs-default-skin vjs-4-3"  preload="auto"  height="auto" width="auto"' +
             'data-setup="{}">' +
             '<source src="'+source+'" type="video/mp4">' +
             '<p class="vjs-no-js">' +
@@ -99,6 +99,9 @@ var swirlnetSections = {
             '</div>' +
             '</div>';
         $(parent).append(vid);
+        var container = document.getElementById("video"+id);
+
+        var myVideo = videojs(container, { controls: true });
     },
 
     createVideoAlternate: function (parent, id, source, name) {
