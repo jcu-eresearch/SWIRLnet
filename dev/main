@@ -2,4 +2,4 @@
 /srv/SWIRLnet/dev/ctsscript
 python3.6 /srv/SWIRLnet/dev/script.py
 python3.6 /srv/SWIRLnet/dev/images.py
-/srv/SWIRLnet/dev/timelapse
+#/srv/SWIRLnet/dev/timelapse
