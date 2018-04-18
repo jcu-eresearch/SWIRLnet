@@ -106,6 +106,10 @@ button {
     cursor : pointer;
 }
 
+ol.carousel-indicators li:hover {
+    background-color: #DBE0E5;
+}
+
 * {
     border-radius: 0 !important;
 }
