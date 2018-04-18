@@ -146,8 +146,8 @@ var swirlnetSections = {
                 '<i class="fa fa-chevron-circle-right" data-toggle="tooltip" data-placement="left" title="Click to view next chart"></i>' +
                 '</a>' +*/
                 '<ol class="carousel-indicators">' +
-                '<li data-target="#carousel-'+i+event+'" data-slide-to="0" class="active">Wind</li>' +
-                '<li data-target="#carousel-'+i+event+'" data-slide-to="1">Pressure</li>' +
+                '<li data-toggle="tooltip" data-placement="top" title="click to view wind chart" data-target="#carousel-'+i+event+'" data-slide-to="0" class="active">Wind</li>' +
+                '<li data-toggle="tooltip" data-placement="top" title="click to view pressure chart" data-target="#carousel-'+i+event+'" data-slide-to="1">Pressure</li>' +
                 '</ol>' +
                 '</div>' +
                 '</div>' +
