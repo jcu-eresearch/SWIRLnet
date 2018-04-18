@@ -56,6 +56,7 @@ var swirlnetMap = {
         this.addZoomHandler();
     },
 
+    //TODO test this
     renderTrack: function (trackFile) {
         if (!this.mapObject) return;
 
@@ -271,7 +272,8 @@ var swirlnetMap = {
             return div;
         };
 
-        legend.addTo(this.mapObject);
+        // TODO fix when this shows up
+        //legend.addTo(this.mapObject);
     },
 
     showCyclone: function(){
@@ -302,7 +304,7 @@ var swirlnetMap = {
                                         if (split.length > 0) {
                                             split = split[split.length - 1].split(",");
                                             if (split && split.length > 0) {
-                                                var marker1 = L.marker([split[1], split[0]], {opacity: 0.01}).addTo(mymap);
+                                                var marker1 = L.marker([split[1], split[0]], {opacity: 0.01}).addTo(self.mapObject);
                                                 marker1.bindTooltip(L.tooltip({
                                                     direction: 'top',
                                                     permanent: true
@@ -311,7 +313,7 @@ var swirlnetMap = {
                                         }
                                     }
                                 }
-                                self.renderShapeFiles(mymap, 'data/cyclone/' + n);
+                                self.renderShapeFiles(self.mapObject, 'data/cyclone/' + n);
                             };
                         })(self)
                     });

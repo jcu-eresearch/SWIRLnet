@@ -3,10 +3,11 @@ var swirlnetSections = {
     plots : [],
     d3: Plotly.d3,
     maxRange : 150,
+    numTowers :6,
 
     init: function (dir, parent, event, loc, includeCameras ){
         this.createNav(parent, event);
-        this.createTowers(parent, event);
+        this.createTowers(parent, event, loc);
         for(var x=1; x<= 6 ; x++){
             this.makeplotWind(dir+"t"+x+".csv", "t"+x+event+"-wind");
             this.makeplotWeather(dir+"t"+x+".csv", "t"+x+event+"-pressure");
@@ -89,12 +90,24 @@ var swirlnetSections = {
         $(parent).append(vid);
     },
 
-    createTowers: function (parent, event) {
-        for (var i = 1; i < 7; i++) {
+    createTowers: function (parent, event, loc) {
+        var headings=[];
+        for (var j=0; j<this.numTowers ; j++){
+            headings.push({
+                name: "Tower"+(j+1),
+                location: ""
+            });
+        }
+
+        if(loc && loc.length>=this.numTowers){
+            headings= loc;
+        }
+
+        for (var i = 1; i < this.numTowers+1; i++) {
             var content = '<div class="card cts-card t'+i+event+'">' +
                 '<div class="card-body">' +
-                '<h4 class="card-title"></h4>' +
-                '<h6 class="card-subtitle mb-2 text-muted"></h6>' +
+                '<h4 class="card-title">'+headings[i-1].name+'</h4>' +
+                '<h6 class="card-subtitle mb-2 text-muted">'+headings[i-1].place+'</h6>' +
                 '<div id="carousel-'+i+event+'" class="carousel slide" data-ride="carousel" data-interval="false">' +
                 '<div class="carousel-inner">' +
                 '<div class="carousel-item active text-center">' +
