@@ -76,3 +76,36 @@ h4, h6, .card-body {
     font-size: 12px;
     text-align: left !important;
 }
+
+.carousel-indicators{
+    position: relative;
+    justify-content: center;
+    margin: 0;
+  /*  margin-left: 60px;*/
+    /*justify-content: flex-end;*/
+}
+
+ol.carousel-indicators li,
+ol.carousel-indicators li.active {
+
+    text-indent:0;
+    width:80px;
+    height: 40px;
+    border:none;
+    background-color: #F8F9FA;
+    cursor : pointer;
+    line-height: 40px;
+    text-align: center;
+}
+
+ol.carousel-indicators li.active {
+    background-color: #DBE0E5;
+}
+
+button {
+    cursor : pointer;
+}
+
+* {
+    border-radius: 0 !important;
+}

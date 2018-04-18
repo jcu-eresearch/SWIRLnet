@@ -93,8 +93,8 @@ var swirlnetDashboard = (function (){
                 for(var i=0; i< settings.cameraDateRanges.length ; i++){
                     if(settings.cameraDateRanges[i].displayOld)
                         displayCameras[i]= settings.cameraDateRanges[i].displayOld;
-                    if(settings.cameraDateRanges[i].name)
-                        cameraNames[i] = settings.cameraDateRanges[i].name;
+                    if(settings.cameraDateRanges[i].nameOld)
+                        cameraNames[i] = settings.cameraDateRanges[i].nameOld;
                 }
             }
 

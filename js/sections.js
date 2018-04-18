@@ -2,11 +2,12 @@ var swirlnetSections = {
 
     plots : [],
     d3: Plotly.d3,
-    maxRange : 150,
-    numTowers :6,
+    maxRange: 150,
+    numTowers: 6,
+    numCameras: 2,
 
     init: function (dir, parent, event, loc, includeCameras ){
-        this.createNav(parent, event);
+        this.createNav(parent, event, loc, includeCameras);
         this.createTowers(parent, event, loc);
         for(var x=1; x<= 6 ; x++){
             this.makeplotWind(dir+"t"+x+".csv", "t"+x+event+"-wind");
@@ -45,17 +46,38 @@ var swirlnetSections = {
         this.maxRange = x;
     },
 
-    createNav: function (parent, id) {
+    createNav: function (parent, id, loc, includeCameras) {
+        var headings=[];
+        var cameras=[];
+        for (var j=0; j<this.numTowers ; j++){
+            headings.push({
+                name: "Tower"+(j+1)
+            });
+        }
+        for (j=0; j<this.numCameras ; j++){
+            cameras.push({
+                name: "Camera"+(j+1)
+            });
+        }
+
+        if(loc && loc.length>=this.numTowers){
+            headings= loc;
+        }
+
+        if(includeCameras && includeCameras.length>=this.numCameras){
+            cameras= includeCameras;
+        }
+
         var nav =  '<div class="card cts-card no-border">'+
             '<div id="selector" class="card-body">'+
-            '<button type="button" class="btn btn-light active " id="move-1'+id+'">Tower 1</button>'+
-            '<button type="button" class="btn btn-light" id="move-2'+id+'">Tower 2</button>'+
-            '<button type="button" class="btn btn-light" id="move-3'+id+'">Tower 3</button>'+
-            '<button type="button" class="btn btn-light" id="move-4'+id+'">Tower 4</button>'+
-            '<button type="button" class="btn btn-light" id="move-5'+id+'">Tower 5</button>'+
-            '<button type="button" class="btn btn-light" id="move-6'+id+'">Tower 6</button>'+
-            '<button type="button" class="btn btn-light" id="move-7'+id+'">Camera 1</button>'+
-            '<button type="button" class="btn btn-light" id="move-8'+id+'">Camera 2</button>'+
+            '<button type="button" class="btn btn-light active " id="move-1'+id+'">'+headings[0].name+'</button>'+
+            '<button type="button" class="btn btn-light" id="move-2'+id+'">'+headings[1].name+'</button>'+
+            '<button type="button" class="btn btn-light" id="move-3'+id+'">'+headings[2].name+'</button>'+
+            '<button type="button" class="btn btn-light" id="move-4'+id+'">'+headings[3].name+'</button>'+
+            '<button type="button" class="btn btn-light" id="move-5'+id+'">'+headings[4].name+'</button>'+
+            '<button type="button" class="btn btn-light" id="move-6'+id+'">'+headings[5].name+'</button>'+
+            '<button type="button" class="btn btn-light" id="move-7'+id+'">'+cameras[0].name+'</button>'+
+            '<button type="button" class="btn btn-light" id="move-8'+id+'">'+cameras[1].name+'</button>'+
             '</div>'+
             '</div>';
         $(parent).append(nav);
@@ -117,12 +139,16 @@ var swirlnetSections = {
                 '<div id="t'+i+event+'-pressure" class="cts-chart"></div>' +
                 '</div>' +
                 '</div>' +
-                '<a class="carousel-control-prev" href="#carousel-'+i+event+'" role="button" data-slide="prev">' +
+                /*'<a class="carousel-control-prev" href="#carousel-'+i+event+'" role="button" data-slide="prev">' +
                 '<i class="fa fa-chevron-circle-left" data-toggle="tooltip" data-placement="left" title="Click to view previous chart"></i>' +
                 '</a>' +
                 '<a class="carousel-control-next" href="#carousel-'+i+event+'" role="button" data-slide="next" >' +
                 '<i class="fa fa-chevron-circle-right" data-toggle="tooltip" data-placement="left" title="Click to view next chart"></i>' +
-                '</a>' +
+                '</a>' +*/
+                '<ol class="carousel-indicators">' +
+                '<li data-target="#carousel-'+i+event+'" data-slide-to="0" class="active">Wind</li>' +
+                '<li data-target="#carousel-'+i+event+'" data-slide-to="1">Pressure</li>' +
+                '</ol>' +
                 '</div>' +
                 '</div>' +
                 '</div>';
@@ -328,10 +354,15 @@ var swirlnetSections = {
                 }
             })(i, this));
         }
+
         for(var i=2; i<=8; i++){
             
             this.hideDiv(i+event);
         }
+    },
+
+    goToSlide: function(number, i, event) {
+        $('#carousel-'+i+event).carousel(number);
     },
 
     getNodes: function(event){
