@@ -381,6 +381,34 @@ var swirlnetSections = {
             this.makeplotWind(dir+"t"+chartNum+".csv", "t"+chartNum+event+"-wind");
             this.makeplotWeather(dir+"t"+chartNum+".csv", "t"+chartNum+event+"-pressure");
         }
+    },
+
+    showDirection: function (degrees, event) {
+
+        var canvas = document.getElementById('direction' + event);
+        var ctx = canvas.getContext('2d');
+        var img = new Image();
+
+        var ang = degrees; //angle
+
+        img.onload = function () { //on image load do the following stuff
+            canvas.width = 200; //Any width
+            canvas.height = 500; //Any height
+            var cache = this; //cache the local copy of image element for future reference
+            var iw = cache.width;
+            var ih = cache.height;
+
+            ctx.save(); //saves the state of canvas
+            ctx.clearRect(0, 0, canvas.width, canvas.height); //clear the canvas
+            ctx.translate(canvas.width / 2, canvas.height / 2); //let's translate
+            ctx.rotate(Math.PI / 180 * (ang)); //increment the angle and rotate the image
+            ctx.translate(-(canvas.width / 2), -(canvas.height / 2)); //let's translate
+            ctx.drawImage(img, canvas.width / 2 - iw / 2, canvas.height / 2 - ih / 2, iw, ih); //draw the image ;)
+            ctx.restore(); //restore the state of canvas
+
+        };
+
+        img.src = 'data:image/png;base64,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';
     }
 
 };
