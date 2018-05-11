@@ -219,7 +219,7 @@ var swirlnetSections = {
             yaxis: 'y2',
             name: 'Pressure',
             line: {
-                color: "rgb(44, 94, 160)"
+                color: "#446597"
             }
         }];
         var layout = {
