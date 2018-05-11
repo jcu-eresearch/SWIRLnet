@@ -136,12 +136,12 @@ var swirlnetSections = {
                 '<div id="carousel-'+i+event+'" class="carousel slide" data-ride="carousel" data-interval="false">' +
                 '<div class="carousel-inner">' +
                 '<div class="carousel-item active text-center">' +
-                '<div id="t'+i+event+'-wind" class="cts-chart"></div>' +
                 '<div id="t'+i+event+'-wind-hover" style="position:absolute;z-index:1000" class="hover-info"></div>'+
+                '<div id="t'+i+event+'-wind" class="cts-chart"></div>' +
                 '</div>' +
                 '<div class="carousel-item text-center">' +
-                '<div id="t'+i+event+'-pressure" class="cts-chart"></div>' +
                 '<div id="t'+i+event+'-pressure-hover" style="position:absolute;z-index:1000" class="hover-info"></div>'+
+                '<div id="t'+i+event+'-pressure" class="cts-chart"></div>' +
                 '</div>' +
                 '</div>' +
                 '<ol class="carousel-indicators">' +
@@ -211,7 +211,7 @@ var swirlnetSections = {
             y: y1,
             name: 'Max 3-sec Gust',
             line: {
-                color: "red"
+                color: "crimson"
             }
         },{
             x: x,
@@ -219,7 +219,7 @@ var swirlnetSections = {
             yaxis: 'y2',
             name: 'Pressure',
             line: {
-                color: "blue"
+                color: "rgb(44, 94, 160)"
             }
         }];
         var layout = {
@@ -303,22 +303,20 @@ var swirlnetSections = {
         };
         Plotly.newPlot(id, traces1, layout);
 
-        /*var plot= document.getElementById(id);
+        var plot= document.getElementById(id);
         var hoverInfo = document.getElementById(id+"-hover");
-        plot.on('plotly_hover', function(data){
-            debugger;
-            var infoText = data.points.map(function(d){
-                return ('<ul><li>'+d.data.name+'</li><li>'+d.x+'</li><li>'+
-                    d.y.toPrecision(3)+'</li><li class="bg-Arrow'+Math.round(data.points[2].y)+'  "  >'+'</li></ul>');
-            });
+/*        plot.on('plotly_hover', function(data){
 
-            hoverInfo.innerHTML = infoText.join('');
+            var infoText = ('<ul><li>'+data.points[0].data.name+'</li><li>'+data.points[0].x+'</li><li>'+
+                data.points[0].y.toPrecision(3)+'</li><li class="bg-Arrow'+Math.round(data.points[2].y)+'  "  >'+'</li></ul>');
 
-            hoverInfo.style.left = +data.points[0].xaxis.l2p(data.points[0].x)+
-                data.points[0].xaxis._offset -60+ 'px';
+            hoverInfo.innerHTML = infoText;
+
+            hoverInfo.style.left = +data.points[0].xaxis.r2p(data.points[0].x)+
+                data.points[0].xaxis._offset -110+ 'px';
 
             hoverInfo.style.top = +data.points[0].yaxis.l2p(data.points[0].y)+
-                data.points[0].yaxis._offset -100+'px';
+                data.points[0].yaxis._offset -188+'px';
 
             hoverInfo.style.padding = "20px";
             hoverInfo.className= "hover-info extra-stuff";
