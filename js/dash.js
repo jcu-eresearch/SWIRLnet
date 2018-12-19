@@ -99,7 +99,7 @@ var swirlnetDashboard = (function (){
             }
 
             historicalTowers.init(
-                "data-preview/old/processed/",
+                "data/old/processed/",
                 ".cts-content",
                 'historical',
                 settings["locationsOld"],
