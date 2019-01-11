@@ -23,13 +23,12 @@ var swirlnetMap = {
     initMap: function (map) {
         if (!map || !map.id) return;
         this.createMapDiv(map);
-        this.mapObject = L.map(map.id, {maxZoom: 10}).setView([-20.311542, 148.588719], 8);
+        this.mapObject = L.map(map.id, {maxZoom: map.zoom}).setView([-20.311542, 148.588719], 8);
         L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
             attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> ' +
             'contributors, ' +
             '<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>,' +
             'Imagery © <a href="http://mapbox.com">Mapbox</a>',
-            maxZoom: 18,
             id: 'mapbox.streets-satellite',
             accessToken: this.accessToken
         }).addTo(this.mapObject);
@@ -277,48 +276,48 @@ var swirlnetMap = {
     },
 
     showCyclone: function(){
-            this.names.forEach( (function(self){
-                return function(n){
-                    $.ajax({
-                        type: "GET",
-                        url: 'data/cyclone/'+n+".gml",
-                        dataType: "xml",
-                        success: (function(self) {
-                            return function (xml) {
-                                var xml = $(xml);
-                                var name = "";
-                                var start = "";
-                                var split = [];
+        this.names.forEach( (function(self){
+            return function(n){
+                $.ajax({
+                    type: "GET",
+                    url: 'data/cyclone/'+n+".gml",
+                    dataType: "xml",
+                    success: (function(self) {
+                        return function (xml) {
+                            var xml = $(xml);
+                            var name = "";
+                            var start = "";
+                            var split = [];
 
-                                // find the name of the cyclone
-                                if (xml.find('distName')) {
-                                    name = xml.find('distName').text();
-                                }
+                            // find the name of the cyclone
+                            if (xml.find('distName')) {
+                                name = xml.find('distName').text();
+                            }
 
-                                // invisible marker with name
-                                if (xml.find('lineString')) {
-                                    var ls = xml.find('lineString');
-                                    if (ls[0] && ls[0].children && ls[0].children[0]) {
-                                        start = xml.find('lineString')[0].children[0].textContent;
-                                        split = start.split("\n");
-                                        if (split.length > 0) {
-                                            split = split[split.length - 1].split(",");
-                                            if (split && split.length > 0) {
-                                                var marker1 = L.marker([split[1], split[0]], {opacity: 0.01}).addTo(self.mapObject);
-                                                marker1.bindTooltip(L.tooltip({
-                                                    direction: 'top',
-                                                    permanent: true
-                                                }).setContent(name)).openTooltip();
-                                            }
+                            // invisible marker with name
+                            if (xml.find('lineString')) {
+                                var ls = xml.find('lineString');
+                                if (ls[0] && ls[0].children && ls[0].children[0]) {
+                                    start = xml.find('lineString')[0].children[0].textContent;
+                                    split = start.split("\n");
+                                    if (split.length > 0) {
+                                        split = split[split.length - 1].split(",");
+                                        if (split && split.length > 0) {
+                                            var marker1 = L.marker([split[1], split[0]], {opacity: 0.01}).addTo(self.mapObject);
+                                            marker1.bindTooltip(L.tooltip({
+                                                direction: 'top',
+                                                permanent: true
+                                            }).setContent(name)).openTooltip();
                                         }
                                     }
                                 }
-                                self.renderShapeFiles(self.mapObject, 'data/cyclone/' + n);
-                            };
-                        })(self)
-                    });
-                };
-            })(this));
+                            }
+                            self.renderShapeFiles(self.mapObject, 'data/cyclone/' + n);
+                        };
+                    })(self)
+                });
+            };
+        })(this));
     },
 
     names: ["IDW60266", "IDD65401", "IDQ65248",

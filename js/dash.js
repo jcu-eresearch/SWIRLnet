@@ -14,16 +14,20 @@ var swirlnetDashboard = (function (){
 
             // The default title for the map
             var title = "SWIRLnet Current Data";
-
+            var zoom = 8;
             // If the title is available
             if(settings["dateRanges"] && settings["dateRanges"][1] )
                 title= settings["dateRanges"][1].name;
+
+            if (settings.mapZoomNew)
+                zoom = settings.mapZoomNew
 
             // Initialize the Map
             currentMap.initMap({
                 parent: ".cts-content",
                 title: title,
-                id : "currentMap"
+                id : "currentMap",
+                zoom : zoom
             });
 
             // Add markers
@@ -70,13 +74,16 @@ var swirlnetDashboard = (function (){
 
         if(settings.showOld){
             title = "SWIRLnet Historical Data";
+            zoom = 8;
             if(settings["dateRanges"] && settings["dateRanges"][0] )
                 title= settings["dateRanges"][0].name;
-
+            if (settings.mapZoomOld)
+                zoom = settings.mapZoomOld
             historicalMap.initMap({
                 parent: ".cts-content",
                 title: title,
-                id : "historicalMap"
+                id : "historicalMap",
+                zoom : zoom
             });
             historicalMap.addMarkers(settings["locationsOld"]);
             historicalMap.fitBounds();
@@ -99,7 +106,7 @@ var swirlnetDashboard = (function (){
             }
 
             historicalTowers.init(
-                "data/old/processed/",
+                "data-preview/old/processed/",
                 ".cts-content",
                 'historical',
                 settings["locationsOld"],
