@@ -14,7 +14,7 @@ var swirlnetDashboard = (function (){
 
             // The default title for the map
             var title = "SWIRLnet Current Data";
-            var zoom = 8;
+            var zoom = 18;
             // If the title is available
             if(settings["dateRanges"] && settings["dateRanges"][1] )
                 title= settings["dateRanges"][1].name;
@@ -74,7 +74,7 @@ var swirlnetDashboard = (function (){
 
         if(settings.showOld){
             title = "SWIRLnet Historical Data";
-            zoom = 8;
+            zoom = 18;
             if(settings["dateRanges"] && settings["dateRanges"][0] )
                 title= settings["dateRanges"][0].name;
             if (settings.mapZoomOld)
